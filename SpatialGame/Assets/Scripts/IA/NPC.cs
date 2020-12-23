@@ -17,7 +17,11 @@ public class NPC : MonoBehaviour
         CHATTING, MOVING, WORKING, RANDOM_POS
     }
     public EState currentState;
-
+    public enum EType 
+    {
+        FARMER,SCIENTIST,MERCHANT
+    }
+    public EType currentType;
     Vector3 currentTarget;
     float currentTime;
     [SerializeField]

@@ -22,20 +22,16 @@ public class ResourcesRoom : MonoBehaviour
     [SerializeField]
     List<Transform> workingPositions;
     ResourceManager myResourceManager;
-    [SerializeField]
-    Canvas myCanvas;
 
 	private void Update()
 	{
 		if(startCounting)
         {
             currentTimeWorking+=Time.deltaTime;
-            Debug.Log(timeToCollectResources/numberOfWorkers);
             if(currentTimeWorking>=timeToCollectResources/numberOfWorkers)
             {
                 currentTimeWorking = 0;
-                myCanvas.gameObject.SetActive(true); 
-                currentResources+=amountOfResourcesToGive;
+                myResourceManager.AddResource(currentResource,amountOfResourcesToGive);
             }
         }
 	}
@@ -54,10 +50,4 @@ public class ResourcesRoom : MonoBehaviour
     public void RemoveWorker(){numberOfWorkers--;}
     public void StartCounter(bool must){startCounting = must;}
     public void SetResourceManager(ResourceManager manager){myResourceManager = manager;}
-    public void CollectResources()
-    {
-        myResourceManager.AddResource(currentResource,currentResources);
-        myCanvas.gameObject.SetActive(false);
-        currentResources = 0;
-    }
 }

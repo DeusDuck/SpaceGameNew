@@ -4,23 +4,58 @@ using UnityEngine;
 
 public class NPCManager : MonoBehaviour
 {
-    [SerializeField]
-    List<NPC> currentNPC;
-    [SerializeField]
-    List<ResourcesRoom> currentBuildings;
+    List<NPC> currentNPC = new List<NPC>();
+    List<ResourcesRoom> oxigenBuildings = new List<ResourcesRoom>();
+    List<ResourcesRoom> foodBuildings = new List<ResourcesRoom>();
+    List<ResourcesRoom> moneyBuildings = new List<ResourcesRoom>();
 
 	void AssignJob(NPC npc)
     {
-        if(currentBuildings.Count == 0)
-            npc.SetDestination(null);
-        foreach(ResourcesRoom building in currentBuildings)
-        {
-            if(building.IsBuildingFull())
-                continue;
-            npc.SetDestination(building.GetWorkingPosition());
-            npc.SetBuilding(building);
-            break;
-        }
+        
+            switch(npc.currentType)
+            {
+                case NPC.EType.FARMER:
+                    if(foodBuildings.Count == 0)
+                    return;
+
+                    foreach(ResourcesRoom room in foodBuildings)
+                    {
+                        if(!room.IsBuildingFull())
+                        {
+                            npc.SetDestination(room.GetWorkingPosition());
+                            npc.SetBuilding(room);
+                        }
+                    }
+                    break;
+                case NPC.EType.MERCHANT:
+                if(moneyBuildings.Count == 0)
+                    return;
+
+                    foreach(ResourcesRoom room in moneyBuildings)
+                    {
+                        if(!room.IsBuildingFull())
+                        {
+                            npc.SetDestination(room.GetWorkingPosition());
+                            npc.SetBuilding(room);
+                        }
+                    }
+                    break;
+                case NPC.EType.SCIENTIST:
+                    if(oxigenBuildings.Count == 0)
+                    return;
+
+                    foreach(ResourcesRoom room in oxigenBuildings)
+                    {
+                        if(!room.IsBuildingFull())
+                        {
+                            npc.SetDestination(room.GetWorkingPosition());
+                            npc.SetBuilding(room);
+                        }
+                    }
+                    break;
+            }
+                       
+        
     }
     public void AddNPC(NPC npc)
     {
@@ -29,7 +64,18 @@ public class NPCManager : MonoBehaviour
     }
     public void AddBuilding(ResourcesRoom building)
     {       
-        currentBuildings.Add(building);
+        switch(building.currentResource)
+        {
+            case ResourcesRoom.EResource.FOOD:
+                foodBuildings.Add(building);
+                break;
+            case ResourcesRoom.EResource.MONEY:
+                moneyBuildings.Add(building);
+                break;
+            case ResourcesRoom.EResource.OXIGEN:
+                oxigenBuildings.Add(building);
+                break;
+        }
         GiveRandomNPCTarget();      
     }
     void GiveRandomNPCTarget()

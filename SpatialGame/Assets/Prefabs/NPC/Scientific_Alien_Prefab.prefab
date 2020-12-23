@@ -139,6 +139,7 @@ MonoBehaviour:
   timeToWait: 5
   myAgent: {fileID: 7108067184853302748}
   currentState: 1
+  currentType: 1
   mySkeleton: {fileID: 1289383836576616545}
   idle: {fileID: 11400000, guid: e0adbd589a8c4214495dcb18917054fe, type: 2}
   walk: {fileID: 11400000, guid: 3684d224feae35647934860d59140ab2, type: 2}

@@ -11,9 +11,9 @@ public class AIMenu : MonoBehaviour
 
 	private void Start()
 	{
-		for(int i = 1; i< numberOfNPC; i++)
+		/*for(int i = 1; i< numberOfNPC; i++)
 		{
 			Instantiate(myImage.gameObject,transform);
-		}
+		}*/
 	}
 }
