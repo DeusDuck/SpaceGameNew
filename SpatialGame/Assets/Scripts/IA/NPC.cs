@@ -27,6 +27,8 @@ public class NPC : MonoBehaviour
     [SerializeField]
     AnimationReferenceAsset walk;
     string currentAnimationName;
+    NPCManager myManager;
+    ResourcesRoom currentRoom;
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +89,7 @@ public class NPC : MonoBehaviour
                 break;
             case EState.WORKING:
                 SetAnimationAsset(idle,true,1);
+                myManager.NPCInWorkingPosition(this);
                 break;
             case EState.RANDOM_POS:
                 currentTarget = Vector3.zero;
@@ -97,7 +100,8 @@ public class NPC : MonoBehaviour
         }
         currentState = nextState;
     }
-    void UpdateMoving()
+	#region Update Current State
+	void UpdateMoving()
     {
         myAgent.destination = currentTarget;
         TurnAroundCharacter();
@@ -131,8 +135,8 @@ public class NPC : MonoBehaviour
         myAgent.destination = currentTarget;
         TurnAroundCharacter();
     }
-
-    Vector3 RandomNavmeshLocation() 
+	#endregion
+	Vector3 RandomNavmeshLocation() 
     {
          Vector3 randomDirection = Random.insideUnitSphere * randomPositionRadius;
          randomDirection += transform.position;
@@ -155,7 +159,7 @@ public class NPC : MonoBehaviour
         {
             ChangeState(EState.RANDOM_POS); 
         }            
-    }
+    }   
     void TurnAroundCharacter()
     {
         if(myAgent.velocity.x<0)
@@ -170,4 +174,9 @@ public class NPC : MonoBehaviour
         mySkeleton.state.SetAnimation(0, anim, loop).TimeScale = timeScale;
         currentAnimationName = anim.name;
     }
+	#region Setter and Getters
+    public void SetManager(NPCManager manager){myManager = manager;}
+    public void SetBuilding(ResourcesRoom room){ currentRoom = room;}
+    public ResourcesRoom GetWorkingRoom(){return currentRoom;}
+	#endregion
 }

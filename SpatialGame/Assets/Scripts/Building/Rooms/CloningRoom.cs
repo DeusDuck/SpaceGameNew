@@ -31,10 +31,11 @@ public class CloningRoom : MonoBehaviour
         if(currentTimeToSpawn>=timeToSpawn)
         {
             NPC currentNPC = Instantiate(NPC,spawnPos.position,NPC.gameObject.transform.rotation).GetComponent<NPC>();
+            currentNPC.SetManager(npcManager);
             currentTimeToSpawn = 0.0f;
             progressBarBack.gameObject.SetActive(false);
             hasNPCToSpawn = false;
-            npcManager.AddNPC(currentNPC.GetComponent<NPC>());
+            npcManager.AddNPC(currentNPC);
         }
     }
 # region Setters and Getters

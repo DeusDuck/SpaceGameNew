@@ -7,17 +7,18 @@ public class NPCManager : MonoBehaviour
     [SerializeField]
     List<NPC> currentNPC;
     [SerializeField]
-    List<BuildingType> currentBuildings;
+    List<ResourcesRoom> currentBuildings;
 
 	void AssignJob(NPC npc)
     {
         if(currentBuildings.Count == 0)
             npc.SetDestination(null);
-        foreach(BuildingType building in currentBuildings)
+        foreach(ResourcesRoom building in currentBuildings)
         {
             if(building.IsBuildingFull())
                 continue;
             npc.SetDestination(building.GetWorkingPosition());
+            npc.SetBuilding(building);
             break;
         }
     }
@@ -26,13 +27,10 @@ public class NPCManager : MonoBehaviour
         currentNPC.Add(npc);
         AssignJob(npc);
     }
-    public void AddBuilding(BuildingType building)
-    {
-        if(building.GetBuildingType() == BuildingType.EBuildingType.DINNER)
-        {
-            currentBuildings.Add(building);
-            GiveRandomNPCTarget();
-        }
+    public void AddBuilding(ResourcesRoom building)
+    {       
+        currentBuildings.Add(building);
+        GiveRandomNPCTarget();      
     }
     void GiveRandomNPCTarget()
     {
@@ -41,5 +39,10 @@ public class NPCManager : MonoBehaviour
             if(npc.currentState == NPC.EState.RANDOM_POS)
                 AssignJob(npc);
         }
+    }
+    public void NPCInWorkingPosition(NPC current)
+    {
+        current.GetWorkingRoom().StartCounter(true);
+        current.GetWorkingRoom().AddWorker();
     }
 }

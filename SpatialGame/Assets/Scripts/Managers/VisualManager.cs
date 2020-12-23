@@ -28,6 +28,12 @@ public class VisualManager : MonoBehaviour
     [SerializeField]
     Button eraseButton;
     GameObject currentRoom;
+    [SerializeField]
+    Text money;
+    [SerializeField]
+    Text water;
+    [SerializeField]
+    Text oxigen;
     public enum VisualState
     {
         BUILDING,ON_ROOM,MOVING_AROUND
@@ -158,4 +164,19 @@ public class VisualManager : MonoBehaviour
     }
 
     public void SetCurrentRoom(GameObject room){currentRoom = room; }
+    public void UpdateResources(ResourcesRoom.EResource type, int amount)
+    {       
+        switch(type)
+        {
+            case ResourcesRoom.EResource.OXIGEN:
+                oxigen.text = amount.ToString();
+                break;
+            case ResourcesRoom.EResource.MONEY:
+                money.text= amount.ToString();
+                break;
+            case ResourcesRoom.EResource.FOOD:
+                water.text=amount.ToString();
+                break;
+        }    
+    }
 }

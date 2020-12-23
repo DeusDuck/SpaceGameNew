@@ -16,14 +16,9 @@ public class BuildingType : MonoBehaviour
     }
     public List<ExitsPosition> currentExits;
     [SerializeField]
-    Transform zoomObjective;
-    [SerializeField]
-    List<Transform> availableWorkingPositions;
-    [SerializeField]
-    List<Transform> workingPositions;
+    Transform zoomObjective;    
     [SerializeField]
     List<Transform> buildingPositions;
-    bool imFull;
     public NodeManager myNodeManager;
     public Node myNode;
     [SerializeField]
@@ -52,18 +47,7 @@ public class BuildingType : MonoBehaviour
 	public List<ExitsPosition> GetExitsType(){return currentExits;}
     public EBuildingType GetBuildingType(){return currentType; }
     public Transform GetZoomObjective(){ return zoomObjective;}
-    public Transform GetWorkingPosition()
-    { 
-        if(availableWorkingPositions.Count>0)
-        {
-            Transform pos = availableWorkingPositions[0];
-            availableWorkingPositions.Remove(pos);
-            return pos;
-        }
-        imFull = true;
-        return null;
-    }
-    public bool IsBuildingFull(){return imFull; }
+    
     public void UpdateExits(List<ExitsPosition> updated, Transform top, Transform bottom, Transform left, Transform right)
     {
         currentExits = updated;

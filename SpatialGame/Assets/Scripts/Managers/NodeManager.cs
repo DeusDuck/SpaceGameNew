@@ -16,7 +16,9 @@ public class NodeManager : MonoBehaviour
     Node node;
     MeshRenderer[] currentMats;
     [SerializeField]
-    NPCManager npcManager;  
+    NPCManager npcManager;
+    [SerializeField]
+    ResourceManager resourceManager;
     List<Node> buildNodes;
     List<Node> neightboors;
 
@@ -230,8 +232,16 @@ public class NodeManager : MonoBehaviour
                     neightboors.Remove(currentNode);
             
                 if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.CLONING)
-                    currentNode.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);            
-                npcManager.AddBuilding(currentNode.GetBuildingType());
+                    currentNode.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);
+                else if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.DINNER)
+                {
+                    ResourcesRoom room = currentNode.GetBuildingType().transform.GetComponent<ResourcesRoom>();
+                    if(room!=null)
+                    {
+                        npcManager.AddBuilding(room);
+                        room.SetResourceManager(resourceManager);
+                    }
+                }               
 
                 CreateNodesNeightboors();
                 SetUpNodes();
