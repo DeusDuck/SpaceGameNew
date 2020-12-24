@@ -16,7 +16,10 @@ public class NPCManager : MonoBehaviour
             {
                 case NPC.EType.FARMER:
                     if(foodBuildings.Count == 0)
-                    return;
+                    {
+                        npc.SetDestination(null);
+                        return;
+                    }                    
 
                     foreach(ResourcesRoom room in foodBuildings)
                     {
@@ -24,12 +27,16 @@ public class NPCManager : MonoBehaviour
                         {
                             npc.SetDestination(room.GetWorkingPosition());
                             npc.SetBuilding(room);
-                        }
+                        }else
+                            npc.SetDestination(null);
                     }
                     break;
                 case NPC.EType.MERCHANT:
-                if(moneyBuildings.Count == 0)
-                    return;
+                    if(moneyBuildings.Count == 0)
+                    {
+                        npc.SetDestination(null);
+                        return;
+                    }                    
 
                     foreach(ResourcesRoom room in moneyBuildings)
                     {
@@ -37,12 +44,16 @@ public class NPCManager : MonoBehaviour
                         {
                             npc.SetDestination(room.GetWorkingPosition());
                             npc.SetBuilding(room);
-                        }
+                        }else
+                            npc.SetDestination(null);
                     }
                     break;
                 case NPC.EType.SCIENTIST:
                     if(oxigenBuildings.Count == 0)
-                    return;
+                    {
+                        npc.SetDestination(null);
+                        return;
+                    }                    
 
                     foreach(ResourcesRoom room in oxigenBuildings)
                     {
@@ -50,12 +61,11 @@ public class NPCManager : MonoBehaviour
                         {
                             npc.SetDestination(room.GetWorkingPosition());
                             npc.SetBuilding(room);
-                        }
+                        }else
+                            npc.SetDestination(null);
                     }
                     break;
-            }
-                       
-        
+            }       
     }
     public void AddNPC(NPC npc)
     {
