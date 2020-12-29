@@ -61,7 +61,7 @@ public class CameraMovement : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             direction = PlanePositionDelta(touch);
-            if (touch.phase == TouchPhase.Moved)
+            if (touch.phase == TouchPhase.Moved && getVisual.state !=VisualManager.VisualState.ON_ROOM)
             {
                 if(direction.y>0 && (transform.position.y-myCamera.transform.position.y)<=maxYDist) 
                     myCamera.transform.position += Vector3.up * direction.y * movementSpeed * Time.deltaTime;
@@ -71,18 +71,6 @@ public class CameraMovement : MonoBehaviour
                     myCamera.transform.position += Vector3.right * direction.x * movementSpeed * Time.deltaTime;
                 if(direction.x>0 && (transform.position.x-myCamera.transform.position.x)>=minXDist) 
                     myCamera.transform.position += Vector3.right * direction.x * movementSpeed * Time.deltaTime;
-
-                //Comprueba la distancia de la cámara respecto al zoomTarget, si está lo suficientemente cerca canvia el estado a ON_ROOM sino a MOVING_AROUND
-                if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)>=distToChange && getVisual.state ==VisualManager.VisualState.ON_ROOM)
-                {
-                    getVisual.SetState(VisualManager.VisualState.MOVING_AROUND);
-                    visualManager.ChangeState(getVisual);
-                }
-                else if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)<=distToChange)
-                {
-                    getVisual.SetState(VisualManager.VisualState.ON_ROOM);
-                    visualManager.ChangeState(getVisual);
-                }
             } 
             if(touch.tapCount>=2)
             {                    
@@ -113,7 +101,18 @@ public class CameraMovement : MonoBehaviour
 
         //Zoom
         if (Input.touchCount >= 2)
-        {            
+        {      
+            //Comprueba la distancia de la cámara respecto al zoomTarget, si está lo suficientemente cerca canvia el estado a ON_ROOM sino a MOVING_AROUND
+            if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)>distToChange && getVisual.state ==VisualManager.VisualState.ON_ROOM)
+            {
+                getVisual.SetState(VisualManager.VisualState.MOVING_AROUND);
+                visualManager.ChangeState(getVisual);
+            }else if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)<=distToChange)
+            {
+                getVisual.SetState(VisualManager.VisualState.ON_ROOM);
+                visualManager.ChangeState(getVisual);
+            }
+
             Vector3 pos1  = PlanePosition(Input.GetTouch(0).position);
             Vector3 pos2  = PlanePosition(Input.GetTouch(1).position);
             Vector3 pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
@@ -133,7 +132,7 @@ public class CameraMovement : MonoBehaviour
             if(zoom <1 && Vector3.Distance(myCamera.transform.position, transform.position) <= maxZoomDist)
                 myCamera.transform.position -= zoomDirection * zoom * Time.deltaTime * zoomSpeed;
   
-            else if(zoom > 1 &&  Vector3.Distance(myCamera.transform.position, transform.position) >= maxZoomToRoom)
+            if(zoom > 1 &&  Mathf.Abs(transform.position.z - myCamera.transform.position.z) > maxZoomToRoom)
                 myCamera.transform.position += zoomDirection * zoom * Time.deltaTime * zoomSpeed;
         }
     }

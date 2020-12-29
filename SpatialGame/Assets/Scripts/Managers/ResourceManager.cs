@@ -1,30 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    [SerializeField]
     int oxigen;
+    [SerializeField]
     int money;
+    [SerializeField]
     int food;
     [SerializeField]
     VisualManager visualManager;
-    public void AddResource(ResourcesRoom.EResource type, int amount)
+
+	private void Start()
+	{
+		visualManager.UpdateResources(ResourcesRoom.EResource.OXIGEN,oxigen);
+        visualManager.UpdateResources(ResourcesRoom.EResource.MONEY,money);
+        visualManager.UpdateResources(ResourcesRoom.EResource.FOOD,food);
+	}
+	public void AddResource(ResourcesRoom.EResource type, int amount)
     {
         switch(type)
         {
             case ResourcesRoom.EResource.OXIGEN:
                 oxigen+=amount;
-                visualManager.UpdateResources(type,oxigen);
+                
                 break;
             case ResourcesRoom.EResource.MONEY:
                 money+=amount;
-                visualManager.UpdateResources(type,money);
+                
                 break;
             case ResourcesRoom.EResource.FOOD:
                 food+=amount;
-                visualManager.UpdateResources(type,food);
+                
                 break;
-        }        
+        }
+        UpdateUI();
+    }
+    public bool EnoughResources(int[] currency)
+    {
+        return oxigen>=currency[0] && money>=currency[1] && food>=currency[2];    
+    }
+    public void SpendResources(int[] currency)
+    {
+        oxigen-=currency[0];
+        money-=currency[1];
+        food-=currency[2];
+        UpdateUI();
+    }
+    void UpdateUI()
+    {
+        visualManager.UpdateResources(ResourcesRoom.EResource.OXIGEN,oxigen);
+        visualManager.UpdateResources(ResourcesRoom.EResource.MONEY,money);
+        visualManager.UpdateResources(ResourcesRoom.EResource.FOOD,food);
     }
 }

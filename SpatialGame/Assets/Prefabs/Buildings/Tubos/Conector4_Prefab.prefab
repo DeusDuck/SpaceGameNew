@@ -162,12 +162,16 @@ MonoBehaviour:
   - {fileID: 8869518439367898426}
   myNodeManager: {fileID: 0}
   myNode: {fileID: 0}
+  builtTime: 5
   anchorPointLeft: {fileID: 8289243973262103688}
   anchorPointRight: {fileID: 2077689355700643720}
   anchorPointTop: {fileID: 3594068224896326024}
   anchorPointBottom: {fileID: 8869518439367898426}
   meshObject: {fileID: 1374335253177031536}
   myCollider: {fileID: 4462322533572029445}
+  oxigenCost: 0
+  moneyCost: 5
+  foodCost: 0
 --- !u!114 &792927467234935462
 MonoBehaviour:
   m_ObjectHideFlags: 0

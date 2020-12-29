@@ -481,12 +481,16 @@ MonoBehaviour:
   - {fileID: 3387840020163601725}
   myNodeManager: {fileID: 0}
   myNode: {fileID: 0}
+  builtTime: 10
   anchorPointLeft: {fileID: 3387840018563077596}
   anchorPointRight: {fileID: 3387840020163601725}
   anchorPointTop: {fileID: 0}
   anchorPointBottom: {fileID: 0}
   meshObject: {fileID: 8228320794898740915}
   myCollider: {fileID: 5701209072201701459}
+  oxigenCost: 5
+  moneyCost: 5
+  foodCost: 5
 --- !u!114 &2722461502058144994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,7 +514,6 @@ MonoBehaviour:
   - {fileID: 3485192180950467621}
   - {fileID: 5054541589714643874}
   - {fileID: 2582161270901331088}
-  myCanvas: {fileID: 0}
 --- !u!1 &3387840018563077597
 GameObject:
   m_ObjectHideFlags: 0

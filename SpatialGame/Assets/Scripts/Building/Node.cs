@@ -22,7 +22,10 @@ public class Node : MonoBehaviour
     [SerializeField]
     bool canBeBuilt = true;
     [SerializeField]
-    bool isBuilt = false;    
+    bool isBuilt = false;
+    float builtTime;
+    float currentBuildTime;
+    MeshRenderer[] mat;
 
 	private void OnDrawGizmos()
 	{
@@ -30,14 +33,40 @@ public class Node : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, transform.localScale);
         
 	}
+	private void Update()
+	{
+		if(builtTime!=0)
+        {
+            currentBuildTime+=Time.deltaTime;
+            if(currentBuildTime>=builtTime)
+            {
+                Renderer[] childRenderer = availableBuilding.transform.GetComponentsInChildren<MeshRenderer>();
+                for(int i = 0; i<childRenderer.Length; i++)
+                    childRenderer[i].material = mat[i].sharedMaterial;
+
+                SetIsBuilt(true);               
+                availableBuilding.transform.tag = "Building";
+                var navMeshSurface = availableBuilding.GetComponent<NavMeshSurface>();
+                if(navMeshSurface != null)
+                    NavMeshManager.CalculateNavMesh(navMeshSurface);
+                if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)
+                {
+                    NavMeshManager.AddPipe(myBuildingType.GetComponent<PipeRoom>());
+                    NavMeshManager.CalculateOffMeshLinks();
+                }
+                currentBuildTime = 0;
+                builtTime = 0;
+                myBuildingType.myNodeManager.BuildNode(this);
+            }
+        }
+	}
 	//Recibe un edificio y un material y lo instancia en la escena
 	public void SetAvailableBuilding(GameObject _building, Material availableMat)
     {
-        canBeBuilt = true;            
-
+        canBeBuilt = true;
         availableBuilding = Instantiate(_building,transform.position,_building.transform.rotation,transform);            
-            
         myBuildingType = availableBuilding.transform.GetComponent<BuildingType>();
+        
         myBuildingType.SetManager(nodeManager,this);
         if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)               
             myBuildingType.ConnectPipe();               
@@ -48,21 +77,9 @@ public class Node : MonoBehaviour
     //Canvia el material del edificio y setea el nodo a construido
     public void BuildBuilding(MeshRenderer[] actualMat)
     {
-        Renderer[] childRenderer = availableBuilding.transform.GetComponentsInChildren<MeshRenderer>();
-        for(int i = 0; i<childRenderer.Length; i++)
-            childRenderer[i].material = actualMat[i].sharedMaterial;
-
-        SetIsBuilt(true);               
-        availableBuilding.transform.tag = "Building";
-        var navMeshSurface = availableBuilding.GetComponent<NavMeshSurface>();
-        if(navMeshSurface != null)
-            NavMeshManager.CalculateNavMesh(navMeshSurface);
-        if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)
-        {
-            NavMeshManager.AddPipe(myBuildingType.GetComponent<PipeRoom>());
-            NavMeshManager.CalculateOffMeshLinks();
-        }
-           
+        builtTime = myBuildingType.builtTime;
+        mat = actualMat;
+        canBeBuilt = false;
     }
     //Destruye el edificio actual
     public void DestroyAvailableBuilding()
@@ -93,17 +110,17 @@ public class Node : MonoBehaviour
                 {
                     Node parent = collider.transform.GetComponentInParent<Node>();  
                     if(parent!=this)
-                    {                 
+                    {       
                         if(parent.GetIsBuilt() && !IsNeightboor(parent))
-                        {
+                        {                            
                             canBeBuilt = false;
                             myBuildingType.ChangeMaterial(nodeManager.unAvailablePositionMat);
-                        }
-                        else
-                        {                            
-                            canBeBuilt = true;
-                            myBuildingType.ChangeMaterial(nodeManager.availablePositionMat);
-                        }                        
+                        }                                          
+                    }
+                    if(colliders.Length == 1 && !canBeBuilt)
+                    {
+                        canBeBuilt = true;
+                        myBuildingType.ChangeMaterial(nodeManager.availablePositionMat);
                     }
                 }
             }
@@ -145,6 +162,7 @@ public class Node : MonoBehaviour
     public Node GetLeftNode(){return leftNeightboor;}
     public Node GetRightNode(){return rightNeightboor;}
     public bool CanBeBuild(){return canBeBuilt;}
+    public void SetCanBeBuild(bool can){canBeBuilt = can;}
     public Transform GetAvailableBuildingTransform(){return availableBuilding.transform;}
 
     bool IsNeightboor(Node node)

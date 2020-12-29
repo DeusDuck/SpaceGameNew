@@ -21,6 +21,7 @@ public class BuildingType : MonoBehaviour
     List<Transform> buildingPositions;
     public NodeManager myNodeManager;
     public Node myNode;
+    public float builtTime;
     [SerializeField]
     Transform anchorPointLeft;
     [SerializeField]
@@ -33,8 +34,12 @@ public class BuildingType : MonoBehaviour
     GameObject meshObject;
     [SerializeField]
     BoxCollider myCollider;
-    
-    
+    [SerializeField]
+    int oxigenCost = 0;
+    [SerializeField]
+    int moneyCost = 0;
+    [SerializeField]
+    int foodCost = 0;
 
 	private void OnDrawGizmos()
 	{
@@ -100,4 +105,12 @@ public class BuildingType : MonoBehaviour
     }  
     
     public BoxCollider GetCollider(){return myCollider;}
+    public int[] MyCost()
+    {
+        int[] costs = new int[3];
+        costs[0] = oxigenCost;
+        costs[1] = moneyCost;
+        costs[2] = foodCost;
+        return costs;
+    }
 }

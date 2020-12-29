@@ -56,19 +56,21 @@ MonoBehaviour:
   currentType: 2
   currentExits: 0200000001000000
   zoomObjective: {fileID: 6326838379510435515}
-  availableWorkingPositions: []
-  workingPositions: []
   buildingPositions:
   - {fileID: 2330918560974377449}
   - {fileID: 6961324147993646149}
   myNodeManager: {fileID: 0}
   myNode: {fileID: 0}
+  builtTime: 5
   anchorPointLeft: {fileID: 6961324147993646149}
   anchorPointRight: {fileID: 0}
   anchorPointTop: {fileID: 2330918560974377449}
   anchorPointBottom: {fileID: 0}
   meshObject: {fileID: 8633518533930424241}
   myCollider: {fileID: 7932795102187991805}
+  oxigenCost: 0
+  moneyCost: 5
+  foodCost: 0
 --- !u!114 &2102745119650987777
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -31,7 +31,9 @@ public class NodeManager : MonoBehaviour
         Node nodeToBuild =Instantiate(node,transform.position,transform.rotation);
         nodeToBuild.SetAvailableBuilding(currentBuilding,availablePositionMat);
         currentMats = currentBuilding.transform.GetComponentsInChildren<MeshRenderer>();
-        nodeToBuild.BuildBuilding(currentMats);
+        nodeToBuild.GetBuildingType().builtTime = 0.01f;
+        nodeToBuild.GetBuildingType().myNodeManager = this;
+        nodeToBuild.BuildBuilding(currentMats);        
         nodeToBuild.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);        
         AddBuildNode(nodeToBuild);
         CreateNodesNeightboors();      
@@ -113,7 +115,20 @@ public class NodeManager : MonoBehaviour
         foreach(Node node in neightboors)
         {
             if(node.HasAvailableBuilding())
-                node.CheckIfBuildingColliding();
+            {
+                 node.CheckIfBuildingColliding();
+
+                if(EnoughCurrency(node))
+                {
+                    node.SetCanBeBuild(true);
+                    node.GetBuildingType().ChangeMaterial(availablePositionMat);
+                }else
+                {
+                    node.SetCanBeBuild(false);
+                    node.GetBuildingType().ChangeMaterial(unAvailablePositionMat);
+                }
+            }
+               
         }  
     }
 	//Canvia el edificio a construir y el material a usar
@@ -226,27 +241,34 @@ public class NodeManager : MonoBehaviour
         {         
             if(currentNode.GetBuildingType().GetBuildingType()!=BuildingType.EBuildingType.PIPE)
             {            
+                resourceManager.SpendResources(currentNode.GetBuildingType().MyCost());
                 currentNode.BuildBuilding(currentMats);
                 buildNodes.Add(currentNode);
                 if(neightboors.Contains(currentNode))
                     neightboors.Remove(currentNode);
-            
-                if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.CLONING)
-                    currentNode.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);
-                else if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.DINNER)
-                {
-                    ResourcesRoom room = currentNode.GetBuildingType().transform.GetComponent<ResourcesRoom>();
-                    if(room!=null)
-                    {
-                        npcManager.AddBuilding(room);
-                        room.SetResourceManager(resourceManager);
-                    }
-                }               
-
-                CreateNodesNeightboors();
-                SetUpNodes();
             }
         }
+    }
+    bool EnoughCurrency(Node node)
+    {
+        return resourceManager.EnoughResources(node.GetBuildingType().MyCost());
+    }
+    public void BuildNode(Node currentNode)
+    {            
+        if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.CLONING)
+            currentNode.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);
+        else if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.DINNER)
+        {
+            ResourcesRoom room = currentNode.GetBuildingType().transform.GetComponent<ResourcesRoom>();
+            if(room!=null)
+            {
+                npcManager.AddBuilding(room);
+                room.SetResourceManager(resourceManager);
+            }
+        }               
+
+        CreateNodesNeightboors();
+        SetUpNodes();
     }
     //Esconde a los vecinos(Se usa cuando dejas de construir)
     public void HideBuildings(bool hide)
@@ -270,12 +292,11 @@ public class NodeManager : MonoBehaviour
      
             if(node.CanBeBuild())
             {
+                resourceManager.SpendResources(node.GetBuildingType().MyCost());
                 node.BuildBuilding(currentMats);
                 buildNodes.Add(node);
                 if(neightboors.Contains(node))
                     neightboors.Remove(node);
-                CreateNodesNeightboors();
-                SetUpNodes();
             }  
         }      
     }

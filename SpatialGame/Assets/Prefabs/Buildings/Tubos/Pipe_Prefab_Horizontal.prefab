@@ -470,19 +470,21 @@ MonoBehaviour:
   currentType: 2
   currentExits: 0000000001000000
   zoomObjective: {fileID: 1789922146711643749}
-  availablePositions: []
-  workingPositions: []
   buildingPositions:
   - {fileID: 626226984054732077}
   - {fileID: 4640368651332881458}
   myNodeManager: {fileID: 0}
   myNode: {fileID: 0}
+  builtTime: 5
   anchorPointLeft: {fileID: 626226984054732077}
   anchorPointRight: {fileID: 4640368651332881458}
   anchorPointTop: {fileID: 0}
   anchorPointBottom: {fileID: 0}
   meshObject: {fileID: 3728848491912056589}
   myCollider: {fileID: 5791917205745905979}
+  oxigenCost: 0
+  moneyCost: 5
+  foodCost: 0
 --- !u!114 &5504922726275082825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +502,8 @@ MonoBehaviour:
   anchorPointRight: {fileID: 4640368651332881458}
   anchorPointTop: {fileID: 0}
   anchorPointBottom: {fileID: 0}
+  link: {fileID: 0}
+  offMeshLink: {fileID: 0}
 --- !u!1 &3728848491912056589
 GameObject:
   m_ObjectHideFlags: 0

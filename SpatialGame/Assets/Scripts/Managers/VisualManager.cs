@@ -27,6 +27,8 @@ public class VisualManager : MonoBehaviour
     GetEnumVisualState getEnumVisualState;
     [SerializeField]
     Button eraseButton;
+    [SerializeField]
+    Button clonningMenuButton;
     GameObject currentRoom;
     [SerializeField]
     Text money;
@@ -58,7 +60,7 @@ public class VisualManager : MonoBehaviour
         buildPipe.gameObject.SetActive(false);
         clickHandler.nodeManager.HideBuildings(true);
     }
-    public void ShowBuildingsMenu(Vector3 touchPos, Transform building)
+    public void ShowBuildingsMenu(Transform building)
     {
         //Dependiendo del tipo de edificio que selecciones, enseñará un menú u otro.
         var type = building.GetComponent<BuildingType>();
@@ -71,31 +73,12 @@ public class VisualManager : MonoBehaviour
         switch(type.GetBuildingType())
         {
             case BuildingType.EBuildingType.CLONING:
-                if(currentState == VisualState.ON_ROOM)
-                {
-                    AISelection.gameObject.SetActive(true);
-                    //Esto hay que hacerlo en una funcion aparte si se acaba usando así
-                    AISelection.position = touchPos + Vector3.up * 75;
-                    var cloningRoom = building.GetComponent<CloningRoom>();
-                    Button[] buttons = AISelection.GetComponentsInChildren<Button>();
-                    if(buttons.Length>0)
-                    {
-                        foreach(Button current in buttons)
-                        {
-                            if(current.transform.tag != "CloseButton")
-                            {
-                                current.onClick.RemoveAllListeners();
-                                current.onClick.AddListener(delegate {cloningRoom.SetNPC(current.transform.GetComponent<ButtonNPC>().GetCurrentNPC());});
-                            }
-                        }
-                    }
-                }
+                
                 break;
                 
                 
             case BuildingType.EBuildingType.DINNER:
-                /*taskMenuAI.gameObject.SetActive(true);
-                taskMenuAI.position = touchPos + Vector3.up * 75;*/
+                
                 break; 
             case BuildingType.EBuildingType.PIPE:
                 rotateLeft.gameObject.SetActive(true);
@@ -139,6 +122,7 @@ public class VisualManager : MonoBehaviour
                     if(currentRoom.GetComponent<CloningRoom>())
                     {
                         currentRoom.GetComponent<CloningRoom>().DisplayProgessBar(true);
+                        ShowGameObject(clonningMenuButton.gameObject);
                     }
                     break;
                 case VisualState.MOVING_AROUND:
@@ -154,6 +138,7 @@ public class VisualManager : MonoBehaviour
                     if(currentRoom.GetComponent<CloningRoom>())
                     {
                         currentRoom.GetComponent<CloningRoom>().DisplayProgessBar(false);
+                        HideGameObject(clonningMenuButton.gameObject);
                     }
                     break;
                 case VisualState.MOVING_AROUND:

@@ -25,11 +25,11 @@ public class ClickHandler : MonoBehaviour
                     {                        
                         Node node = hitInfo.collider.transform.GetComponentInParent<Node>();
                         nodeManager.GetClickedNode(node);                        
-                        visualManager.ShowBuildingsMenu(Input.GetTouch(0).position,node.GetAvailableBuildingTransform());
+                        visualManager.ShowBuildingsMenu(node.GetAvailableBuildingTransform());
                     }
                     if(hitInfo.collider.transform.tag == "Building")
                     {                
-                       visualManager.ShowBuildingsMenu(Input.GetTouch(0).position,hitInfo.collider.transform);
+                       visualManager.ShowBuildingsMenu(hitInfo.collider.transform);
                     }
                 }
             }
