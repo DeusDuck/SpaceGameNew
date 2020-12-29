@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 780.8
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_MinSize: {x: 709, y: 492}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 1795
+  controlID: 55
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 421}
   m_MaxSize: {x: 4001, y: 8021}
   vertical: 1
-  controlID: 1849
+  controlID: 29
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_MinSize: {x: 232, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 1820
+  controlID: 134
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -434,9 +434,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 387.74915, y: 211.00414, z: 0.7565403}
+    m_Target: {x: 3.4670029, y: -7.6038465, z: 7.2401485}
     speed: 2
-    m_Value: {x: 387.74915, y: 211.00414, z: 0.7565403}
+    m_Value: {x: 3.4670029, y: -7.6038465, z: 7.2401485}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -483,13 +483,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.014699444, y: -0.0057000895, z: 0.00009549408, w: 0.9999256}
+    m_Target: {x: 0.11005059, y: 0.087551445, z: -0.009724396, w: 0.9900671}
     speed: 2
-    m_Value: {x: 0.014698712, y: -0.0056998054, z: 0.00009548932, w: 0.9998758}
+    m_Value: {x: 0.11004488, y: 0.08754691, z: -0.009723892, w: 0.9900158}
   m_Size:
-    m_Target: 107.51611
+    m_Target: 13.72356
     speed: 2
-    m_Value: 107.51611
+    m_Value: 13.72356
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -602,10 +602,10 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 48}
-      m_SelectedIDs: 9c440000
-      m_LastClickedID: 17564
-      m_ExpandedIDs: 38fbffffb2420000ea420000fe420000144400002a440000564400009c440000
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 3c01feff5001feff8401feff0e04feff0e07feff8207feff8807feffea22feff4e27feff3c40feff5640feffaa46feffa4c9feffa8c9feffbac9feff24cafeff28cafeff3acafeffc0cafeffc6cafeffa6d5feffcad5feff1cd6feff54d6feff58d6feff6ad6feff70d7feff7ed8feffee11ffff1212ffff2412ffff7c12ffffa012ffffb212ffffb813ffffc614ffff82d5ffff9cd5ffffe6d6ffff3cdbffff48dbffff74dbffffd2dbffff58dcffff84dcffff4addffff76e1ffff90e1ffffdae2ffff04eeffff1eeeffff68efffff38fbffff42440000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -667,21 +667,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Arte/Alien/AlienSkeleton
+    - Assets/Prefabs/Buildings/Tubos
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 69
   m_LastFolders:
-  - Assets/Arte/Alien/AlienSkeleton
+  - Assets/Prefabs/Buildings/Tubos
   m_LastFoldersGridSize: 69
   m_LastProjectPath: C:\Users\enric\OneDrive\Escritorio\SpaceGameNew\SpatialGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 143}
-    m_SelectedIDs: 34510000
-    m_LastClickedID: 20788
-    m_ExpandedIDs: 000000001e51000020510000225100002451000026510000285100002a5100002c5100002e51000030510000325100003451000036510000385100003a5100003c5100003e5100004051000042510000445100004651000000ca9a3b
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: f0510000
+    m_LastClickedID: 20976
+    m_ExpandedIDs: 0000000036510000385100003a5100003c5100003e51000040510000425100004451000046510000485100004a5100004c5100004e51000050510000525100005451000056510000585100005a5100005c5100005e51000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -709,7 +709,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000001e51000020510000225100002451000026510000285100002a5100002c5100002e51000030510000325100003451000036510000385100003a5100003c5100003e5100004051000042510000445100004651000000ca9a3b
+    m_ExpandedIDs: 0000000036510000385100003a5100003c5100003e51000040510000425100004451000046510000485100004a5100004c5100004e51000050510000525100005451000056510000585100005a5100005c5100005e510000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

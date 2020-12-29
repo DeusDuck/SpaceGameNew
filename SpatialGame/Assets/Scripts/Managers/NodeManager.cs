@@ -71,7 +71,7 @@ public class NodeManager : MonoBehaviour
         {
             if(node.GetIsBuilt())
                 continue;
-            //Mira si tiene un edificio ya construido y se lo destruye 
+            //Mira si tiene un edificio ya construido y si es diferente al actual y lo destruye 
             if(node.HasAvailableBuilding() && node.GetAvailableBuilding()!= currentBuilding)
                 node.DestroyAvailableBuilding();
             

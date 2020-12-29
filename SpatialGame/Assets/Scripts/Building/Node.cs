@@ -33,30 +33,25 @@ public class Node : MonoBehaviour
 	//Recibe un edificio y un material y lo instancia en la escena
 	public void SetAvailableBuilding(GameObject _building, Material availableMat)
     {
-        if(!isBuilt)
-        {
-            if(availableBuilding!=null)
-                Destroy(availableBuilding);             
+        canBeBuilt = true;            
 
-            availableBuilding = Instantiate(_building,transform.position,_building.transform.rotation,transform);            
+        availableBuilding = Instantiate(_building,transform.position,_building.transform.rotation,transform);            
             
-            myBuildingType = availableBuilding.transform.GetComponent<BuildingType>();
-            myBuildingType.SetManager(nodeManager,this);
-            if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)               
-                myBuildingType.ConnectPipe();
-                
+        myBuildingType = availableBuilding.transform.GetComponent<BuildingType>();
+        myBuildingType.SetManager(nodeManager,this);
+        if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)               
+            myBuildingType.ConnectPipe();               
 
-            myBuildingType.ChangeMaterial(availableMat);                        
-        }
+       myBuildingType.ChangeMaterial(availableMat);                        
+        
     }
     //Canvia el material del edificio y setea el nodo a construido
     public void BuildBuilding(MeshRenderer[] actualMat)
     {
         Renderer[] childRenderer = availableBuilding.transform.GetComponentsInChildren<MeshRenderer>();
         for(int i = 0; i<childRenderer.Length; i++)
-        {
             childRenderer[i].material = actualMat[i].sharedMaterial;
-        }
+
         SetIsBuilt(true);               
         availableBuilding.transform.tag = "Building";
         var navMeshSurface = availableBuilding.GetComponent<NavMeshSurface>();
@@ -105,20 +100,12 @@ public class Node : MonoBehaviour
                             myBuildingType.ChangeMaterial(nodeManager.unAvailablePositionMat);
                         }
                         else
-                        {
+                        {                            
                             canBeBuilt = true;
-                            myBuildingType.ChangeMaterial(nodeManager.availablePositionMat);                        
+                            myBuildingType.ChangeMaterial(nodeManager.availablePositionMat);
                         }                        
-                    }else if(colliders.Length == 1)
-                    {
-                        canBeBuilt = true;
-                        myBuildingType.ChangeMaterial(nodeManager.availablePositionMat);
                     }
                 }
-            }else
-            {
-                canBeBuilt = true;
-                myBuildingType.ChangeMaterial(nodeManager.availablePositionMat);
             }
         }        
     }    

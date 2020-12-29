@@ -70,8 +70,8 @@ public class BuildingType : MonoBehaviour
         pipe.SetPipe(myNodeManager,myNode,currentExits);
         pipe.RotateTillConnect();                 
     }
-    public void ChangeMaterial(Material currentMaterial)
-    {
+    public void ChangeMaterial(Material currentMaterial)    {
+        
         MeshRenderer[] childRenderer = meshObject.GetComponentsInChildren<MeshRenderer>(); 
         foreach(MeshRenderer rnd in childRenderer)
         {
@@ -89,7 +89,7 @@ public class BuildingType : MonoBehaviour
                 if(col.transform == transform)
                     continue;
                 
-               // if(col.transform.GetComponentInParent<Node>().GetIsBuilt())
+               if(col.transform.GetComponentInParent<Node>().GetIsBuilt())
                     trans.Add(t);                    
             }
         }

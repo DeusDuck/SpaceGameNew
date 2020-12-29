@@ -155,8 +155,6 @@ MonoBehaviour:
   currentType: 2
   currentExits: 02000000010000000300000000000000
   zoomObjective: {fileID: 5013172837690000683}
-  availableWorkingPositions: []
-  workingPositions: []
   buildingPositions:
   - {fileID: 8289243973262103688}
   - {fileID: 2077689355700643720}
@@ -203,8 +201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
   m_CollectObjects: 1
-  m_Size: {x: 11.547455, y: 3.1673145, z: 3.4636254}
-  m_Center: {x: 0.68266296, y: -1.4163427, z: -1.5367761}
+  m_Size: {x: 12.888277, y: 3.1673145, z: 3.4636254}
+  m_Center: {x: 0.012252092, y: -1.4163427, z: -1.5367761}
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
