@@ -73,7 +73,15 @@ public class VisualManager : MonoBehaviour
         switch(type.GetBuildingType())
         {
             case BuildingType.EBuildingType.CLONING:
-                
+                Button[] buttons = AISelection.GetComponentsInChildren<Button>();
+                foreach(Button b in buttons)
+                {
+                    if(b.transform.tag == "CloseButton")
+                        continue;
+                    GameObject npc = b.GetComponent<ButtonNPC>().GetCurrentNPC();
+                    b.onClick.RemoveAllListeners();
+                    b.onClick.AddListener(delegate{type.transform.GetComponent<CloningRoom>().SetNPC(npc);});
+                }
                 break;
                 
                 

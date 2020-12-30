@@ -46,7 +46,7 @@ public class Node : MonoBehaviour
 
                 SetIsBuilt(true);               
                 availableBuilding.transform.tag = "Building";
-                var navMeshSurface = availableBuilding.GetComponent<NavMeshSurface>();
+                var navMeshSurface = myBuildingType.GetNavMeshSurface();
                 if(navMeshSurface != null)
                     NavMeshManager.CalculateNavMesh(navMeshSurface);
                 if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)

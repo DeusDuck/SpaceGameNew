@@ -22,6 +22,14 @@ public class PipeRoom : MonoBehaviour
     Transform link;
     [SerializeField]
     OffMeshLink offMeshLink;
+    [SerializeField]
+    Transform navMeshLongLeft;
+    [SerializeField]
+    Transform navMeshLongRight;
+    [SerializeField]
+    Transform navMeshShortTop;
+    [SerializeField]
+    Transform navMeshShrotBottom;
 
     Transform initBottomTransform;
     Transform initTopTransform;
@@ -202,6 +210,10 @@ public class PipeRoom : MonoBehaviour
             PipeRoom neightBoor = myNode.GetTopNode().GetBuildingType().GetComponent<PipeRoom>();
             offMeshLink.endTransform = neightBoor.GetLink();
         }        
+    }
+    void SetActiveNavMesh()
+    {
+        
     }
 }
     

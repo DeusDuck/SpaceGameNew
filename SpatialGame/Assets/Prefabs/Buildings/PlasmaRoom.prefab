@@ -446,8 +446,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
   m_CollectObjects: 1
-  m_Size: {x: 12.483576, y: 2.1647415, z: 6.526082}
-  m_Center: {x: 0.03189373, y: -2.7911034, z: -0.5661607}
+  m_Size: {x: 12.483576, y: 2.1647415, z: 6.2868776}
+  m_Center: {x: 0.03189373, y: -2.7911034, z: -0.11743736}
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -491,6 +491,7 @@ MonoBehaviour:
   oxigenCost: 5
   moneyCost: 5
   foodCost: 5
+  myNavMesh: {fileID: 2623843169989799245}
 --- !u!114 &2722461502058144994
 MonoBehaviour:
   m_ObjectHideFlags: 0

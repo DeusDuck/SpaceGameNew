@@ -246,6 +246,7 @@ MonoBehaviour:
   oxigenCost: 5
   moneyCost: 20
   foodCost: 10
+  myNavMesh: {fileID: 7976252592942965017}
 --- !u!114 &7976252592942965017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,8 +261,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
   m_CollectObjects: 1
-  m_Size: {x: 16.923096, y: 3.4746723, z: 19.16209}
-  m_Center: {x: 0.25402832, y: -2.1020746, z: -4.581045}
+  m_Size: {x: 12.410373, y: 3.4746723, z: 16.359394}
+  m_Center: {x: -0.054739475, y: -2.1020746, z: -5.2223396}
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -288,7 +289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetLightmaps:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   lightmapID: 4

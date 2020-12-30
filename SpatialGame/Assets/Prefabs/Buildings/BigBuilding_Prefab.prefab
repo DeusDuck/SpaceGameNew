@@ -2594,23 +2594,22 @@ MonoBehaviour:
   currentType: 1
   currentExits: 0100000000000000
   zoomObjective: {fileID: 1119043606840613370}
-  availablePositions:
-  - {fileID: 2627201715789016147}
-  - {fileID: 21666511399901693}
-  - {fileID: 1558341952212936775}
-  - {fileID: 8889485476823247693}
-  workingPositions: []
   buildingPositions:
   - {fileID: 2490508785869056746}
   - {fileID: 4730099438588130052}
   myNodeManager: {fileID: 0}
   myNode: {fileID: 0}
+  builtTime: 0
   anchorPointLeft: {fileID: 2490508785869056746}
   anchorPointRight: {fileID: 4730099438588130052}
   anchorPointTop: {fileID: 0}
   anchorPointBottom: {fileID: 0}
   meshObject: {fileID: 8513165962567721900}
   myCollider: {fileID: 5732321740824517855}
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  myNavMesh: {fileID: 2056304391105547377}
 --- !u!114 &2056304391105547377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2625,8 +2624,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
   m_CollectObjects: 1
-  m_Size: {x: 40.92679, y: 3.699317, z: 8.0563}
-  m_Center: {x: 0.33106995, y: -2.1173234, z: 0.039469242}
+  m_Size: {x: 39.429123, y: 3.699317, z: 15.0675955}
+  m_Center: {x: 0.21269226, y: -2.1173234, z: -2.3632798}
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2666,7 +2665,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetLightmaps:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   lightmapID: 2

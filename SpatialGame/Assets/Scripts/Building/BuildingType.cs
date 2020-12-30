@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BuildingType : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class BuildingType : MonoBehaviour
     int moneyCost = 0;
     [SerializeField]
     int foodCost = 0;
+    [SerializeField]
+    NavMeshSurface myNavMesh;
 
 	private void OnDrawGizmos()
 	{
@@ -72,8 +75,11 @@ public class BuildingType : MonoBehaviour
     public void ConnectPipe()
     {        
         PipeRoom pipe = GetComponent<PipeRoom>();
-        pipe.SetPipe(myNodeManager,myNode,currentExits);
-        pipe.RotateTillConnect();                 
+        if(pipe!=null)
+        {
+            pipe.SetPipe(myNodeManager,myNode,currentExits);
+            pipe.RotateTillConnect(); 
+        }                        
     }
     public void ChangeMaterial(Material currentMaterial)    {
         
@@ -113,4 +119,5 @@ public class BuildingType : MonoBehaviour
         costs[2] = foodCost;
         return costs;
     }
+    public NavMeshSurface GetNavMeshSurface(){return myNavMesh;}
 }
