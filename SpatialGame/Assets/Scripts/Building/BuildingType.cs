@@ -120,4 +120,5 @@ public class BuildingType : MonoBehaviour
         return costs;
     }
     public NavMeshSurface GetNavMeshSurface(){return myNavMesh;}
+    public void SetNavMeshSurface(NavMeshSurface nav){myNavMesh = nav;}
 }

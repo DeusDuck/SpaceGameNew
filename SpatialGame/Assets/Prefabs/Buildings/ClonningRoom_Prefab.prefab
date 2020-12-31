@@ -3610,10 +3610,11 @@ MonoBehaviour:
   zoomObjective: {fileID: 5541969502223260076}
   buildingPositions:
   - {fileID: 8319268323195129649}
+  - {fileID: 4742284001917384739}
   myNodeManager: {fileID: 0}
   myNode: {fileID: 0}
   builtTime: 10
-  anchorPointLeft: {fileID: 0}
+  anchorPointLeft: {fileID: 4742284001917384739}
   anchorPointRight: {fileID: 8319268323195129649}
   anchorPointTop: {fileID: 0}
   anchorPointBottom: {fileID: 0}

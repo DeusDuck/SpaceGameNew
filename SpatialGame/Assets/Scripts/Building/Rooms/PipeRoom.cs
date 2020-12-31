@@ -19,7 +19,14 @@ public class PipeRoom : MonoBehaviour
     NodeManager myNodeManager;
     Node myNode;
     [SerializeField]
-    Transform link;
+    Transform linkLeft;
+    [SerializeField]
+    Transform linkRight;
+    [SerializeField]
+    Transform linkTop;
+    [SerializeField]
+    Transform linkBottom;
+    Transform currentLink;
     [SerializeField]
     OffMeshLink offMeshLink;
     [SerializeField]
@@ -29,12 +36,14 @@ public class PipeRoom : MonoBehaviour
     [SerializeField]
     Transform navMeshShortTop;
     [SerializeField]
-    Transform navMeshShrotBottom;
+    Transform navMeshShortBottom;
 
     Transform initBottomTransform;
     Transform initTopTransform;
     Transform initLeftTranform;
     Transform initRightTransform;
+    Quaternion rotation;
+    public bool mustChangeNavMesh;
 
 
 	private void Awake()
@@ -42,7 +51,10 @@ public class PipeRoom : MonoBehaviour
 		initBottomTransform = anchorPointBottom;
         initLeftTranform = anchorPointLeft;
         initRightTransform = anchorPointRight;
-        initTopTransform = anchorPointTop;    
+        initTopTransform = anchorPointTop;
+        rotation = transform.rotation;
+        if(offMeshLink!=null)
+        currentLink = offMeshLink.startTransform;
 	}
     public void RotatePipe(bool clockwise = false)
     {
@@ -108,8 +120,9 @@ public class PipeRoom : MonoBehaviour
             degrees = (degrees - 90) % 360;
             UpdateExitsTransforms(true);            
         }
-        transform.Rotate(0,0,degrees);        
+        transform.Rotate(0,0,degrees);         
         myType.UpdateExits(myExits,anchorPointTop,anchorPointBottom,anchorPointLeft,anchorPointRight);
+        SetActiveNavMesh();
         myNodeManager.UpdateNodeDistance(myNode);
     }
     void UpdateExitsTransforms(bool clockwise = false)
@@ -143,10 +156,10 @@ public class PipeRoom : MonoBehaviour
     }
     void UpdateExits(bool clockwise = false)
     {
-        if(!myType.myNode.GetIsBuilt())
+        if(!myType.myNode.GetIsBuilt() && mustChangeNavMesh)
         {
             List<BuildingType.ExitsPosition> updatedPos = new List<BuildingType.ExitsPosition>();
-            float degrees;
+            float degrees;            
             if(clockwise)
             {
                 degrees = -90;
@@ -196,13 +209,14 @@ public class PipeRoom : MonoBehaviour
                 UpdateExitsTransforms(clockwise);
                 myType.UpdateExits(updatedPos, anchorPointTop, anchorPointBottom, anchorPointLeft,anchorPointRight);
                 myExits = updatedPos;
+                SetActiveNavMesh();
                 myNodeManager.UpdateNodeDistance(myNode);
                 myNode.CheckIfBuildingColliding();
             }            
         }  
     }  
     public void SetPipe(NodeManager manager, Node node, List<BuildingType.ExitsPosition> exits){myNodeManager = manager; myNode = node; myExits = exits;} 
-    public Transform GetLink(){return link;}
+    public Transform GetLink(){return currentLink;}
     public void CreateLink()
     {
         if(myNode.GetTopNode()!=null)
@@ -212,8 +226,43 @@ public class PipeRoom : MonoBehaviour
         }        
     }
     void SetActiveNavMesh()
-    {
-        
+    {     
+        if(mustChangeNavMesh)
+        {
+            navMeshLongLeft.gameObject.SetActive(false);
+            navMeshLongRight.gameObject.SetActive(false);
+            navMeshShortTop.gameObject.SetActive(false);
+            navMeshShortBottom.gameObject.SetActive(false);
+            Debug.Log(Quaternion.Angle(rotation,transform.rotation));
+            if(Quaternion.Angle(rotation,transform.rotation) == 0)
+            {
+                navMeshLongLeft.gameObject.SetActive(true);
+                myType.SetNavMeshSurface(navMeshLongLeft.GetComponent<NavMeshSurface>());
+                offMeshLink.startTransform = linkLeft;
+                currentLink = linkLeft;
+            }
+            if(Quaternion.Angle(rotation,transform.rotation) == 180)
+            {
+                navMeshLongRight.gameObject.SetActive(true);
+                myType.SetNavMeshSurface(navMeshLongRight.GetComponent<NavMeshSurface>());
+                offMeshLink.startTransform = linkRight;
+                currentLink = linkRight;
+            }
+            if(Quaternion.Angle(rotation,transform.rotation) == 90 && myExits.Contains(BuildingType.ExitsPosition.BOTTOM))
+            {
+                navMeshShortTop.gameObject.SetActive(true);
+                myType.SetNavMeshSurface(navMeshShortTop.GetComponent<NavMeshSurface>());
+                offMeshLink.startTransform = linkBottom;
+                currentLink = linkBottom;
+            }
+            if(Quaternion.Angle(rotation,transform.rotation) == 90 && myExits.Contains(BuildingType.ExitsPosition.TOP))
+            {
+                navMeshShortBottom.gameObject.SetActive(true);
+                myType.SetNavMeshSurface(navMeshShortBottom.GetComponent<NavMeshSurface>());
+                offMeshLink.startTransform = linkTop;
+                currentLink = linkTop;
+            }
+        }               
     }
 }
     
