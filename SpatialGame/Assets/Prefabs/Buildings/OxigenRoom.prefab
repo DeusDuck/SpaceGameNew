@@ -234,6 +234,8 @@ MonoBehaviour:
   availableWorkingPositions:
   - {fileID: 5608107964760394130}
   - {fileID: 2418733929281181064}
+  - {fileID: 2987519902748125900}
+  - {fileID: 1118153434256709725}
   workingPositions:
   - {fileID: 5608107964760394130}
   - {fileID: 2418733929281181064}

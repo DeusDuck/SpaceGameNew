@@ -310,6 +310,8 @@ MonoBehaviour:
   availableWorkingPositions:
   - {fileID: 1122636100310284813}
   - {fileID: 4380538609200032427}
+  - {fileID: 8160260389122192805}
+  - {fileID: 7827644559731018535}
   workingPositions:
   - {fileID: 1122636100310284813}
   - {fileID: 4380538609200032427}
