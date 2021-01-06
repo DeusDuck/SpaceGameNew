@@ -2552,7 +2552,7 @@ GameObject:
   - component: {fileID: 6623051552148672195}
   m_Layer: 8
   m_Name: BigBuilding_Prefab
-  m_TagString: Node
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -2610,6 +2610,9 @@ MonoBehaviour:
   moneyCost: 0
   foodCost: 0
   myNavMesh: {fileID: 2056304391105547377}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &2056304391105547377
 MonoBehaviour:
   m_ObjectHideFlags: 0

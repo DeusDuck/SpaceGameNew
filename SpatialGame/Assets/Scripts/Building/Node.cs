@@ -9,7 +9,8 @@ public class Node : MonoBehaviour
     GameObject availableBuilding;
     [SerializeField]
     LayerMask buildingLayer;
-    NodeManager nodeManager;
+    [SerializeField]
+    NodeManager myNodeManager;
     BuildingType myBuildingType;
     [SerializeField]
     Node topNeightboor;
@@ -30,8 +31,7 @@ public class Node : MonoBehaviour
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, transform.localScale);
-        
+        Gizmos.DrawWireCube(transform.position, transform.localScale);        
 	}
 	private void Update()
 	{
@@ -43,9 +43,7 @@ public class Node : MonoBehaviour
                 Renderer[] childRenderer = availableBuilding.transform.GetComponentsInChildren<MeshRenderer>();
                 for(int i = 0; i<childRenderer.Length; i++)
                     childRenderer[i].material = mat[i].sharedMaterial;
-
                 SetIsBuilt(true);               
-                availableBuilding.transform.tag = "Building";
                 var navMeshSurface = myBuildingType.GetNavMeshSurface();
                 if(navMeshSurface != null)
                     NavMeshManager.CalculateNavMesh(navMeshSurface);
@@ -56,28 +54,54 @@ public class Node : MonoBehaviour
                 }
                 currentBuildTime = 0;
                 builtTime = 0;
-                myBuildingType.myNodeManager.BuildNode(this);
+                myNodeManager.BuildNode(this);
             }
         }
 	}
+
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.tag == "Building")
+        {
+            myBuildingType = col.GetComponent<BuildingType>();
+            if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)
+            {
+                myBuildingType.ChangeMaterial(myNodeManager.availablePositionMat);
+            }
+            else
+            {
+                if(myNodeManager.HasNeightboorsWithPipes(this))
+                {
+                    myBuildingType.ChangeMaterial(myNodeManager.availablePositionMat);
+                }
+            }
+        }
+    }
+    void OnTriggerExit(Collider col)
+    {
+        if(col.tag == "Building")
+        {
+            col.GetComponent<BuildingType>().ChangeMaterial(myNodeManager.unAvailablePositionMat);
+        }
+    }
 	//Recibe un edificio y un material y lo instancia en la escena
 	public void SetAvailableBuilding(GameObject _building, Material availableMat)
     {
         canBeBuilt = true;
-        availableBuilding = Instantiate(_building,transform.position,_building.transform.rotation,transform);            
+        availableBuilding = _building;            
         myBuildingType = availableBuilding.transform.GetComponent<BuildingType>();
         
-        myBuildingType.SetManager(nodeManager,this);
+        myBuildingType.SetManager(myNodeManager);
+        myNodeManager.UpdateNodeDistance(this);
         if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)               
             myBuildingType.ConnectPipe();               
 
-       myBuildingType.ChangeMaterial(availableMat);                        
-        
+       myBuildingType.ChangeMaterial(availableMat);       
     }
     //Canvia el material del edificio y setea el nodo a construido
-    public void BuildBuilding(MeshRenderer[] actualMat)
+    public void BuildBuilding(MeshRenderer[] actualMat, BuildingType type)
     {
-        builtTime = myBuildingType.builtTime;
+        builtTime = type.builtTime;
         mat = actualMat;
         canBeBuilt = false;
     }
@@ -114,13 +138,13 @@ public class Node : MonoBehaviour
                         if(parent.GetIsBuilt() && !IsNeightboor(parent))
                         {                            
                             canBeBuilt = false;
-                            myBuildingType.ChangeMaterial(nodeManager.unAvailablePositionMat);
+                            myBuildingType.ChangeMaterial(myNodeManager.unAvailablePositionMat);
                         }                                          
                     }
                     if(colliders.Length == 1 && !canBeBuilt)
                     {
                         canBeBuilt = true;
-                        myBuildingType.ChangeMaterial(nodeManager.availablePositionMat);
+                        myBuildingType.ChangeMaterial(myNodeManager.availablePositionMat);
                     }
                 }
             }
@@ -134,7 +158,7 @@ public class Node : MonoBehaviour
     //Retorna si el nodo está construido
     public bool GetIsBuilt(){ return isBuilt;} 
     //Inicia las principales variables del nodo
-    public void InitNode(NodeManager _nodeManager){nodeManager= _nodeManager;}
+    public void InitNode(NodeManager _nodeManager){myNodeManager= _nodeManager;}
     public BuildingType GetBuildingType(){return myBuildingType;}
     public bool HasAvailableBuilding(){return availableBuilding!=null;}
     public GameObject GetAvailableBuilding(){return availableBuilding;}

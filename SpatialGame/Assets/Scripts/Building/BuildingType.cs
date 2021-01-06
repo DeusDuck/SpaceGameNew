@@ -43,6 +43,8 @@ public class BuildingType : MonoBehaviour
     int foodCost = 0;
     [SerializeField]
     NavMeshSurface myNavMesh;
+    [SerializeField]
+    LayerMask buildingLayer;
 
 	private void OnDrawGizmos()
 	{
@@ -70,7 +72,7 @@ public class BuildingType : MonoBehaviour
     public Transform GetRightPos(){return anchorPointRight;}
     public Transform GetTopPos(){return anchorPointTop;}
     public Transform GetBottomPos(){return anchorPointBottom;}
-    public void SetManager(NodeManager manager, Node currentNode){myNodeManager = manager; myNode = currentNode;}
+    public void SetManager(NodeManager manager){myNodeManager = manager;}
     public void HideBuilding(bool hide){meshObject.SetActive(!hide);}
     public void ConnectPipe()
     {        
@@ -81,8 +83,8 @@ public class BuildingType : MonoBehaviour
             pipe.RotateTillConnect(); 
         }                        
     }
-    public void ChangeMaterial(Material currentMaterial)    {
-        
+    public void ChangeMaterial(Material currentMaterial)
+    { 
         MeshRenderer[] childRenderer = meshObject.GetComponentsInChildren<MeshRenderer>(); 
         foreach(MeshRenderer rnd in childRenderer)
         {
@@ -121,4 +123,28 @@ public class BuildingType : MonoBehaviour
     }
     public NavMeshSurface GetNavMeshSurface(){return myNavMesh;}
     public void SetNavMeshSurface(NavMeshSurface nav){myNavMesh = nav;}
+    public bool CheckIfBuildingColliding()
+    {        
+        Vector3 worldCenter = myCollider.transform.TransformPoint(myCollider.center);
+        Collider[] colliders = Physics.OverlapBox(worldCenter, myCollider.size * 0.5f, transform.rotation, buildingLayer);
+
+        if(colliders.Length != 0)
+        {            
+            foreach(Collider col in colliders)
+            {
+                if(col.tag == "Node")
+                {
+                    Node node = col.GetComponent<Node>();
+                    transform.SetParent(col.transform);
+                    node.BuildBuilding(myNodeManager.currentMats, this);
+                    myNode = node;
+                    node.SetAvailableBuilding(this.gameObject,myNodeManager.availablePositionMat);
+                    return true;
+                }
+            }
+        }
+        return false;
+               
+    }    
+
 }

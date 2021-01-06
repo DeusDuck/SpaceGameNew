@@ -391,7 +391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 2
-  currentExits: 0200000003000000
+  currentExits: 02000000030000000100000000000000
   zoomObjective: {fileID: 6692552980106528440}
   buildingPositions:
   - {fileID: 8277405506994764954}
@@ -409,6 +409,9 @@ MonoBehaviour:
   moneyCost: 5
   foodCost: 0
   myNavMesh: {fileID: 1077689373371879206}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &48543361179438308
 MonoBehaviour:
   m_ObjectHideFlags: 0

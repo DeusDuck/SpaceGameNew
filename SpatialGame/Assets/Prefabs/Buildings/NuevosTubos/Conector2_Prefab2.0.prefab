@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 7916224114648952013}
   m_Layer: 8
   m_Name: Conector2_Prefab2.0
-  m_TagString: Node
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -497,6 +497,9 @@ MonoBehaviour:
   moneyCost: 5
   foodCost: 0
   myNavMesh: {fileID: 4505768360272886619}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &969816974646514872
 MonoBehaviour:
   m_ObjectHideFlags: 0

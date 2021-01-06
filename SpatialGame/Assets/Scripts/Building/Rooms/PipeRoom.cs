@@ -233,7 +233,7 @@ public class PipeRoom : MonoBehaviour
             navMeshLongRight.gameObject.SetActive(false);
             navMeshShortTop.gameObject.SetActive(false);
             navMeshShortBottom.gameObject.SetActive(false);
-            Debug.Log(Quaternion.Angle(rotation,transform.rotation));
+
             if(Quaternion.Angle(rotation,transform.rotation) == 0)
             {
                 navMeshLongLeft.gameObject.SetActive(true);

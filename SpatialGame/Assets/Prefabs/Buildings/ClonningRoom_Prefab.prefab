@@ -3562,7 +3562,7 @@ GameObject:
   - component: {fileID: 661336767813675438}
   m_Layer: 8
   m_Name: ClonningRoom_Prefab
-  m_TagString: Node
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -3575,7 +3575,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6236104683104115139}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 12.5, y: -9, z: -34.356747}
+  m_LocalPosition: {x: -23.434643, y: -13.734932, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6763902967552809701}
@@ -3624,6 +3624,9 @@ MonoBehaviour:
   moneyCost: 10
   foodCost: 5
   myNavMesh: {fileID: 7434461663776461862}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &5313800814001789978
 MonoBehaviour:
   m_ObjectHideFlags: 0

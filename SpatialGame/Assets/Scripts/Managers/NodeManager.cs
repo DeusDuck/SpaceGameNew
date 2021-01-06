@@ -8,19 +8,22 @@ public class NodeManager : MonoBehaviour
     public Material availablePositionMat;
     public Material unAvailablePositionMat;
     public GameObject currentBuilding;
+    public MeshRenderer[] currentMats;
     [SerializeField]
     GameObject horizontalPipe;
     [SerializeField]
     GameObject verticalPipe;   
     [SerializeField]
     Node node;
-    MeshRenderer[] currentMats;
+    BuildingType currentBuildingType;
     [SerializeField]
     NPCManager npcManager;
     [SerializeField]
     ResourceManager resourceManager;
     List<Node> buildNodes;
     List<Node> neightboors;
+    [SerializeField]
+    VisualManager visualManager;
 
     // Start is called before the first frame update
     void Start()
@@ -29,14 +32,41 @@ public class NodeManager : MonoBehaviour
         neightboors = new List<Node>();
         
         Node nodeToBuild =Instantiate(node,transform.position,transform.rotation);
-        nodeToBuild.SetAvailableBuilding(currentBuilding,availablePositionMat);
+        nodeToBuild.InitNode(this); 
+        GameObject building = Instantiate(currentBuilding,transform.position,currentBuilding.transform.rotation,nodeToBuild.transform);
         currentMats = currentBuilding.transform.GetComponentsInChildren<MeshRenderer>();
+        nodeToBuild.SetAvailableBuilding(building,availablePositionMat);        
         nodeToBuild.GetBuildingType().builtTime = 0.01f;
+        
         nodeToBuild.GetBuildingType().myNodeManager = this;
-        nodeToBuild.BuildBuilding(currentMats);        
+        nodeToBuild.BuildBuilding(currentMats, building.GetComponent<BuildingType>());        
         nodeToBuild.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);        
         AddBuildNode(nodeToBuild);
-        CreateNodesNeightboors();      
+        CreateNodesNeightboors();
+        currentBuilding = null;
+    }
+    void Update()
+    {
+        if(Input.touchCount>0 && currentBuilding!=null)
+        {
+            Touch touch;
+            if(Input.touchCount>0)
+            {
+                touch = Input.GetTouch(0);
+                Vector3 touchPos = touch.position;
+                touchPos.z = 31.4f;
+                currentBuilding.transform.position = Camera.main.ScreenToWorldPoint(touchPos);
+            }
+            if(Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                if(!currentBuilding.GetComponent<BuildingType>().CheckIfBuildingColliding())
+                {
+                    Destroy(currentBuilding);
+                }
+                currentBuilding = null;
+                visualManager.DisplayBuildingMenu();
+            }
+        }        
     }
 	//Crea los vecinos de los nodos, para hacerlo, coje las posiciones de construccion de los edificios y las usa para instanciarlos
     void CreateNodesNeightboors()
@@ -45,14 +75,13 @@ public class NodeManager : MonoBehaviour
         foreach(Node build in buildNodes)
         {
             type = build.GetBuildingType();
-
             if(type.GetCurrentBuildingPositions().Count == 0)
                 continue;
 
             type.CheckBuildingConnected();
             List<Transform> trans = new List<Transform>();
             foreach(Transform t in type.GetCurrentBuildingPositions())
-            {                   
+            {             
                 Node currentNode = Instantiate(node,t.position,node.transform.rotation);
                 neightboors.Add(currentNode);
                 currentNode.InitNode(this);
@@ -69,7 +98,7 @@ public class NodeManager : MonoBehaviour
     //Da a los nodos el edificio a construir
     public void SetUpNodes()
     {        
-        foreach(Node node in neightboors)
+        /*foreach(Node node in neightboors)
         {
             if(node.GetIsBuilt())
                 continue;
@@ -127,9 +156,16 @@ public class NodeManager : MonoBehaviour
                     node.SetCanBeBuild(false);
                     node.GetBuildingType().ChangeMaterial(unAvailablePositionMat);
                 }
-            }
-               
-        }  
+            }               
+        } */ 
+    }
+    public void CreateBuilding(GameObject building)
+    {
+        currentBuilding = Instantiate(building,Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 10f)),building.transform.rotation,spawningPoint);
+        currentBuildingType = currentBuilding.GetComponent<BuildingType>();
+        currentMats = building.transform.GetComponentsInChildren<MeshRenderer>(); 
+        currentBuildingType.ChangeMaterial(unAvailablePositionMat);
+        currentBuildingType.SetManager(this);
     }
 	//Canvia el edificio a construir y el material a usar
 	public void SetCurrentBuilding(GameObject _currentBuilding)
@@ -177,7 +213,7 @@ public class NodeManager : MonoBehaviour
         }
     }
     //Comprueba si el nodo tiene vecinos con tuberias construidas
-    bool HasNeightboorsWithPipes(Node node)
+    public bool HasNeightboorsWithPipes(Node node)
     {        
         if(node.GetBuildingType() !=null)
         {
@@ -242,7 +278,6 @@ public class NodeManager : MonoBehaviour
             if(currentNode.GetBuildingType().GetBuildingType()!=BuildingType.EBuildingType.PIPE)
             {            
                 resourceManager.SpendResources(currentNode.GetBuildingType().MyCost());
-                currentNode.BuildBuilding(currentMats);
                 buildNodes.Add(currentNode);
                 if(neightboors.Contains(currentNode))
                     neightboors.Remove(currentNode);
@@ -266,9 +301,11 @@ public class NodeManager : MonoBehaviour
                 room.SetResourceManager(resourceManager);
             }
         }               
-
+        buildNodes.Add(currentNode);
+        if(neightboors.Contains(currentNode))
+            neightboors.Remove(currentNode);
         CreateNodesNeightboors();
-        SetUpNodes();
+        
     }
     //Esconde a los vecinos(Se usa cuando dejas de construir)
     public void HideBuildings(bool hide)
@@ -293,7 +330,6 @@ public class NodeManager : MonoBehaviour
             if(node.CanBeBuild())
             {
                 resourceManager.SpendResources(node.GetBuildingType().MyCost());
-                node.BuildBuilding(currentMats);
                 buildNodes.Add(node);
                 if(neightboors.Contains(node))
                     neightboors.Remove(node);

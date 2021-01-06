@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 2504614972282083742}
   m_Layer: 8
   m_Name: DinnerRoomPrefab
-  m_TagString: Node
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -247,6 +247,9 @@ MonoBehaviour:
   moneyCost: 20
   foodCost: 10
   myNavMesh: {fileID: 7976252592942965017}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &7976252592942965017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,8 +331,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 12.572174, y: 5.790098, z: 16.243998}
-  m_Center: {x: -0.05366516, y: 0.18617535, z: -5.199997}
+  m_Size: {x: 13.779595, y: 5.790098, z: 16.243998}
+  m_Center: {x: -0.021894932, y: 0.18617535, z: -5.199997}
 --- !u!1 &2804492300263618142
 GameObject:
   m_ObjectHideFlags: 0

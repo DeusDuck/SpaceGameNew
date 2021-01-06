@@ -36,6 +36,8 @@ public class VisualManager : MonoBehaviour
     Text water;
     [SerializeField]
     Text oxigen;
+    [SerializeField]
+    CameraMovement cameraMovement;
     public enum VisualState
     {
         BUILDING,ON_ROOM,MOVING_AROUND
@@ -124,6 +126,7 @@ public class VisualManager : MonoBehaviour
             switch(nextState.state)
             {
                 case VisualState.BUILDING:
+                    cameraMovement.StopCameraMovement(false);
                     DisplayBuildingMenu();
                     break;
                 case VisualState.ON_ROOM:
@@ -140,6 +143,7 @@ public class VisualManager : MonoBehaviour
             switch(currentState)
             {
                 case VisualState.BUILDING:
+                    cameraMovement.StopCameraMovement(true);
                     HideBuildingMenu();
                     break;
                 case VisualState.ON_ROOM:

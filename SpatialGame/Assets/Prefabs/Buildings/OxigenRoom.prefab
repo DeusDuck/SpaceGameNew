@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4468848133554097822}
   m_Layer: 8
   m_Name: OxigenRoom
-  m_TagString: Node
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -187,6 +187,9 @@ MonoBehaviour:
   moneyCost: 10
   foodCost: 10
   myNavMesh: {fileID: 1518433497328545786}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &1518433497328545786
 MonoBehaviour:
   m_ObjectHideFlags: 0

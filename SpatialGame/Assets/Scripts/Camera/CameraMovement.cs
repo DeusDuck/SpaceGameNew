@@ -38,6 +38,7 @@ public class CameraMovement : MonoBehaviour
     float distToChange;
     [SerializeField]
     LayerMask layerToCollide;
+    bool canMove = true;
 
     private void Awake()
     {
@@ -61,7 +62,7 @@ public class CameraMovement : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             direction = PlanePositionDelta(touch);
-            if (touch.phase == TouchPhase.Moved && getVisual.state !=VisualManager.VisualState.ON_ROOM)
+            if (touch.phase == TouchPhase.Moved && canMove)
             {
                 if(direction.y>0 && (transform.position.y-myCamera.transform.position.y)<=maxYDist) 
                     myCamera.transform.position += Vector3.up * direction.y * movementSpeed * Time.deltaTime;
@@ -75,14 +76,25 @@ public class CameraMovement : MonoBehaviour
             if(touch.tapCount>=2)
             {                    
                 Ray rayo = Camera.main.ScreenPointToRay(touch.position);                
-                goToTarget = Physics.Raycast(rayo,out RaycastHit hit,1000,layerToCollide);
-                
+                goToTarget = Physics.Raycast(rayo,out RaycastHit hit,1000,layerToCollide);                
+
                 if(goToTarget)
                 {
                     currentZoomTarget = hit.transform.GetComponent<BuildingType>().GetZoomObjective(); 
                     visualManager.SetCurrentRoom(hit.transform.gameObject);                    
                 }
             }
+             //Comprueba la distancia de la cámara respecto al zoomTarget, si está lo suficientemente cerca canvia el estado a ON_ROOM sino a MOVING_AROUND
+            if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)>distToChange && getVisual.state ==VisualManager.VisualState.ON_ROOM)
+            {
+                getVisual.SetState(VisualManager.VisualState.MOVING_AROUND);
+                visualManager.ChangeState(getVisual);
+            }else if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)<=distToChange)
+            {
+                getVisual.SetState(VisualManager.VisualState.ON_ROOM);
+                visualManager.ChangeState(getVisual);
+            }
+
         }
         if(goToTarget && currentZoomTarget!=null)
         {    
@@ -101,18 +113,8 @@ public class CameraMovement : MonoBehaviour
 
         //Zoom
         if (Input.touchCount >= 2)
-        {      
-            //Comprueba la distancia de la cámara respecto al zoomTarget, si está lo suficientemente cerca canvia el estado a ON_ROOM sino a MOVING_AROUND
-            if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)>distToChange && getVisual.state ==VisualManager.VisualState.ON_ROOM)
-            {
-                getVisual.SetState(VisualManager.VisualState.MOVING_AROUND);
-                visualManager.ChangeState(getVisual);
-            }else if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)<=distToChange)
-            {
-                getVisual.SetState(VisualManager.VisualState.ON_ROOM);
-                visualManager.ChangeState(getVisual);
-            }
-
+        {     
+           
             Vector3 pos1  = PlanePosition(Input.GetTouch(0).position);
             Vector3 pos2  = PlanePosition(Input.GetTouch(1).position);
             Vector3 pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
@@ -137,7 +139,7 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    protected Vector3 PlanePositionDelta(Touch touch)
+    Vector3 PlanePositionDelta(Touch touch)
     {
         //not moved
         if (touch.phase != TouchPhase.Moved)
@@ -154,7 +156,7 @@ public class CameraMovement : MonoBehaviour
         return Vector3.zero;
     }
 
-    protected Vector3 PlanePosition(Vector2 screenPos)
+    Vector3 PlanePosition(Vector2 screenPos)
     {
         //position
         var rayNow = myCamera.ScreenPointToRay(screenPos);
@@ -163,4 +165,5 @@ public class CameraMovement : MonoBehaviour
 
         return Vector3.zero;
     }
+    public void StopCameraMovement(bool stop){canMove = stop;}
 }

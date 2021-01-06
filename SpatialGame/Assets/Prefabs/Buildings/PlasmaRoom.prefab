@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 2722461502058144994}
   m_Layer: 8
   m_Name: PlasmaRoom
-  m_TagString: Node
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -492,6 +492,9 @@ MonoBehaviour:
   moneyCost: 5
   foodCost: 5
   myNavMesh: {fileID: 2623843169989799245}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &2722461502058144994
 MonoBehaviour:
   m_ObjectHideFlags: 0
