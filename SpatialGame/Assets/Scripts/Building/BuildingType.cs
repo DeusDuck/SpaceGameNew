@@ -45,10 +45,13 @@ public class BuildingType : MonoBehaviour
     NavMeshSurface myNavMesh;
     [SerializeField]
     LayerMask buildingLayer;
+    bool canBeBuilt = false;
+    [SerializeField]
+    int numOfNodes;
 
 	private void OnDrawGizmos()
 	{
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(myCollider.transform.TransformPoint(myCollider.center), transform.rotation, myCollider.size * 0.45f);
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(myCollider.transform.TransformPoint(myCollider.center), transform.rotation, myCollider.size * 0.5f);
         Gizmos.matrix = rotationMatrix;
 		Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(Vector3.zero,Vector3.one);
@@ -73,7 +76,6 @@ public class BuildingType : MonoBehaviour
     public Transform GetTopPos(){return anchorPointTop;}
     public Transform GetBottomPos(){return anchorPointBottom;}
     public void SetManager(NodeManager manager){myNodeManager = manager;}
-    public void HideBuilding(bool hide){meshObject.SetActive(!hide);}
     public void ConnectPipe()
     {        
         PipeRoom pipe = GetComponent<PipeRoom>();
@@ -135,16 +137,47 @@ public class BuildingType : MonoBehaviour
                 if(col.tag == "Node")
                 {
                     Node node = col.GetComponent<Node>();
-                    transform.SetParent(col.transform);
-                    node.BuildBuilding(myNodeManager.currentMats, this);
-                    myNode = node;
-                    node.SetAvailableBuilding(this.gameObject,myNodeManager.availablePositionMat);
-                    return true;
+                    if(canBeBuilt && myNodeManager.EnoughCurrency(node) && !node.GetIsBuilt())
+                    {
+                        myNodeManager.SpendResources(MyCost());
+                        col.transform.position = transform.position;
+                        transform.SetParent(col.transform);
+                        node.BuildBuilding(myNodeManager.currentMats, this);
+                        myNode = node;
+                        node.SetAvailableBuilding(this.gameObject,myNodeManager.availablePositionMat);
+                        return true;
+                    }                    
                 }
             }
         }
         return false;
                
     }    
-
+    public void SetCanBeBuild(bool can){canBeBuilt = can;}
+    public void AddNode()
+    {
+        numOfNodes++;
+        HasToChangeMat();
+    }
+    public void RemoveNode()
+    {
+        numOfNodes--;
+        HasToChangeMat();
+    }
+    public int GetNumOfNodes(){return numOfNodes;}
+    void HasToChangeMat()
+    {
+        if(numOfNodes<=1)
+        {
+           
+            ChangeMaterial(myNodeManager.availablePositionMat);
+        }
+            
+        else
+        {
+             Debug.Log("UnAvailableMat");
+            ChangeMaterial(myNodeManager.unAvailablePositionMat);
+        }
+            
+    }
 }

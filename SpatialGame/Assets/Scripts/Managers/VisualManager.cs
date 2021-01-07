@@ -49,7 +49,6 @@ public class VisualManager : MonoBehaviour
     {
         buildButton.gameObject.SetActive(false);
         buildingPanel.gameObject.SetActive(true);
-        clickHandler.nodeManager.HideBuildings(false);
     }
     //Desactiva el menu de construcción
     public void HideBuildingMenu()
@@ -60,7 +59,6 @@ public class VisualManager : MonoBehaviour
         rotateLeft.gameObject.SetActive(false);
         rotateRight.gameObject.SetActive(false);
         buildPipe.gameObject.SetActive(false);
-        clickHandler.nodeManager.HideBuildings(true);
     }
     public void ShowBuildingsMenu(Transform building)
     {
@@ -102,8 +100,7 @@ public class VisualManager : MonoBehaviour
                     buildPipe.onClick.RemoveAllListeners();
                     rotateLeft.onClick.AddListener(delegate {pipe.RotatePipe(); });
                     rotateRight.onClick.AddListener(delegate{pipe.RotatePipe(true);});
-
-                    buildPipe.onClick.AddListener(delegate{clickHandler.nodeManager.BuildPipe(building);});
+                   
                 }
                 break;
         }

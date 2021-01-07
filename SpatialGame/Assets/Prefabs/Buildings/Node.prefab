@@ -54,7 +54,6 @@ MonoBehaviour:
   bottomNeightboor: {fileID: 0}
   leftNeightboor: {fileID: 0}
   rightNeightboor: {fileID: 0}
-  canBeBuilt: 1
   isBuilt: 0
 --- !u!65 &-5573639742647652100
 BoxCollider:

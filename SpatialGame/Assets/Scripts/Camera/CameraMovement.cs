@@ -77,15 +77,19 @@ public class CameraMovement : MonoBehaviour
             {                    
                 Ray rayo = Camera.main.ScreenPointToRay(touch.position);                
                 goToTarget = Physics.Raycast(rayo,out RaycastHit hit,1000,layerToCollide);                
-
+                
                 if(goToTarget)
                 {
-                    currentZoomTarget = hit.transform.GetComponent<BuildingType>().GetZoomObjective(); 
-                    visualManager.SetCurrentRoom(hit.transform.gameObject);                    
+                    if(hit.transform.tag == "Node")
+                    {
+                        BuildingType type = hit.transform.GetComponentInChildren<BuildingType>();
+                        currentZoomTarget = type.GetZoomObjective(); 
+                        visualManager.SetCurrentRoom(type.transform.gameObject); 
+                    }                                       
                 }
             }
              //Comprueba la distancia de la cámara respecto al zoomTarget, si está lo suficientemente cerca canvia el estado a ON_ROOM sino a MOVING_AROUND
-            if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)>distToChange && getVisual.state ==VisualManager.VisualState.ON_ROOM)
+            if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)>distToChange && getVisual.state == VisualManager.VisualState.ON_ROOM)
             {
                 getVisual.SetState(VisualManager.VisualState.MOVING_AROUND);
                 visualManager.ChangeState(getVisual);

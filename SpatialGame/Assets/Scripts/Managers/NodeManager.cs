@@ -31,15 +31,15 @@ public class NodeManager : MonoBehaviour
         buildNodes = new List<Node>();  
         neightboors = new List<Node>();
         
-        Node nodeToBuild =Instantiate(node,transform.position,transform.rotation);
-        nodeToBuild.InitNode(this); 
+        Node nodeToBuild =Instantiate(node,transform.position,transform.rotation);        
         GameObject building = Instantiate(currentBuilding,transform.position,currentBuilding.transform.rotation,nodeToBuild.transform);
+        nodeToBuild.InitNode(this,building.GetComponent<BuildingType>()); 
         currentMats = currentBuilding.transform.GetComponentsInChildren<MeshRenderer>();
         nodeToBuild.SetAvailableBuilding(building,availablePositionMat);        
         nodeToBuild.GetBuildingType().builtTime = 0.01f;
         
         nodeToBuild.GetBuildingType().myNodeManager = this;
-        nodeToBuild.BuildBuilding(currentMats, building.GetComponent<BuildingType>());        
+        nodeToBuild.BuildBuilding(currentMats,building.GetComponent<BuildingType>());        
         nodeToBuild.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);        
         AddBuildNode(nodeToBuild);
         CreateNodesNeightboors();
@@ -54,12 +54,13 @@ public class NodeManager : MonoBehaviour
             {
                 touch = Input.GetTouch(0);
                 Vector3 touchPos = touch.position;
-                touchPos.z = 31.4f;
+                touchPos.z = transform.position.z - Camera.main.transform.position.z;
                 currentBuilding.transform.position = Camera.main.ScreenToWorldPoint(touchPos);
             }
             if(Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                if(!currentBuilding.GetComponent<BuildingType>().CheckIfBuildingColliding())
+                BuildingType type = currentBuilding.GetComponent<BuildingType>();
+                if(!type.CheckIfBuildingColliding())
                 {
                     Destroy(currentBuilding);
                 }
@@ -84,7 +85,7 @@ public class NodeManager : MonoBehaviour
             {             
                 Node currentNode = Instantiate(node,t.position,node.transform.rotation);
                 neightboors.Add(currentNode);
-                currentNode.InitNode(this);
+                currentNode.InitNode(this,type);
                 currentNode.AddNeightboors(build);
                 build.AddNeightboors(currentNode);
                 trans.Add(t);
@@ -96,69 +97,7 @@ public class NodeManager : MonoBehaviour
         }
     }
     //Da a los nodos el edificio a construir
-    public void SetUpNodes()
-    {        
-        /*foreach(Node node in neightboors)
-        {
-            if(node.GetIsBuilt())
-                continue;
-            //Mira si tiene un edificio ya construido y si es diferente al actual y lo destruye 
-            if(node.HasAvailableBuilding() && node.GetAvailableBuilding()!= currentBuilding)
-                node.DestroyAvailableBuilding();
-            
-
-            //Comprueba si tiene vecinos con tuberia y actualiza la distancia entre nodos
-            if(HasNeightboorsWithPipes(node))
-            {                
-                //Le da el nuevo edificio
-                node.SetAvailableBuilding(currentBuilding, availablePositionMat);
-                UpdateNodeDistance(node);
-            }
-            else
-            {
-                //Destruye el edificio actual del nodo y mira si el edificio que tiene que construir es una tuberia
-                node.DestroyAvailableBuilding();
-                if(currentBuilding.GetComponent<BuildingType>().GetBuildingType() == BuildingType.EBuildingType.PIPE)
-                {                    
-                    Node up = node.GetTopNode();
-                    Node down = node.GetBottomNode();
-                    Node left = node.GetLeftNode();
-                    Node right = node.GetRightNode();
-                    List<BuildingType.ExitsPosition> exits = currentBuilding.GetComponent<BuildingType>().GetExitsType();                    
-                                               
-                    if(up != null && up.GetIsBuilt() || down != null && down.GetIsBuilt())
-                    {
-                        if(!exits.Contains(BuildingType.ExitsPosition.TOP) && !exits.Contains(BuildingType.ExitsPosition.BOTTOM))
-                            currentBuilding = verticalPipe;
-                    }                            
-                    if(left!=null && left.GetIsBuilt() || right!=null && right.GetIsBuilt())
-                    {
-                        if(!exits.Contains(BuildingType.ExitsPosition.LEFT) && !exits.Contains(BuildingType.ExitsPosition.RIGHT))
-                            currentBuilding = horizontalPipe;
-                    }  
-                    node.SetAvailableBuilding(currentBuilding,availablePositionMat);
-                }               
-            }            
-        }
-        //Miramos si los edificios colisionan, si es así se destruyen
-        foreach(Node node in neightboors)
-        {
-            if(node.HasAvailableBuilding())
-            {
-                 node.CheckIfBuildingColliding();
-
-                if(EnoughCurrency(node))
-                {
-                    node.SetCanBeBuild(true);
-                    node.GetBuildingType().ChangeMaterial(availablePositionMat);
-                }else
-                {
-                    node.SetCanBeBuild(false);
-                    node.GetBuildingType().ChangeMaterial(unAvailablePositionMat);
-                }
-            }               
-        } */ 
-    }
+    
     public void CreateBuilding(GameObject building)
     {
         currentBuilding = Instantiate(building,Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 10f)),building.transform.rotation,spawningPoint);
@@ -171,8 +110,7 @@ public class NodeManager : MonoBehaviour
 	public void SetCurrentBuilding(GameObject _currentBuilding)
     { 
         currentBuilding = _currentBuilding;
-        currentMats = _currentBuilding.transform.GetComponentsInChildren<MeshRenderer>();        
-        SetUpNodes();        
+        currentMats = _currentBuilding.transform.GetComponentsInChildren<MeshRenderer>();               
     } 
     //Actualiza la distancia entre los nodos dependiendo del edificio que se quiera construir
     public void UpdateNodeDistance(Node node)
@@ -182,9 +120,10 @@ public class NodeManager : MonoBehaviour
         Node down = node.GetBottomNode();
         Node left = node.GetLeftNode();
         Node right = node.GetRightNode();
+        
 
         if(up != null && up.GetIsBuilt())
-        {
+        {                  
             if(nodeType.GetExitsType().Contains(BuildingType.ExitsPosition.TOP))
             {
                  node.transform.Translate(up.GetBuildingType().GetBottomPos().position - nodeType.GetTopPos().position);
@@ -192,6 +131,7 @@ public class NodeManager : MonoBehaviour
         }
         if(down != null && down.GetIsBuilt())
         {
+        
             if(nodeType.GetExitsType().Contains(BuildingType.ExitsPosition.BOTTOM))
             {
                  node.transform.Translate(down.GetBuildingType().GetTopPos().position - nodeType.GetBottomPos().position);
@@ -199,6 +139,7 @@ public class NodeManager : MonoBehaviour
         }
         if(left != null && left.GetIsBuilt())
         {
+        
             if(nodeType.GetExitsType().Contains(BuildingType.ExitsPosition.LEFT))
             {
                 node.transform.Translate(left.GetBuildingType().GetRightPos().position - nodeType.GetLeftPos().position);
@@ -270,21 +211,11 @@ public class NodeManager : MonoBehaviour
         }        
         return false;
     }
-    //Recibe un nodo y construye el edificio actual, después calcula los nodos edificados y sus vecinos
-    public void GetClickedNode(Node currentNode)
+    public void SpendResources(int[] cost)
     {
-        if(!currentNode.GetIsBuilt() && currentNode.CanBeBuild())
-        {         
-            if(currentNode.GetBuildingType().GetBuildingType()!=BuildingType.EBuildingType.PIPE)
-            {            
-                resourceManager.SpendResources(currentNode.GetBuildingType().MyCost());
-                buildNodes.Add(currentNode);
-                if(neightboors.Contains(currentNode))
-                    neightboors.Remove(currentNode);
-            }
-        }
+        resourceManager.SpendResources(cost);
     }
-    bool EnoughCurrency(Node node)
+   public bool EnoughCurrency(Node node)
     {
         return resourceManager.EnoughResources(node.GetBuildingType().MyCost());
     }
@@ -307,35 +238,12 @@ public class NodeManager : MonoBehaviour
         CreateNodesNeightboors();
         
     }
-    //Esconde a los vecinos(Se usa cuando dejas de construir)
-    public void HideBuildings(bool hide)
-    {
-        foreach(Node node in neightboors)
-        {
-            node.HideBuilding(hide);
-        }  
-    }
     //Añade un nodo a la lista de los que están construidos
     public void AddBuildNode(Node node)
     {
         if(!buildNodes.Contains(node))
             buildNodes.Add(node);
     }  
-    public void BuildPipe(Transform building)
-    {
-        if(building!=null)
-        {
-            Node node = building.transform.GetComponent<BuildingType>().myNode;
-     
-            if(node.CanBeBuild())
-            {
-                resourceManager.SpendResources(node.GetBuildingType().MyCost());
-                buildNodes.Add(node);
-                if(neightboors.Contains(node))
-                    neightboors.Remove(node);
-            }  
-        }      
-    }
     public void EraseBuilding(Node node)
     {
         Node up = node.GetTopNode();

@@ -211,7 +211,6 @@ public class PipeRoom : MonoBehaviour
                 myExits = updatedPos;
                 SetActiveNavMesh();
                 myNodeManager.UpdateNodeDistance(myNode);
-                myNode.CheckIfBuildingColliding();
             }            
         }  
     }  

@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4468848133554097822}
   m_Layer: 8
   m_Name: OxigenRoom
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
