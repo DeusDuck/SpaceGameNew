@@ -21,15 +21,14 @@ public class NodeManager : MonoBehaviour
     [SerializeField]
     ResourceManager resourceManager;
     List<Node> buildNodes;
-    List<Node> neightboors;
-    [SerializeField]
-    VisualManager visualManager;
+    List<Node> neightboors;    
+    public VisualManager visualManager;
 
     // Start is called before the first frame update
     void Start()
     {  
         buildNodes = new List<Node>();  
-        neightboors = new List<Node>();
+        neightboors = new List<Node>();        
         
         Node nodeToBuild =Instantiate(node,transform.position,transform.rotation);        
         GameObject building = Instantiate(currentBuilding,transform.position,currentBuilding.transform.rotation,nodeToBuild.transform);
@@ -231,13 +230,32 @@ public class NodeManager : MonoBehaviour
                 npcManager.AddBuilding(room);
                 room.SetResourceManager(resourceManager);
             }
-        }               
+        }
+
         buildNodes.Add(currentNode);
         if(neightboors.Contains(currentNode))
             neightboors.Remove(currentNode);
         CreateNodesNeightboors();
-        
+               
+    }    
+    public void BuildPipe(Transform building)
+    {
+        if(building!=null)
+        {
+            Node node = building.transform.GetComponent<BuildingType>().myNode;
+     
+            if(node.CanBeBuild())
+            {
+                resourceManager.SpendResources(node.GetBuildingType().MyCost());
+                node.BuildBuilding(currentMats);
+                buildNodes.Add(node);
+                if(neightboors.Contains(node))
+                    neightboors.Remove(node);
+                visualManager.HidePipesMenu();
+            }  
+        }      
     }
+    
     //Añade un nodo a la lista de los que están construidos
     public void AddBuildNode(Node node)
     {

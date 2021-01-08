@@ -39,7 +39,6 @@ public class LightmapPrefab : MonoBehaviour
 					currentRenderers[a].lightmapIndex = targetRenderers[a].lightmapIndex;
 					currentRenderers[a].lightmapScaleOffset = targetRenderers[a].lightmapScaleOffset;
 				}
-
 			}
 
 		}

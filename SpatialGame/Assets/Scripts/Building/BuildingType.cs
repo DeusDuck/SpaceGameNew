@@ -51,10 +51,11 @@ public class BuildingType : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(myCollider.transform.TransformPoint(myCollider.center), transform.rotation, myCollider.size * 0.5f);
-        Gizmos.matrix = rotationMatrix;
-		Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(Vector3.zero,Vector3.one);
+        Gizmos.color = Color.blue;
+        foreach(Transform t in buildingPositions)
+        {
+            Gizmos.DrawWireSphere(t.position,1.0f);
+        }
 	}	
 	
 	public List<ExitsPosition> GetExitsType(){return currentExits;}
@@ -98,14 +99,16 @@ public class BuildingType : MonoBehaviour
         List<Transform> trans = new List<Transform>();
         foreach(Transform t in buildingPositions)
         {
-            Collider[] colliders = Physics.OverlapSphere(t.position, 0.5f);            
+            Collider[] colliders = Physics.OverlapSphere(t.position, 1.0f,buildingLayer);
+            
             foreach(Collider col in colliders)
             {
                 if(col.transform == transform)
                     continue;
-                
                if(col.transform.GetComponentInParent<Node>().GetIsBuilt())
-                    trans.Add(t);                    
+               {
+                    trans.Add(t);  
+               }                                      
             }
         }
         foreach(Transform t in trans)
@@ -137,14 +140,26 @@ public class BuildingType : MonoBehaviour
                 if(col.tag == "Node")
                 {
                     Node node = col.GetComponent<Node>();
-                    if(canBeBuilt && myNodeManager.EnoughCurrency(node) && !node.GetIsBuilt())
+                    if(canBeBuilt && myNodeManager.EnoughCurrency(node) && !node.GetIsBuilt() )
                     {
-                        myNodeManager.SpendResources(MyCost());
-                        col.transform.position = transform.position;
-                        transform.SetParent(col.transform);
-                        node.BuildBuilding(myNodeManager.currentMats, this);
-                        myNode = node;
-                        node.SetAvailableBuilding(this.gameObject,myNodeManager.availablePositionMat);
+                        if(currentType != EBuildingType.PIPE)
+						{
+                            myNodeManager.SpendResources(MyCost());
+                            col.transform.position = transform.position;
+                            transform.SetParent(col.transform);                            
+                            myNode = node;
+                            node.BuildBuilding(myNodeManager.currentMats, this);
+                            node.SetAvailableBuilding(this.gameObject,myNodeManager.availablePositionMat);                            
+						}
+						else
+						{
+                            col.transform.position = transform.position;
+                            transform.SetParent(col.transform);
+                            myNode = node;
+                            node.SetAvailableBuilding(this.gameObject,myNodeManager.availablePositionMat);
+                            myNodeManager.visualManager.ShowBuildingsMenu(transform);
+                            
+						} 
                         return true;
                     }                    
                 }
@@ -156,28 +171,19 @@ public class BuildingType : MonoBehaviour
     public void SetCanBeBuild(bool can){canBeBuilt = can;}
     public void AddNode()
     {
-        numOfNodes++;
-        HasToChangeMat();
+        numOfNodes++;        
     }
     public void RemoveNode()
     {
-        numOfNodes--;
-        HasToChangeMat();
+        if(numOfNodes>0)
+            numOfNodes--;        
     }
     public int GetNumOfNodes(){return numOfNodes;}
-    void HasToChangeMat()
+    public void HasToChangeMat()
     {
-        if(numOfNodes<=1)
-        {
-           
-            ChangeMaterial(myNodeManager.availablePositionMat);
-        }
-            
+        if(canBeBuilt)
+            ChangeMaterial(myNodeManager.availablePositionMat); 
         else
-        {
-             Debug.Log("UnAvailableMat");
-            ChangeMaterial(myNodeManager.unAvailablePositionMat);
-        }
-            
+            ChangeMaterial(myNodeManager.unAvailablePositionMat);         
     }
 }

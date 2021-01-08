@@ -288,7 +288,8 @@ MonoBehaviour:
   myNavMesh: {fileID: 7550983701597489683}
   buildingLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
+  numOfNodes: 0
 --- !u!114 &4751748324870348779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +316,9 @@ MonoBehaviour:
   navMeshLongRight: {fileID: 0}
   navMeshShortTop: {fileID: 0}
   navMeshShortBottom: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 768
   mustChangeNavMesh: 0
 --- !u!114 &7550983701597489683
 MonoBehaviour:

@@ -22,11 +22,11 @@ public class VisualManager : MonoBehaviour
     [SerializeField]
     Button rotateRight;
     [SerializeField]
-    Button buildPipe;
-    [SerializeField]
     GetEnumVisualState getEnumVisualState;
     [SerializeField]
     Button eraseButton;
+    [SerializeField]
+    Button buildPipe;
     [SerializeField]
     Button clonningMenuButton;
     GameObject currentRoom;
@@ -60,11 +60,17 @@ public class VisualManager : MonoBehaviour
         rotateRight.gameObject.SetActive(false);
         buildPipe.gameObject.SetActive(false);
     }
+    public void HidePipesMenu()
+    {
+        rotateLeft.gameObject.SetActive(false);
+        rotateRight.gameObject.SetActive(false);
+        buildPipe.gameObject.SetActive(false);
+    }
     public void ShowBuildingsMenu(Transform building)
     {
         //Dependiendo del tipo de edificio que selecciones, enseñará un menú u otro.
         var type = building.GetComponent<BuildingType>();
-        if(type.myNode.GetIsBuilt())
+        if(type.myNode != null && type.myNode.GetIsBuilt())
         {
             ShowGameObject(eraseButton.gameObject);
             eraseButton.onClick.RemoveAllListeners();
@@ -91,16 +97,15 @@ public class VisualManager : MonoBehaviour
             case BuildingType.EBuildingType.PIPE:
                 rotateLeft.gameObject.SetActive(true);
                 rotateRight.gameObject.SetActive(true);
-                buildPipe.gameObject.SetActive(true);
+                 buildPipe.gameObject.SetActive(true);
                 var pipe = building.GetComponent<PipeRoom>();
                 if(pipe!=null)
                 {
                     rotateLeft.onClick.RemoveAllListeners();
                     rotateRight.onClick.RemoveAllListeners();
-                    buildPipe.onClick.RemoveAllListeners();
-                    rotateLeft.onClick.AddListener(delegate {pipe.RotatePipe(); });
+                    rotateLeft.onClick.AddListener(delegate {pipe.RotatePipe();});
                     rotateRight.onClick.AddListener(delegate{pipe.RotatePipe(true);});
-                   
+                    buildPipe.onClick.AddListener(delegate{clickHandler.nodeManager.BuildPipe(building);});
                 }
                 break;
         }

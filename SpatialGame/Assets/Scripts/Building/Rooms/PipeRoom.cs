@@ -37,7 +37,8 @@ public class PipeRoom : MonoBehaviour
     Transform navMeshShortTop;
     [SerializeField]
     Transform navMeshShortBottom;
-
+    [SerializeField]
+    LayerMask buildingLayer;
     Transform initBottomTransform;
     Transform initTopTransform;
     Transform initLeftTranform;
@@ -213,7 +214,7 @@ public class PipeRoom : MonoBehaviour
                 myNodeManager.UpdateNodeDistance(myNode);
             }            
         }  
-    }  
+    }    
     public void SetPipe(NodeManager manager, Node node, List<BuildingType.ExitsPosition> exits){myNodeManager = manager; myNode = node; myExits = exits;} 
     public Transform GetLink(){return currentLink;}
     public void CreateLink()

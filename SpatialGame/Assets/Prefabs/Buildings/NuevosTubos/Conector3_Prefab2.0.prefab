@@ -316,7 +316,6 @@ GameObject:
   - component: {fileID: 5301572106599620908}
   - component: {fileID: 2122475195103444591}
   - component: {fileID: 2121294996745862673}
-  - component: {fileID: 7145886285456121595}
   m_Layer: 8
   m_Name: Conector3_Prefab2.0
   m_TagString: Building
@@ -381,7 +380,8 @@ MonoBehaviour:
   myNavMesh: {fileID: 5320878398307831365}
   buildingLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
+  numOfNodes: 0
 --- !u!114 &5301572106599620908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +408,9 @@ MonoBehaviour:
   navMeshLongRight: {fileID: 4434197095610987802}
   navMeshShortTop: {fileID: 5618343503877277333}
   navMeshShortBottom: {fileID: 6520108513713135795}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 256
   mustChangeNavMesh: 1
 --- !u!65 &2122475195103444591
 BoxCollider:
@@ -439,35 +442,6 @@ OffMeshLink:
   m_BiDirectional: 1
   m_Activated: 1
   m_AutoUpdatePositions: 1
---- !u!114 &7145886285456121595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3190454552698596070}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 1
-  m_Size: {x: 7.388236, y: 6.0366936, z: 3.0054092}
-  m_Center: {x: -2.3864493, y: 0.018346786, z: -1.5572472}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.1
-  m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 0}
 --- !u!1 &3897135447343762305
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class Node : MonoBehaviour
     LayerMask buildingLayer;
     [SerializeField]
     NodeManager myNodeManager;
+    [SerializeField]
     BuildingType myBuildingType;
     BuildingType myCreator;
     [SerializeField]
@@ -43,7 +44,7 @@ public class Node : MonoBehaviour
                 Renderer[] childRenderer = availableBuilding.transform.GetComponentsInChildren<MeshRenderer>();
                 for(int i = 0; i<childRenderer.Length; i++)
                     childRenderer[i].material = mat[i].sharedMaterial;
-                SetIsBuilt(true);               
+                SetIsBuilt(true); 
                 var navMeshSurface = myBuildingType.GetNavMeshSurface();
                 if(navMeshSurface != null)
                     NavMeshManager.CalculateNavMesh(navMeshSurface);
@@ -69,22 +70,28 @@ public class Node : MonoBehaviour
             if(myCreator!=myBuildingType)
             {
                 myBuildingType.AddNode();
-                if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE && myBuildingType.GetNumOfNodes() <= 1)
+                if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE )
                 {
-                    myBuildingType.SetCanBeBuild(true);
-                    availableBuilding = myBuildingType.gameObject;
+                    if(myBuildingType.GetNumOfNodes() <= 1)
+                    {
+                        myBuildingType.SetCanBeBuild(true);
+                        myBuildingType.HasToChangeMat();
+                        availableBuilding = myBuildingType.gameObject;
+                    }                    
                 }
                 else
                 {
                     myBuildingType.ChangeMaterial(myNodeManager.unAvailablePositionMat);
                     if(myNodeManager.HasNeightboorsWithPipes(this) && myBuildingType.GetNumOfNodes() <= 1)
                     {
-                        
+                         
                         myBuildingType.SetCanBeBuild(true);
+                        myBuildingType.HasToChangeMat();
                         availableBuilding = myBuildingType.gameObject;
                     }else
                     {
                         myBuildingType.SetCanBeBuild(false);
+                        myBuildingType.HasToChangeMat();
                         myBuildingType = null;
                         availableBuilding = null;
                     }
@@ -98,13 +105,18 @@ public class Node : MonoBehaviour
             return;
         if(col.tag == "Building")
         {
-            myBuildingType.RemoveNode();
-            if(myBuildingType && builtTime==0)
+            Node parent = col.GetComponentInParent<Node>();
+            if(parent==null || !parent.GetIsBuilt())
             {
-                myBuildingType.SetCanBeBuild(false);
-                myBuildingType = null;
-                availableBuilding = null;
-            }            
+                myBuildingType.RemoveNode();
+                if(myBuildingType && builtTime==0)
+                {
+                    myBuildingType.SetCanBeBuild(false);
+                    myBuildingType.HasToChangeMat();
+                    myBuildingType = null;
+                    availableBuilding = null;
+                }   
+            }                     
         }
     }
 	//Recibe un edificio y un material y lo instancia en la escena
@@ -125,7 +137,7 @@ public class Node : MonoBehaviour
     {
         builtTime = type.builtTime;
         mat = actualMat;
-        canBeBuilt = false;
+        canBeBuilt = false; 
     }
     //Destruye el edificio actual
     public void DestroyAvailableBuilding()
@@ -133,8 +145,13 @@ public class Node : MonoBehaviour
         Destroy(availableBuilding);
         if(isBuilt)
             SetIsBuilt(false);
-    }   
-
+    }
+    public void BuildBuilding(MeshRenderer[] actualMat)
+    {
+        builtTime = myBuildingType.builtTime;
+        mat = actualMat;
+        canBeBuilt = false;
+    }
 # region Setters and Getters
 
     //Seta si el nodo está construido
