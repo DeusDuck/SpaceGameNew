@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -9,13 +11,31 @@ public class ResourceManager : MonoBehaviour
     [SerializeField]
     int food;
     [SerializeField]
+    int wood;
+    [SerializeField]
+    int iron;
+    [SerializeField]
+    int rock;
+    [SerializeField]
     VisualManager visualManager;
 
 	private void Start()
 	{
-		visualManager.UpdateResources(ResourcesRoom.EResource.OXIGEN,oxigen);
+        GameSaver saveFile = SaveSystem.LoadGame();
+		if(saveFile!=null)
+		{
+            oxigen = saveFile.oxigen;
+            wood = saveFile.wood;
+            food = saveFile.food;
+            iron = saveFile.iron;
+            money = saveFile.money;
+            rock = saveFile.rock;
+		}
+		
+        visualManager.UpdateResources(ResourcesRoom.EResource.OXIGEN,oxigen);
         visualManager.UpdateResources(ResourcesRoom.EResource.MONEY,money);
         visualManager.UpdateResources(ResourcesRoom.EResource.FOOD,food);
+		
 	}
 	public void AddResource(ResourcesRoom.EResource type, int amount)
     {
@@ -36,6 +56,13 @@ public class ResourceManager : MonoBehaviour
         }
         UpdateUI();
     }
+    public void AddResourceInventory(int rockAmount, int ironAmount, int woodAmount)
+    {
+        rock+=rockAmount;
+        iron+=ironAmount;
+        wood+=woodAmount;
+        UpdateUI();
+    }
     public bool EnoughResources(int[] currency)
     {
         return oxigen>=currency[0] && money>=currency[1] && food>=currency[2];    
@@ -52,5 +79,18 @@ public class ResourceManager : MonoBehaviour
         visualManager.UpdateResources(ResourcesRoom.EResource.OXIGEN,oxigen);
         visualManager.UpdateResources(ResourcesRoom.EResource.MONEY,money);
         visualManager.UpdateResources(ResourcesRoom.EResource.FOOD,food);
+        visualManager.UpdateInventory(rock,iron,wood);
+        SaveSystem.SaveGame(this);
+    }
+    public List<int> GetAllResources()
+    {
+        List<int> resources = new List<int>();
+        resources.Add(food);
+        resources.Add(money);
+        resources.Add(oxigen);
+        resources.Add(rock);
+        resources.Add(iron);
+        resources.Add(wood);
+        return resources;
     }
 }

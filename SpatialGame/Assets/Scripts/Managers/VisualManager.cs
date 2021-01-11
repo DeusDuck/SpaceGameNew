@@ -5,31 +5,41 @@ using UnityEngine.UI;
 
 public class VisualManager : MonoBehaviour
 {    
+    [Header("Transforms")]
+    [Space(5)]
     [SerializeField]
     Transform buildButton;
     [SerializeField]
-    Transform buildingPanel;
-    [SerializeField]
-    ClickHandler clickHandler;
-    [SerializeField]
-    Transform taskMenuAI;
+    Transform buildingPanel;    
     [SerializeField]
     Transform AISelection;
     [SerializeField]
     Transform pipesPanel;
     [SerializeField]
+    Transform droneSelectionMenu;
+    [Space(5)]
+
+    [Header("Buttons")]
+    [Space(5)]
+    [SerializeField]
     Button rotateLeft;
     [SerializeField]
-    Button rotateRight;
-    [SerializeField]
-    GetEnumVisualState getEnumVisualState;
+    Button rotateRight;    
     [SerializeField]
     Button eraseButton;
     [SerializeField]
     Button buildPipe;
     [SerializeField]
     Button clonningMenuButton;
+    [SerializeField]
+    Button sendDroneButton;   
+    [SerializeField]
+    Button inventoryButton;
     GameObject currentRoom;
+    [Space(5)]
+
+    [Header("Inventory Text")]
+    [Space(5)]
     [SerializeField]
     Text money;
     [SerializeField]
@@ -37,7 +47,22 @@ public class VisualManager : MonoBehaviour
     [SerializeField]
     Text oxigen;
     [SerializeField]
+    Text rockText;
+    [SerializeField]
+    Text ironText;
+    [SerializeField]
+    Text woodText;
+    [Space(5)]
+
+    [Header("Other Scripts")]
+    [Space(5)]
+    [SerializeField]
     CameraMovement cameraMovement;
+    [SerializeField]
+    ClickHandler clickHandler;
+    [SerializeField]
+    GetEnumVisualState getEnumVisualState;
+    
     public enum VisualState
     {
         BUILDING,ON_ROOM,MOVING_AROUND
@@ -48,17 +73,19 @@ public class VisualManager : MonoBehaviour
     public void DisplayBuildingMenu()
     {
         buildButton.gameObject.SetActive(false);
+        inventoryButton.gameObject.SetActive(false);
         buildingPanel.gameObject.SetActive(true);
     }
     //Desactiva el menu de construcción
     public void HideBuildingMenu()
     {
         buildButton.gameObject.SetActive(true);
+        inventoryButton.gameObject.SetActive(true);
         buildingPanel.gameObject.SetActive(false);
         pipesPanel.gameObject.SetActive(false);
         rotateLeft.gameObject.SetActive(false);
         rotateRight.gameObject.SetActive(false);
-        buildPipe.gameObject.SetActive(false);
+        buildPipe.gameObject.SetActive(false);        
     }
     public void HidePipesMenu()
     {
@@ -91,8 +118,16 @@ public class VisualManager : MonoBehaviour
                 break;
                 
                 
-            case BuildingType.EBuildingType.DINNER:
-                
+            case BuildingType.EBuildingType.DRONES:
+                sendDroneButton.gameObject.SetActive(true);
+                Button[] dronesButton = droneSelectionMenu.GetComponentsInChildren<Button>();
+                List<Drone> drones = type.transform.GetComponent<DronesRoom>().GetDrones();
+                for(int i = 0; i<dronesButton.Length; i++)
+                {                    
+                    Drone current = drones[i];
+                    dronesButton[i].onClick.RemoveAllListeners();
+                    dronesButton[i].onClick.AddListener(delegate{type.transform.GetComponent<DronesRoom>().SetWorkingDrone(current);});
+                }
                 break; 
             case BuildingType.EBuildingType.PIPE:
                 rotateLeft.gameObject.SetActive(true);
@@ -128,7 +163,6 @@ public class VisualManager : MonoBehaviour
             switch(nextState.state)
             {
                 case VisualState.BUILDING:
-                    cameraMovement.StopCameraMovement(false);
                     DisplayBuildingMenu();
                     break;
                 case VisualState.ON_ROOM:
@@ -145,7 +179,6 @@ public class VisualManager : MonoBehaviour
             switch(currentState)
             {
                 case VisualState.BUILDING:
-                    cameraMovement.StopCameraMovement(true);
                     HideBuildingMenu();
                     break;
                 case VisualState.ON_ROOM:
@@ -178,4 +211,11 @@ public class VisualManager : MonoBehaviour
                 break;
         }    
     }
+    public void UpdateInventory(int rock, int iron, int wood)
+    {
+        rockText.text = rock.ToString();
+        ironText.text = iron.ToString();
+        woodText.text = wood.ToString();
+    }
+    public void StopCameraMovement(bool stop){cameraMovement.StopCameraMovement(stop);}
 }

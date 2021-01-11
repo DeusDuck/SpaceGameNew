@@ -7,7 +7,7 @@ public class BuildingType : MonoBehaviour
 {
     public enum EBuildingType
     {
-        CLONING,DINNER,PIPE
+        CLONING,RESOURCES,PIPE,DRONES
     }
     public EBuildingType currentType;
     

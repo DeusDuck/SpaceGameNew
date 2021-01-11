@@ -169,5 +169,5 @@ public class CameraMovement : MonoBehaviour
 
         return Vector3.zero;
     }
-    public void StopCameraMovement(bool stop){canMove = stop;}
+    public void StopCameraMovement(bool stop){canMove = !stop;}
 }

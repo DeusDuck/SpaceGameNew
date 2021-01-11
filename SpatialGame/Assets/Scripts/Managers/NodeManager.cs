@@ -62,9 +62,11 @@ public class NodeManager : MonoBehaviour
                 if(!type.CheckIfBuildingColliding())
                 {
                     Destroy(currentBuilding);
+                    
                 }
                 currentBuilding = null;
                 visualManager.DisplayBuildingMenu();
+                visualManager.StopCameraMovement(false);
             }
         }        
     }
@@ -104,6 +106,7 @@ public class NodeManager : MonoBehaviour
         currentMats = building.transform.GetComponentsInChildren<MeshRenderer>(); 
         currentBuildingType.ChangeMaterial(unAvailablePositionMat);
         currentBuildingType.SetManager(this);
+        visualManager.StopCameraMovement(true);
     }
 	//Canvia el edificio a construir y el material a usar
 	public void SetCurrentBuilding(GameObject _currentBuilding)
@@ -222,7 +225,7 @@ public class NodeManager : MonoBehaviour
     {            
         if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.CLONING)
             currentNode.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);
-        else if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.DINNER)
+        else if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.RESOURCES)
         {
             ResourcesRoom room = currentNode.GetBuildingType().transform.GetComponent<ResourcesRoom>();
             if(room!=null)
@@ -230,6 +233,14 @@ public class NodeManager : MonoBehaviour
                 npcManager.AddBuilding(room);
                 room.SetResourceManager(resourceManager);
             }
+        }else if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.DRONES)
+        {
+            DronesRoom room = currentNode.GetBuildingType().transform.GetComponent<DronesRoom>();
+			if(room!=null)
+			{
+                room.SetResourceManager(resourceManager);
+                room.ActivateDrones();
+			}
         }
 
         buildNodes.Add(currentNode);
