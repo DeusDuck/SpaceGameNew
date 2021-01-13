@@ -9,12 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
   - enabled: 0
-    path: Assets/Scenes/Pruebas Enric/Tutorial/Online_Enric_Tutorial.unity
-    guid: 7ea2c15ad0155f545b82d27ca8f3ad2e
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/Pruebas Enric/Tutorial/Online_Enric _Tutorial_2.unity
-    guid: 5eaf45baae3cbd94a9f57a62a9c6c28d
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Pruebas Enric/FinalGame.unity
-    guid: ecf6bccfbacef7c46aa9789395a9d523
+    path: Assets/Scenes/Pruebas Enric/EstacionEspacial.unity
+    guid: a2b7243dada459140b40c236f94ec48f
+  - enabled: 1
+    path: Assets/Scenes/Pruebas Enric/BattleGame.unity
+    guid: b0095ccab24535748841f1c2e15c7e78
   m_configObjects: {}
