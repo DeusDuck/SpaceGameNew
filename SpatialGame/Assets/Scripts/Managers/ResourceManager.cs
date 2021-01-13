@@ -35,7 +35,7 @@ public class ResourceManager : MonoBehaviour
         visualManager.UpdateResources(ResourcesRoom.EResource.OXIGEN,oxigen);
         visualManager.UpdateResources(ResourcesRoom.EResource.MONEY,money);
         visualManager.UpdateResources(ResourcesRoom.EResource.FOOD,food);
-		
+		visualManager.UpdateInventory(rock,iron,wood);
 	}
 	public void AddResource(ResourcesRoom.EResource type, int amount)
     {

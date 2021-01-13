@@ -27,6 +27,7 @@ public class NodeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {  
+       // Debug.Log(Application.persistentDataPath);
         buildNodes = new List<Node>();  
         neightboors = new List<Node>();        
         
@@ -61,8 +62,7 @@ public class NodeManager : MonoBehaviour
                 BuildingType type = currentBuilding.GetComponent<BuildingType>();
                 if(!type.CheckIfBuildingColliding())
                 {
-                    Destroy(currentBuilding);
-                    
+                    Destroy(currentBuilding);                    
                 }
                 currentBuilding = null;
                 visualManager.DisplayBuildingMenu();
@@ -107,13 +107,13 @@ public class NodeManager : MonoBehaviour
         currentBuildingType.ChangeMaterial(unAvailablePositionMat);
         currentBuildingType.SetManager(this);
         visualManager.StopCameraMovement(true);
+        foreach(Node node in neightboors)
+        {
+            if(node.HasAvailableBuilding() && node.GetBuiltTime()==0)
+                node.DestroyAvailableBuilding();
+        }
     }
-	//Canvia el edificio a construir y el material a usar
-	public void SetCurrentBuilding(GameObject _currentBuilding)
-    { 
-        currentBuilding = _currentBuilding;
-        currentMats = _currentBuilding.transform.GetComponentsInChildren<MeshRenderer>();               
-    } 
+	
     //Actualiza la distancia entre los nodos dependiendo del edificio que se quiera construir
     public void UpdateNodeDistance(Node node)
     {

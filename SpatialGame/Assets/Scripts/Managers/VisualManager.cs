@@ -118,12 +118,14 @@ public class VisualManager : MonoBehaviour
                 break;
                 
                 
-            case BuildingType.EBuildingType.DRONES:
-                sendDroneButton.gameObject.SetActive(true);
+            case BuildingType.EBuildingType.DRONES:                
                 Button[] dronesButton = droneSelectionMenu.GetComponentsInChildren<Button>();
                 List<Drone> drones = type.transform.GetComponent<DronesRoom>().GetDrones();
                 for(int i = 0; i<dronesButton.Length; i++)
                 {                    
+                    Debug.Log(i);
+                    Debug.Log(drones[i]);
+                    Debug.Log(dronesButton[i]);
                     Drone current = drones[i];
                     dronesButton[i].onClick.RemoveAllListeners();
                     dronesButton[i].onClick.AddListener(delegate{type.transform.GetComponent<DronesRoom>().SetWorkingDrone(current);});
@@ -132,7 +134,7 @@ public class VisualManager : MonoBehaviour
             case BuildingType.EBuildingType.PIPE:
                 rotateLeft.gameObject.SetActive(true);
                 rotateRight.gameObject.SetActive(true);
-                 buildPipe.gameObject.SetActive(true);
+                buildPipe.gameObject.SetActive(true);
                 var pipe = building.GetComponent<PipeRoom>();
                 if(pipe!=null)
                 {
@@ -142,6 +144,8 @@ public class VisualManager : MonoBehaviour
                     rotateRight.onClick.AddListener(delegate{pipe.RotatePipe(true);});
                     buildPipe.onClick.AddListener(delegate{clickHandler.nodeManager.BuildPipe(building);});
                 }
+                break;
+            case BuildingType.EBuildingType.RESOURCES:
                 break;
         }
     }
@@ -166,10 +170,14 @@ public class VisualManager : MonoBehaviour
                     DisplayBuildingMenu();
                     break;
                 case VisualState.ON_ROOM:
+                    StopCameraMovement(false);
                     if(currentRoom.GetComponent<CloningRoom>())
                     {
                         currentRoom.GetComponent<CloningRoom>().DisplayProgessBar(true);
                         ShowGameObject(clonningMenuButton.gameObject);
+                    }else if(currentRoom.GetComponent<DronesRoom>())
+                    {
+                        ShowGameObject(sendDroneButton.gameObject);
                     }
                     break;
                 case VisualState.MOVING_AROUND:
@@ -186,6 +194,9 @@ public class VisualManager : MonoBehaviour
                     {
                         currentRoom.GetComponent<CloningRoom>().DisplayProgessBar(false);
                         HideGameObject(clonningMenuButton.gameObject);
+                    }else if(currentRoom.GetComponent<DronesRoom>())
+                    {
+                        HideGameObject(sendDroneButton.gameObject);
                     }
                     break;
                 case VisualState.MOVING_AROUND:

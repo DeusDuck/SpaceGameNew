@@ -22,12 +22,13 @@ public class ClickHandler : MonoBehaviour
                 if(Physics.Raycast(rayo, out RaycastHit hitInfo,hitableLayer))
                 {                 
                     if(hitInfo.collider.transform.tag == "Node")
-                    {                       
+                    {                 
                         Node node = hitInfo.collider.transform.GetComponentInParent<Node>();                     
                         visualManager.ShowBuildingsMenu(node.GetAvailableBuildingTransform());
                     }
                     if(hitInfo.collider.transform.tag == "Building")
                     {                
+                        Debug.Log("olaaa");
                         visualManager.ShowBuildingsMenu(hitInfo.collider.transform);
                     }
                 }

@@ -189,7 +189,7 @@ public class Node : MonoBehaviour
     public bool CanBeBuild(){return canBeBuilt;}
     public void SetCanBeBuild(bool can){canBeBuilt = can;}
     public Transform GetAvailableBuildingTransform(){return availableBuilding.transform;}
-
+    public float GetBuiltTime(){return builtTime;}
     bool IsNeightboor(Node node)
     {
         return(node == topNeightboor) || (node == bottomNeightboor) || (node==leftNeightboor) || (node == rightNeightboor);

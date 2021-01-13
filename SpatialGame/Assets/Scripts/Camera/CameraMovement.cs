@@ -62,6 +62,7 @@ public class CameraMovement : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             direction = PlanePositionDelta(touch);
+
             if (touch.phase == TouchPhase.Moved && canMove)
             {
                 if(direction.y>0 && (transform.position.y-myCamera.transform.position.y)<=maxYDist) 
