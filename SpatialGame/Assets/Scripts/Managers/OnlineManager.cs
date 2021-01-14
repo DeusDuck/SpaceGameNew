@@ -1,19 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
 public class OnlineManager : MonoBehaviourPunCallbacks
 {
+	public static OnlineManager instance;
 	[SerializeField]
 	GameSettings gameSettings;
-
-    // Start is called before the first frame update
-    void Start()
+	
+	private void Awake()
+	{
+		if(instance == null)
+		{
+			instance = this;
+		}
+		else
+		{
+			if(instance!=this)
+			{
+				Destroy(instance.gameObject);
+				instance = this;
+			}
+		}
+		DontDestroyOnLoad(this);
+	}
+	public override void OnEnable()
+	{
+		base.OnEnable();
+		SceneManager.sceneLoaded += OnSceneFinishedLoading;
+	}
+	public override void OnDisable()
+	{
+		base.OnDisable();
+		SceneManager.sceneLoaded -= OnSceneFinishedLoading;
+	}
+	void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
+	{
+		if(scene.buildIndex == 1)
+			CreatePlayer();
+	}
+	void CreatePlayer()
+	{
+		PhotonNetwork.Instantiate("MultiplayerPrefabs/Player1",transform.position,Quaternion.identity,0);		
+	}
+	// Start is called before the first frame update
+	void Start()
     {
-        Debug.Log("Connecting to master");
-		PhotonNetwork.AutomaticallySyncScene = true;
+        Debug.Log("Connecting to master");		
 		PhotonNetwork.NickName = gameSettings.NickName;
         PhotonNetwork.GameVersion = "0.0.1";
         PhotonNetwork.ConnectUsingSettings();
@@ -21,6 +57,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	public override void OnConnectedToMaster()
 	{
+		PhotonNetwork.AutomaticallySyncScene = true;
 		Debug.Log("OnConnected to master");
 	}
 	public override void OnDisconnected(DisconnectCause cause)
@@ -29,22 +66,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	}
 	public void FindGame()
 	{
-		if(!PhotonNetwork.IsConnected)
+		if(!PhotonNetwork.IsConnected || PhotonNetwork.CurrentRoom !=null)
 			return;		
 		PhotonNetwork.JoinRandomRoom();
 	}
-	void CreateRoom()
-	{
-		//Creamos las opciones de la sala
-		RoomOptions roomOptions = new RoomOptions();
-		//Numero maxiomo de jugadores
-		roomOptions.MaxPlayers = 2;
-		//Tiempo de espera antes de hechar a un jugador estar desconectado
-		roomOptions.PlayerTtl = 30;
-		//Tiempo de espera antes de eliminar la sala cuando no hay ningun jugador conectado
-		roomOptions.EmptyRoomTtl = 30;
-		PhotonNetwork.CreateRoom(null,roomOptions,null);
-	}
+	
 	public override void OnPlayerEnteredRoom(Player newPlayer)
 	{
 		if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
@@ -61,6 +87,18 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	public override void OnCreateRoomFailed(short returnCode, string message)
 	{
 		Debug.Log("Room Creation failed " + message);
+	}
+	void CreateRoom()
+	{
+		//Creamos las opciones de la sala
+		RoomOptions roomOptions = new RoomOptions();
+		//Numero maxiomo de jugadores
+		roomOptions.MaxPlayers = 2;
+		//Tiempo de espera antes de hechar a un jugador estar desconectado
+		roomOptions.PlayerTtl = 30;
+		//Tiempo de espera antes de eliminar la sala cuando no hay ningun jugador conectado
+		roomOptions.EmptyRoomTtl = 30;
+		PhotonNetwork.CreateRoom(null,roomOptions,null);
 	}
 	void StartGame()
 	{

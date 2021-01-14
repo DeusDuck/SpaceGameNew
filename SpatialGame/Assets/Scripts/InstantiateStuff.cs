@@ -1,18 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class InstantiateStuff : MonoBehaviour
+public class InstantiateStuff : MonoBehaviourPun
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    public GameObject obj;
+    
     void Update()
     {
-        
+        if(Input.GetMouseButtonDown(0) && base.photonView.IsMine)
+            Instantiate(obj,transform.position,transform.rotation);
     }
 }
