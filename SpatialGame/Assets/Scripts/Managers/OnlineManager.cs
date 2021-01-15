@@ -44,7 +44,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	}
 	void CreatePlayer()
 	{
-		PhotonNetwork.Instantiate("MultiplayerPrefabs/Player1",transform.position,Quaternion.identity,0);		
+		PhotonNetwork.Instantiate("MultiplayerPrefabs/Player",transform.position,Quaternion.identity,0);		
 	}
 	// Start is called before the first frame update
 	void Start()
@@ -65,8 +65,8 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		Debug.Log("Disconnected: " + cause.ToString());
 	}
 	public void FindGame()
-	{
-		if(!PhotonNetwork.IsConnected || PhotonNetwork.CurrentRoom !=null)
+	{	
+		if(!PhotonNetwork.IsConnectedAndReady || PhotonNetwork.CurrentRoom !=null)
 			return;		
 		PhotonNetwork.JoinRandomRoom();
 	}
@@ -106,7 +106,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		PhotonNetwork.CurrentRoom.IsVisible = false;
 		PhotonNetwork.LoadLevel(1);
 	}
-	#region
+	#region Getters
 	public GameSettings GameSettings{get{return gameSettings;}}
 	#endregion
 }
