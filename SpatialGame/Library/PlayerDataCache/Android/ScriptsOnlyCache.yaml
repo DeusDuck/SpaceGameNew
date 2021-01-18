@@ -9,6 +9,7 @@ ScriptsOnlyBuild:
     - CombatInfo
     - Drone
     - DronesRoom
+    - GamePlayManager
     - GameSetUp
     - GameSettings
     - GetEnumVisualState
@@ -143,16 +144,36 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 12016}
+    - Class: 114
+      Script: {instanceID: 12022}
+    - Class: 114
+      Script: {instanceID: 12030}
+    - Class: 114
       Script: {instanceID: 12290}
     - Class: 114
-      Script: {instanceID: 13264}
+      Script: {instanceID: 13262}
     - Class: 114
-      Script: {instanceID: 16512}
+      Script: {instanceID: 13548}
+    - Class: 114
+      Script: {instanceID: 16510}
+    - Class: 114
+      Script: {instanceID: 16668}
+    - Class: 114
+      Script: {instanceID: 23912}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
       Script: {instanceID: 0}
     Assets/Scenes/Pruebas Enric/EstacionEspacial.unity:
     - Class: 1
@@ -236,137 +257,137 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12606}
     - Class: 114
-      Script: {instanceID: 12656}
+      Script: {instanceID: 12654}
     - Class: 114
-      Script: {instanceID: 12738}
+      Script: {instanceID: 12736}
     - Class: 114
-      Script: {instanceID: 12870}
+      Script: {instanceID: 12868}
     - Class: 114
-      Script: {instanceID: 12884}
+      Script: {instanceID: 12882}
     - Class: 114
-      Script: {instanceID: 13264}
+      Script: {instanceID: 13262}
     - Class: 114
-      Script: {instanceID: 13318}
+      Script: {instanceID: 13316}
     - Class: 114
-      Script: {instanceID: 13360}
+      Script: {instanceID: 13358}
     - Class: 114
-      Script: {instanceID: 13392}
+      Script: {instanceID: 13390}
     - Class: 114
-      Script: {instanceID: 13414}
+      Script: {instanceID: 13412}
     - Class: 114
-      Script: {instanceID: 13490}
+      Script: {instanceID: 13488}
     - Class: 114
-      Script: {instanceID: 13550}
+      Script: {instanceID: 13548}
     - Class: 114
-      Script: {instanceID: 13692}
+      Script: {instanceID: 13690}
     - Class: 114
-      Script: {instanceID: 13702}
+      Script: {instanceID: 13700}
     - Class: 114
-      Script: {instanceID: 13732}
+      Script: {instanceID: 13730}
     - Class: 114
-      Script: {instanceID: 13912}
+      Script: {instanceID: 13910}
     - Class: 114
-      Script: {instanceID: 13964}
+      Script: {instanceID: 13962}
     - Class: 114
-      Script: {instanceID: 13978}
+      Script: {instanceID: 13976}
     - Class: 114
-      Script: {instanceID: 13996}
+      Script: {instanceID: 13994}
     - Class: 114
-      Script: {instanceID: 14018}
+      Script: {instanceID: 14016}
     - Class: 114
-      Script: {instanceID: 14064}
+      Script: {instanceID: 14062}
     - Class: 114
-      Script: {instanceID: 14074}
+      Script: {instanceID: 14072}
     - Class: 114
-      Script: {instanceID: 14090}
+      Script: {instanceID: 14088}
     - Class: 114
-      Script: {instanceID: 14230}
+      Script: {instanceID: 14228}
     - Class: 114
-      Script: {instanceID: 14236}
+      Script: {instanceID: 14234}
     - Class: 114
-      Script: {instanceID: 14272}
+      Script: {instanceID: 14270}
     - Class: 114
-      Script: {instanceID: 14356}
+      Script: {instanceID: 14354}
     - Class: 114
-      Script: {instanceID: 14630}
+      Script: {instanceID: 14628}
     - Class: 114
-      Script: {instanceID: 14664}
+      Script: {instanceID: 14662}
     - Class: 114
-      Script: {instanceID: 14698}
+      Script: {instanceID: 14696}
     - Class: 114
-      Script: {instanceID: 14706}
+      Script: {instanceID: 14704}
     - Class: 114
-      Script: {instanceID: 14764}
+      Script: {instanceID: 14762}
     - Class: 114
-      Script: {instanceID: 14768}
+      Script: {instanceID: 14766}
     - Class: 114
-      Script: {instanceID: 14820}
+      Script: {instanceID: 14818}
     - Class: 114
-      Script: {instanceID: 14836}
+      Script: {instanceID: 14834}
     - Class: 114
-      Script: {instanceID: 14944}
+      Script: {instanceID: 14942}
     - Class: 114
-      Script: {instanceID: 14994}
+      Script: {instanceID: 14992}
     - Class: 114
-      Script: {instanceID: 15000}
+      Script: {instanceID: 14998}
+    - Class: 114
+      Script: {instanceID: 15018}
     - Class: 114
       Script: {instanceID: 15020}
     - Class: 114
       Script: {instanceID: 15022}
     - Class: 114
-      Script: {instanceID: 15024}
+      Script: {instanceID: 15096}
     - Class: 114
-      Script: {instanceID: 15098}
+      Script: {instanceID: 15120}
     - Class: 114
-      Script: {instanceID: 15122}
+      Script: {instanceID: 15256}
     - Class: 114
-      Script: {instanceID: 15258}
+      Script: {instanceID: 15284}
     - Class: 114
-      Script: {instanceID: 15286}
+      Script: {instanceID: 15330}
     - Class: 114
-      Script: {instanceID: 15332}
+      Script: {instanceID: 15340}
     - Class: 114
-      Script: {instanceID: 15342}
+      Script: {instanceID: 15376}
     - Class: 114
-      Script: {instanceID: 15378}
+      Script: {instanceID: 15430}
     - Class: 114
-      Script: {instanceID: 15432}
+      Script: {instanceID: 15470}
     - Class: 114
-      Script: {instanceID: 15472}
+      Script: {instanceID: 15498}
     - Class: 114
-      Script: {instanceID: 15500}
+      Script: {instanceID: 15674}
     - Class: 114
       Script: {instanceID: 15676}
     - Class: 114
-      Script: {instanceID: 15678}
+      Script: {instanceID: 15730}
     - Class: 114
-      Script: {instanceID: 15732}
+      Script: {instanceID: 15810}
     - Class: 114
-      Script: {instanceID: 15812}
+      Script: {instanceID: 16118}
     - Class: 114
-      Script: {instanceID: 16120}
+      Script: {instanceID: 16328}
     - Class: 114
-      Script: {instanceID: 16330}
+      Script: {instanceID: 16384}
     - Class: 114
-      Script: {instanceID: 16386}
+      Script: {instanceID: 16510}
     - Class: 114
-      Script: {instanceID: 16512}
+      Script: {instanceID: 16562}
     - Class: 114
-      Script: {instanceID: 16564}
+      Script: {instanceID: 16626}
     - Class: 114
-      Script: {instanceID: 16628}
+      Script: {instanceID: 16630}
     - Class: 114
-      Script: {instanceID: 16632}
+      Script: {instanceID: 16668}
     - Class: 114
-      Script: {instanceID: 16670}
+      Script: {instanceID: 16698}
     - Class: 114
-      Script: {instanceID: 16700}
+      Script: {instanceID: 16730}
     - Class: 114
-      Script: {instanceID: 16732}
+      Script: {instanceID: 16860}
     - Class: 114
-      Script: {instanceID: 16862}
-    - Class: 114
-      Script: {instanceID: 16870}
+      Script: {instanceID: 16868}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -620,7 +641,7 @@ ScriptsOnlyBuild:
     className: SpineboyBodyTilt
   - hash:
       serializedVersion: 2
-      Hash: 0c3eeca333b9d19d62494130060681ce
+      Hash: 5e27c82fb2c993be27aa1947d27c469a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameSetUp
@@ -816,12 +837,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: UnityTemplateProjects
     className: SimpleCameraController
-  - hash:
-      serializedVersion: 2
-      Hash: 7805dbebd103341782f3d6071ec8690f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: InstantiateStuff
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1874,7 +1889,7 @@ ScriptsOnlyBuild:
     className: PointedAtGameObjectInfo
   - hash:
       serializedVersion: 2
-      Hash: 6be9b020d09fbce5ca6852ebf5dea434
+      Hash: b34c2c19176fe920de00a1e80068bbbd
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VisualManager
@@ -1886,7 +1901,7 @@ ScriptsOnlyBuild:
     className: SplineWalker
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 5a61dadeddeb6b88d4ab23f3f0fa8379
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerOnlineController
@@ -2826,6 +2841,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 324de033e14f80919a2b1323ae9d9f78
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GamePlayManager
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TrainingRoom
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WeaponRoom
   platform: 13
   scenePathNames:
   - Assets/Scenes/Pruebas Enric/EstacionEspacial.unity

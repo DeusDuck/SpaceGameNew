@@ -824,9 +824,6 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 0
   numOfNodes: 0
 --- !u!114 &5313800814001789978
 MonoBehaviour:

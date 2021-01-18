@@ -36,9 +36,10 @@ public class VisualManager : MonoBehaviour
     [SerializeField]
     Button inventoryButton;
     GameObject currentRoom;
+    Button onlineButton;
     [Space(5)]
 
-    [Header("Inventory Text")]
+    [Header("Text Fields")]
     [Space(5)]
     [SerializeField]
     Text money;
@@ -52,6 +53,8 @@ public class VisualManager : MonoBehaviour
     Text ironText;
     [SerializeField]
     Text woodText;
+    [SerializeField]
+    Text onlineCounterText;
     [Space(5)]
 
     [Header("Other Scripts")]
@@ -62,6 +65,10 @@ public class VisualManager : MonoBehaviour
     ClickHandler clickHandler;
     [SerializeField]
     GetEnumVisualState getEnumVisualState;
+    [Space(5)]
+
+    [Header("Other Variables")]
+    int numberOfPlayers;
     
     public enum VisualState
     {
@@ -69,8 +76,12 @@ public class VisualManager : MonoBehaviour
     }
     public VisualState currentState = VisualState.MOVING_AROUND;
 
+	private void Update()
+	{
+		onlineCounterText.text = OnlineManager.instance.GetCurrentNumberOfPlayers.ToString() + " / 2";
+	}
 	//Activa el menu de construcción
-    public void DisplayBuildingMenu()
+	public void DisplayBuildingMenu()
     {
         buildButton.gameObject.SetActive(false);
         inventoryButton.gameObject.SetActive(false);

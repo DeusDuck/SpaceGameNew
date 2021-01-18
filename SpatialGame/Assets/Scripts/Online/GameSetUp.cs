@@ -11,6 +11,8 @@ public class GameSetUp : MonoBehaviourPunCallbacks
 
     public Transform[] spawningPointsLocal;
     public Transform[] spawningPointsOther;
+	public Transform player1CameraPos;
+	public Transform player2CameraPos;
 	// Start is called before the first frame update
 	public override void OnEnable()
 	{
@@ -34,17 +36,52 @@ public class GameSetUp : MonoBehaviourPunCallbacks
 	{
 		if(team == 0)
 		{
-			foreach(Transform pos in GameSetUp.gameSetUp.spawningPointsLocal)
+			for(int i = 0; i<spawningPointsLocal.Length; i++)
 			{
-                PhotonNetwork.Instantiate("MultiplayerPrefabs/Cube", pos.position,pos.rotation,0);
-			}
+				int rnd = Random.Range(0,spawningPointsLocal.Length);
+				if(spawningPointsLocal[rnd].childCount==0)
+				{
+					GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Cube", spawningPointsLocal[rnd].position,spawningPointsLocal[rnd].rotation,0);
+					obj.transform.SetParent(spawningPointsLocal[rnd]);
+				}
+				else
+				{
+					for(int j = 1; j<spawningPointsLocal.Length; j++)
+					{
+						int index = (rnd+j) % spawningPointsLocal.Length;
+						if(spawningPointsLocal[index].childCount==0)
+						{
+							GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Cube", spawningPointsLocal[index].position,spawningPointsLocal[index].rotation,0);
+							obj.transform.SetParent(spawningPointsLocal[index]);
+						}							
+					}
+				}
+                
+			}		
 		}
 		else if(team == 1)
 		{
-			foreach(Transform pos in GameSetUp.gameSetUp.spawningPointsOther)
+			for(int i = 0; i<spawningPointsOther.Length; i++)
 			{
-                PhotonNetwork.Instantiate("MultiplayerPrefabs/Sphere", pos.position,pos.rotation,0);
-			}
+				int rnd = Random.Range(0,spawningPointsOther.Length);
+				if(spawningPointsOther[rnd].childCount==0)
+				{
+					GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Sphere", spawningPointsOther[rnd].position,spawningPointsOther[rnd].rotation,0);
+					obj.transform.SetParent(spawningPointsOther[rnd]);
+				}
+				else
+				{
+					for(int j = 1; j<spawningPointsOther.Length; j++)
+					{
+						int index = (rnd+j) % spawningPointsOther.Length;
+						if(spawningPointsOther[index].childCount==0)
+						{
+							GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Sphere", spawningPointsOther[index].position,spawningPointsOther[index].rotation,0);
+							obj.transform.SetParent(spawningPointsOther[index]);
+						}							
+					}
+				}
+			}	
 		}
 	}
 }

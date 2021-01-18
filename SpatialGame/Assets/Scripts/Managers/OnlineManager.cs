@@ -9,7 +9,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 {
 	public static OnlineManager instance;
 	[SerializeField]
-	GameSettings gameSettings;
+	GameSettings gameSettings;	
 	
 	private void Awake()
 	{
@@ -26,7 +26,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 			}
 		}
 		DontDestroyOnLoad(this);
-	}
+	}	
 	public override void OnEnable()
 	{
 		base.OnEnable();
@@ -36,7 +36,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	{
 		base.OnDisable();
 		SceneManager.sceneLoaded -= OnSceneFinishedLoading;
-	}
+	}	
 	void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
 	{
 		if(scene.buildIndex == 1)
@@ -51,7 +51,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connecting to master");		
 		PhotonNetwork.NickName = gameSettings.NickName;
-        PhotonNetwork.GameVersion = "0.0.1";
+        PhotonNetwork.GameVersion = "0.0.0";
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -108,5 +108,6 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	}
 	#region Getters
 	public GameSettings GameSettings{get{return gameSettings;}}
+	public int GetCurrentNumberOfPlayers{get{return PhotonNetwork.PlayerList.Length;}}
 	#endregion
 }
