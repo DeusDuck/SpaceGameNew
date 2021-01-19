@@ -21,8 +21,10 @@ public class GameSetUp : MonoBehaviourPunCallbacks
 	}
 	private void Start()
 	{
+		//Busca la lista de jugadores
 		Player[] players = PhotonNetwork.PlayerList;
 
+		//Mira si es el cliente maestro, si lo es utiliza la lista de jugadores para llamar la funcion RPC_SetSpawnPoints
 		if(PhotonNetwork.IsMasterClient)
 		{			
 			for(int i = 0; i<players.Length;i++)
@@ -31,6 +33,7 @@ public class GameSetUp : MonoBehaviourPunCallbacks
 			}
 		}
 	}
+	//Instancia los avatares en las posiciones adecuadas dependiendo del equipo que le haya tocado
 	[PunRPC]
 	void RPC_SetSpawnPoints(int team)
 	{

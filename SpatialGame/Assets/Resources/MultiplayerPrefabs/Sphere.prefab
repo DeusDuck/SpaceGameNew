@@ -309,6 +309,10 @@ MonoBehaviour:
   maxHealth: 1000
   healthBar: {fileID: 9018836342776497055}
   damage: 100
+  armor: 0
+  velocity: 0
+  criticalProb: 0
+  myWeapons: []
 --- !u!1 &7102981681103502720
 GameObject:
   m_ObjectHideFlags: 0

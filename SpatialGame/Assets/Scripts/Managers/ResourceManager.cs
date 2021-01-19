@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    //Se encarga de actualizar los recursos
     [SerializeField]
     int oxigen;
     [SerializeField]
@@ -21,6 +22,7 @@ public class ResourceManager : MonoBehaviour
 
 	private void Start()
 	{
+        //Al empezar el juego mira si hay recursos guardados y si los hay los carga
         GameSaver saveFile = SaveSystem.LoadGame();
 		if(saveFile!=null)
 		{
@@ -31,12 +33,13 @@ public class ResourceManager : MonoBehaviour
             money = saveFile.money;
             rock = saveFile.rock;
 		}
-		
+		//Recarga la UI con los recursos
         visualManager.UpdateResources(ResourcesRoom.EResource.OXIGEN,oxigen);
         visualManager.UpdateResources(ResourcesRoom.EResource.MONEY,money);
         visualManager.UpdateResources(ResourcesRoom.EResource.FOOD,food);
 		visualManager.UpdateInventory(rock,iron,wood);
 	}
+    //Suma los recursos
 	public void AddResource(ResourcesRoom.EResource type, int amount)
     {
         switch(type)
@@ -56,6 +59,7 @@ public class ResourceManager : MonoBehaviour
         }
         UpdateUI();
     }
+    //Suma los recursos del inventario
     public void AddResourceInventory(int rockAmount, int ironAmount, int woodAmount)
     {
         rock+=rockAmount;

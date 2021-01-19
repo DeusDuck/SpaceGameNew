@@ -10,6 +10,11 @@ public class BigDrone : MonoBehaviour,IControlable
     [SerializeField]
     Image healthBar;
     public float damage;
+    public float armor;
+    public float velocity;
+    public float criticalProb;
+    [SerializeField]
+    List<Weapon> myWeapons;
 	public void TakeDamage(float _damage)
 	{
 		currentHealth-=_damage;
@@ -19,12 +24,20 @@ public class BigDrone : MonoBehaviour,IControlable
 	// Start is called before the first frame update
 	void Start()
     {
-        
+        SetUpStats();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void SetUpStats()
+	{
+        foreach(Weapon weapon in myWeapons)
+		{
+            damage+=weapon.GetDamage();
+            velocity+=weapon.GetSpeed();
+            criticalProb+=weapon.GetCriticProb();
+		}
+	}
+    public void AddWeapon(Weapon weapon)
+	{
+        myWeapons.Add(weapon);
+	}
 }

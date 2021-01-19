@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class NPCManager : MonoBehaviour
 {
+    //Se encarga de settear los NPC de la nave
     List<NPC> currentNPC = new List<NPC>();
     List<ResourcesRoom> oxigenBuildings = new List<ResourcesRoom>();
     List<ResourcesRoom> foodBuildings = new List<ResourcesRoom>();
     List<ResourcesRoom> moneyBuildings = new List<ResourcesRoom>();
 
+    //Asigna las posiciones a las que deben ir los npc dependiendo de su tipo
 	void AssignJob(NPC npc)
     {
         
@@ -67,11 +69,13 @@ public class NPCManager : MonoBehaviour
                     break;
             }       
     }
+    //Añade un NPC a la lista y le asigna un trabajo
     public void AddNPC(NPC npc)
     {
         currentNPC.Add(npc);
         AssignJob(npc);
     }
+    //Añade un edificio a su lista dependiendo del tipo
     public void AddBuilding(ResourcesRoom building)
     {       
         switch(building.currentResource)
@@ -88,6 +92,7 @@ public class NPCManager : MonoBehaviour
         }
         GiveRandomNPCTarget();      
     }
+    //Si hay un NPC sin rumbo, vuelve a mirar si hay alguna habitación disponible
     void GiveRandomNPCTarget()
     {
         foreach(NPC npc in currentNPC)
@@ -96,6 +101,7 @@ public class NPCManager : MonoBehaviour
                 AssignJob(npc);
         }
     }
+    //Cuando el NPC llega a la posición de trabajo empieza el contador
     public void NPCInWorkingPosition(NPC current)
     {
         current.GetWorkingRoom().StartCounter(true);
