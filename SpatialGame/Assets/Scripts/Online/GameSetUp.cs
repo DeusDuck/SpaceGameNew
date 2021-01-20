@@ -8,11 +8,13 @@ public class GameSetUp : MonoBehaviourPunCallbacks
 {
     public static GameSetUp gameSetUp;
 	public PhotonView PV;
+	public int nextTeam = 1;
 
     public Transform[] spawningPointsLocal;
-    public Transform[] spawningPointsOther;
-	public Transform player1CameraPos;
-	public Transform player2CameraPos;
+    public Transform[] spawningPointsOther;	
+	public List<GameObject> soldiers1  = new List<GameObject>();
+	public List<GameObject> soldiers2  = new List<GameObject>();
+	public List<PlayerOnlineController> players = new List<PlayerOnlineController>();
 	// Start is called before the first frame update
 	public override void OnEnable()
 	{
@@ -22,69 +24,57 @@ public class GameSetUp : MonoBehaviourPunCallbacks
 	private void Start()
 	{
 		//Busca la lista de jugadores
-		Player[] players = PhotonNetwork.PlayerList;
+		/*Player[] players = PhotonNetwork.PlayerList;
 
 		//Mira si es el cliente maestro, si lo es utiliza la lista de jugadores para llamar la funcion RPC_SetSpawnPoints
 		if(PhotonNetwork.IsMasterClient)
 		{			
 			for(int i = 0; i<players.Length;i++)
 			{
-				PV.RPC("RPC_SetSpawnPoints",players[i],i);
+				//PV.RPC("RPC_SetSpawnPoints",players[i],i);
 			}
-		}
+		}*/
 	}
 	//Instancia los avatares en las posiciones adecuadas dependiendo del equipo que le haya tocado
-	[PunRPC]
+	/*[PunRPC]
 	void RPC_SetSpawnPoints(int team)
 	{
 		if(team == 0)
 		{
 			for(int i = 0; i<spawningPointsLocal.Length; i++)
 			{
-				int rnd = Random.Range(0,spawningPointsLocal.Length);
-				if(spawningPointsLocal[rnd].childCount==0)
-				{
-					GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Cube", spawningPointsLocal[rnd].position,spawningPointsLocal[rnd].rotation,0);
-					obj.transform.SetParent(spawningPointsLocal[rnd]);
-				}
-				else
-				{
-					for(int j = 1; j<spawningPointsLocal.Length; j++)
-					{
-						int index = (rnd+j) % spawningPointsLocal.Length;
-						if(spawningPointsLocal[index].childCount==0)
-						{
-							GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Cube", spawningPointsLocal[index].position,spawningPointsLocal[index].rotation,0);
-							obj.transform.SetParent(spawningPointsLocal[index]);
-						}							
-					}
-				}
-                
+				GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Cube", spawningPointsLocal[i].position,spawningPointsLocal[i].rotation,0);
+				obj.transform.SetParent(spawningPointsLocal[i]);
+				soldiers1.Add(obj);
 			}		
 		}
 		else if(team == 1)
 		{
 			for(int i = 0; i<spawningPointsOther.Length; i++)
 			{
-				int rnd = Random.Range(0,spawningPointsOther.Length);
-				if(spawningPointsOther[rnd].childCount==0)
-				{
-					GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Sphere", spawningPointsOther[rnd].position,spawningPointsOther[rnd].rotation,0);
-					obj.transform.SetParent(spawningPointsOther[rnd]);
-				}
-				else
-				{
-					for(int j = 1; j<spawningPointsOther.Length; j++)
-					{
-						int index = (rnd+j) % spawningPointsOther.Length;
-						if(spawningPointsOther[index].childCount==0)
-						{
-							GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Sphere", spawningPointsOther[index].position,spawningPointsOther[index].rotation,0);
-							obj.transform.SetParent(spawningPointsOther[index]);
-						}							
-					}
-				}
+				GameObject obj = PhotonNetwork.Instantiate("MultiplayerPrefabs/Sphere", spawningPointsOther[i].position,spawningPointsOther[i].rotation,0);
+				obj.transform.SetParent(spawningPointsOther[i]);
+				soldiers2.Add(obj);
 			}	
+		}
+		foreach(GameObject obj in soldiers1)
+		{
+			players[0].AddSoldier(obj);
+		}
+		foreach(GameObject obj in soldiers2)
+		{
+			players[1].AddSoldier(obj);
+		}
+	}*/
+	public void UpdateTeam()
+	{
+		if(nextTeam == 1)
+		{
+			nextTeam = 2;
+		}
+		else
+		{
+			nextTeam = 1;
 		}
 	}
 }

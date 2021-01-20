@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6730008470273547118}
   - component: {fileID: 1444240575803892659}
   - component: {fileID: 3004347853367702791}
-  - component: {fileID: 7995466636106534824}
+  - component: {fileID: 3156806761410685831}
   m_Layer: 0
   m_Name: Gun1
   m_TagString: Untagged
@@ -82,7 +82,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7995466636106534824
+--- !u!114 &3156806761410685831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,9 +91,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2052728016380906343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9630dad33c9c2c8418970529496e840c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d0845722d9331b42ae119c6a4ade948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  speed: 5
-  criticProb: 1
+  damage: 0
+  speed: 0
+  criticProb: 0

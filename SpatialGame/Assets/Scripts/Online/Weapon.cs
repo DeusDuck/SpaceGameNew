@@ -5,12 +5,12 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField]
-    float damage;
+    protected float damage;
     [SerializeField]
-    float speed;
+    protected float speed;
     [SerializeField]
-    float criticProb;
-    public float GetDamage(){return damage;}
-    public float GetSpeed(){return speed;}
-    public float GetCriticProb(){return criticProb;}
+    protected float criticProb;
+    public virtual float GetDamage(){return damage;}
+    public virtual float GetSpeed(){return speed;}
+    public virtual float GetCriticProb(){return criticProb;}
 }

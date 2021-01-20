@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class GamePlayManager : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class GamePlayManager : MonoBehaviour
     public PlayerOnlineController currentPlayer;
     [SerializeField]
     LayerMask layerToCollide;
+    [SerializeField]
+    Transform panel;
+    int current = 0;
     
     public enum EGameState
 	{
@@ -32,9 +36,13 @@ public class GamePlayManager : MonoBehaviour
         currentTime = timeToPrepare;
 		if(PhotonNetwork.IsMasterClient)
 		{
-            int rnd = Random.Range(0,players.Count);
-            currentPlayer = players[rnd];
-            PV.RPC("RPC_SetCurrentPlayer",RpcTarget.OthersBuffered,rnd);
+            current = Random.Range(0,players.Count);
+            Player[] _players = PhotonNetwork.PlayerList;
+            for(int i = 0; i<_players.Length;i++)
+			{
+                PV.RPC("RPC_SetCurrentPlayer",_players[i],current);
+			}
+            
 		}
     }
 
@@ -48,39 +56,48 @@ public class GamePlayManager : MonoBehaviour
                 //Resta el tiempo en hacer una acción
                 currentTime-=Time.deltaTime;
                 time.text = currentTime.ToString("F0");
-				if(Input.touchCount>0)
+				if(Input.GetMouseButtonDown(0) && PV.IsMine)
 				{
+                    Player[] _players = PhotonNetwork.PlayerList;
+                    for(int i = 0; i<_players.Length;i++)
+			        {
+                        PV.RPC("RPC_SetCurrentPlayer",_players[i],current);
+			        }
+				}
+                    
+				if(Input.touchCount>0 && currentPlayer.GetPV().IsMine)
+				{
+                    
                     //Mira que jugador has selecionado para hacerle daño
                     Touch touch = Input.GetTouch(0);
-					Ray rayo = Camera.main.ScreenPointToRay(touch.position);                
+					Ray rayo = Camera.main.ScreenPointToRay(touch.position);  
+                    //Debug.Log(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide));
                     if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
-					{
-                        PhotonView enemyPV = hit.transform.GetComponent<PhotonView>();
-						if(enemyPV!=null)
+					{                       
+                        GameObject enemyPV = hit.transform.GetComponent<GameObject>();
+						if(enemyPV!=null && currentPlayer.GetMySoldiers().Contains(enemyPV))
 						{
-                            //enemyPV.Owner
+                            panel.gameObject.SetActive(true);
 						}
 					}   
 				}
                 //Si el tiempo llega a 0 se canvia el estado a attacking
 		        if(currentTime<0)
 		        {
-                    currentTime = timeToPrepare;
                     ChangeState(EGameState.ATTACKING);
 		        }
                 break;
             case EGameState.ATTACKING:
                 break;
-		}
-        
-    }
-    
+		}        
+    }    
     void ChangeState(EGameState nextState)
 	{
 		switch(nextState)
 		{
             
             case EGameState.SELECTING:
+                currentTime = timeToPrepare;
                 break;
             case EGameState.ATTACKING:
                 break;
@@ -95,10 +112,26 @@ public class GamePlayManager : MonoBehaviour
         currentState = nextState;
 	}
     public void AddPlayer(PlayerOnlineController player){players.Add(player);}
+    void SetPlayersSoldiers()
+	{
+        //foreach(PhotonView controlable in GameSetUp.gameSetUp.soldiers)
+		{
+            
+		}
+	}
     //Setea el turno del jugador
     [PunRPC]
     void RPC_SetCurrentPlayer(int playerId)
 	{
+        if(currentPlayer !=null)
+            currentPlayer.transform.position = Vector3.up * 10;
         currentPlayer = players[playerId];
+        currentPlayer.transform.position = Vector3.zero;
+        current = (current++)%players.Count;
+	}
+    [PunRPC]
+    void RPC_SetPlayers()
+	{
+        
 	}
 }
