@@ -7,7 +7,7 @@ public class PlayerOnlineController : MonoBehaviour
 {
     [SerializeField]
     PhotonView PV;
-    GamePlayManager gamePlayManager;
+    Photon.Pun.UtilityScripts.GamePlayManager gamePlayManager;
     [SerializeField]
     List<GameObject> mySoldiers;
     public int playerID;
@@ -17,7 +17,7 @@ public class PlayerOnlineController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gamePlayManager = FindObjectOfType<GamePlayManager>();
+        gamePlayManager = FindObjectOfType<Photon.Pun.UtilityScripts.GamePlayManager>();
         gamePlayManager.AddPlayer(this);
         GameSetUp.gameSetUp.players.Add(this);
     }
@@ -52,7 +52,7 @@ public class PlayerOnlineController : MonoBehaviour
 	{
         myTeam = GameSetUp.gameSetUp.nextTeam;
         GameSetUp.gameSetUp.UpdateTeam();
-        PV.RPC("RPC_SetPlayerTeam",RpcTarget.OthersBuffered,GameSetUp.gameSetUp.nextTeam);
+        PV.RPC("RPC_SetPlayerTeam",RpcTarget.OthersBuffered,myTeam);
 	}
     [PunRPC]
     void RPC_SetPlayerTeam(int team)

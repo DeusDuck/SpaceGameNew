@@ -35,6 +35,17 @@ public class GameSetUp : MonoBehaviourPunCallbacks
 			}
 		}*/
 	}
+	public void UpdateTeam()
+	{
+		if(nextTeam == 1)
+		{
+			nextTeam = 2;
+		}
+		else
+		{
+			nextTeam = 1;
+		}
+	}
 	//Instancia los avatares en las posiciones adecuadas dependiendo del equipo que le haya tocado
 	/*[PunRPC]
 	void RPC_SetSpawnPoints(int team)
@@ -66,15 +77,5 @@ public class GameSetUp : MonoBehaviourPunCallbacks
 			players[1].AddSoldier(obj);
 		}
 	}*/
-	public void UpdateTeam()
-	{
-		if(nextTeam == 1)
-		{
-			nextTeam = 2;
-		}
-		else
-		{
-			nextTeam = 1;
-		}
-	}
+	
 }
