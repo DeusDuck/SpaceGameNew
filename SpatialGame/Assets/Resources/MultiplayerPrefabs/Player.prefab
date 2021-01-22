@@ -144,7 +144,7 @@ MonoBehaviour:
   PV: {fileID: 6302386137897929138}
   mySoldiers: []
   playerID: 0
-  path: MultiplayerPrefabs/Cube
+  path: MultiplayerPrefabs/Combat_Drone
   myTeam: 0
 --- !u!114 &6302386137897929138
 MonoBehaviour:

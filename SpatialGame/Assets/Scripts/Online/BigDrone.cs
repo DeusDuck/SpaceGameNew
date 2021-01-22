@@ -17,6 +17,8 @@ public class BigDrone : MonoBehaviour,IControlable
     List<Weapon> myWeapons;
     [SerializeField]
     Chasis myChasis;
+    public Transform target;
+    public int id;
 	public void TakeDamage(float _damage)
 	{
 		currentHealth-=_damage;
@@ -37,12 +39,25 @@ public class BigDrone : MonoBehaviour,IControlable
             velocity+=weapon.GetSpeed();
             criticalProb+=weapon.GetCriticProb();            
 		}
-        armor+=myChasis.GetArmor();
-        maxHealth+=myChasis.GetHealth();
+		if(myChasis!=null)
+		{
+            armor+=myChasis.GetArmor();
+            maxHealth+=myChasis.GetHealth();
+		}
+        
+        currentHealth = maxHealth;
 	}
     public void AddWeapon(Weapon weapon)
 	{
         myWeapons.Add(weapon);
 	}
-    public void SetChasis(Chasis nextChasis){myChasis = nextChasis;}
+    public void SetChasis(Chasis nextChasis)
+    {
+        myChasis = nextChasis;
+    
+    }
+    public void Attack()
+	{
+        target.GetComponent<BigDrone>().TakeDamage(damage);
+	}
 }

@@ -220,6 +220,8 @@ MonoBehaviour:
   - {fileID: 8180743229185062943}
   - {fileID: 5926708323859024289}
   myChasis: {fileID: 5708303571443787236}
+  target: {fileID: 0}
+  id: 0
 --- !u!1 &5153295815128851570
 GameObject:
   m_ObjectHideFlags: 0

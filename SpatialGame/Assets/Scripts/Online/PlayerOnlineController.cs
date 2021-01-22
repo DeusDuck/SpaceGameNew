@@ -7,9 +7,9 @@ public class PlayerOnlineController : MonoBehaviour
 {
     [SerializeField]
     PhotonView PV;
-    Photon.Pun.UtilityScripts.GamePlayManager gamePlayManager;
+    GamePlayManager gamePlayManager;
     [SerializeField]
-    List<GameObject> mySoldiers;
+    List<Transform> mySoldiers;
     public int playerID;
     public string path;
     public int myTeam;
@@ -17,7 +17,7 @@ public class PlayerOnlineController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gamePlayManager = FindObjectOfType<Photon.Pun.UtilityScripts.GamePlayManager>();
+        gamePlayManager = FindObjectOfType<GamePlayManager>();
         gamePlayManager.AddPlayer(this);
         GameSetUp.gameSetUp.players.Add(this);
     }
@@ -32,7 +32,8 @@ public class PlayerOnlineController : MonoBehaviour
 			    {
 				    GameObject obj = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsLocal[i].position,GameSetUp.gameSetUp.spawningPointsLocal[i].rotation,0);
 				    obj.transform.SetParent(GameSetUp.gameSetUp.spawningPointsLocal[i]);
-				    mySoldiers.Add(obj);
+				    mySoldiers.Add(obj.transform);
+                    obj.GetComponent<BigDrone>().id = i;
 			    }
 			}
 			else
@@ -41,12 +42,13 @@ public class PlayerOnlineController : MonoBehaviour
 			    {
 				    GameObject obj = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsOther[i].position,GameSetUp.gameSetUp.spawningPointsOther[i].rotation,0);
 				    obj.transform.SetParent(GameSetUp.gameSetUp.spawningPointsOther[i]);
-				    mySoldiers.Add(obj);
+				    mySoldiers.Add(obj.transform);
+                    obj.GetComponent<BigDrone>().id = i;
 			    }	
 			}
 		}
 	}
-	public void AddSoldier(GameObject soldier){mySoldiers.Add(soldier);}
+	public void AddSoldier(Transform soldier){mySoldiers.Add(soldier);}
     [PunRPC]
     void RPC_GetTeam()
 	{
@@ -60,5 +62,17 @@ public class PlayerOnlineController : MonoBehaviour
         myTeam = team;
 	}
     public PhotonView GetPV(){return PV;}
-    public List<GameObject> GetMySoldiers(){return mySoldiers;}
+    public List<Transform> GetMySoldiers(){return mySoldiers;}
+    public void DamageSoldier(float damage, int id)
+	{
+        foreach(Transform t in mySoldiers)
+		{
+            BigDrone current = t.GetComponent<BigDrone>();
+            if(current.id == id)
+			{
+                current.TakeDamage(damage);
+                break;
+			}
+		}
+	}
 }

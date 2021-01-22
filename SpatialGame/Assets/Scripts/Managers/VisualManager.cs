@@ -134,9 +134,6 @@ public class VisualManager : MonoBehaviour
                 List<Drone> drones = type.transform.GetComponent<DronesRoom>().GetDrones();
                 for(int i = 0; i<dronesButton.Length; i++)
                 {                    
-                    Debug.Log(i);
-                    Debug.Log(drones[i]);
-                    Debug.Log(dronesButton[i]);
                     Drone current = drones[i];
                     dronesButton[i].onClick.RemoveAllListeners();
                     dronesButton[i].onClick.AddListener(delegate{type.transform.GetComponent<DronesRoom>().SetWorkingDrone(current);});

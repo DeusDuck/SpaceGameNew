@@ -317,6 +317,8 @@ MonoBehaviour:
   myWeapons:
   - {fileID: 8802967191844957908}
   myChasis: {fileID: 3364999147928877872}
+  target: {fileID: 0}
+  id: 0
 --- !u!1 &7102981681103502720
 GameObject:
   m_ObjectHideFlags: 0
