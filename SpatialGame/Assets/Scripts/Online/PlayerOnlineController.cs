@@ -10,7 +10,6 @@ public class PlayerOnlineController : MonoBehaviour
     GamePlayManager gamePlayManager;
     [SerializeField]
     List<Transform> mySoldiers;
-    public int playerID;
     public string path;
     public int myTeam;
 
@@ -31,9 +30,7 @@ public class PlayerOnlineController : MonoBehaviour
                 for(int i = 0; i<GameSetUp.gameSetUp.spawningPointsLocal.Length; i++)
 			    {
 				    GameObject obj = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsLocal[i].position,GameSetUp.gameSetUp.spawningPointsLocal[i].rotation,0);
-				    obj.transform.SetParent(GameSetUp.gameSetUp.spawningPointsLocal[i]);
 				    mySoldiers.Add(obj.transform);
-                    obj.GetComponent<BigDrone>().id = i;
 			    }
 			}
 			else
@@ -41,9 +38,7 @@ public class PlayerOnlineController : MonoBehaviour
                 for(int i = 0; i<GameSetUp.gameSetUp.spawningPointsOther.Length; i++)
 			    {
 				    GameObject obj = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsOther[i].position,GameSetUp.gameSetUp.spawningPointsOther[i].rotation,0);
-				    obj.transform.SetParent(GameSetUp.gameSetUp.spawningPointsOther[i]);
 				    mySoldiers.Add(obj.transform);
-                    obj.GetComponent<BigDrone>().id = i;
 			    }	
 			}
 		}
@@ -68,7 +63,7 @@ public class PlayerOnlineController : MonoBehaviour
         foreach(Transform t in mySoldiers)
 		{
             BigDrone current = t.GetComponent<BigDrone>();
-            if(current.id == id)
+            if(current.PV.ViewID == id)
 			{
                 current.TakeDamage(damage);
                 break;

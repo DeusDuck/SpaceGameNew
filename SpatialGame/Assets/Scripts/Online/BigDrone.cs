@@ -1,24 +1,37 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BigDrone : MonoBehaviour,IControlable
 {
-    float currentHealth;
-    public float maxHealth;
+    float currentHealth;    
     [SerializeField]
     Image healthBar;
+    [SerializeField]
+    Image arrowImage;
+    [Header("Drone Stats")]
+    [Space(5)]
+    public float maxHealth;
     public float damage;
     public float armor;
     public float velocity;
     public float criticalProb;
+    public float avoidanceProb;
+    public float resistance;
+    [Space(5)]
+
+    [Header ("Weapons")]
+    [Space(5)]
     [SerializeField]
     List<Weapon> myWeapons;
     [SerializeField]
     Chasis myChasis;
+    [Space(5)]
+
     public Transform target;
-    public int id;
+    public PhotonView PV;
 	public void TakeDamage(float _damage)
 	{
 		currentHealth-=_damage;
@@ -59,5 +72,9 @@ public class BigDrone : MonoBehaviour,IControlable
     public void Attack()
 	{
         target.GetComponent<BigDrone>().TakeDamage(damage);
+	}
+    public void ShowArrow(bool must)
+	{
+        arrowImage.gameObject.SetActive(must);
 	}
 }

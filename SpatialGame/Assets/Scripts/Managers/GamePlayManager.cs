@@ -13,6 +13,8 @@ public class GamePlayManager : MonoBehaviour
     float timeToPrepare;
     [SerializeField]
     float timeToSelect;
+    [SerializeField]
+    float timeAttacking;
     float currentTime;
     [SerializeField]
     Text time;
@@ -27,6 +29,8 @@ public class GamePlayManager : MonoBehaviour
     List<Transform> attackingDrones = new List<Transform>();
     public bool attacking;
     Transform currentAttackingDrone;
+    public List<BigDrone> avatars = new List<BigDrone>();
+    bool firstTime = true;
         
     
     public enum EGameState
@@ -50,14 +54,12 @@ public class GamePlayManager : MonoBehaviour
             case EGameState.PREPARE:
                 currentTime-=Time.deltaTime;
 				if(currentTime<=0 && PhotonNetwork.IsMasterClient)
-				{
-                    current++;
-                    if(current>2)
-                        current = 1;
+                {                    
+                    ChangeTurn();
                     SetCurrentPlayer(current);
                     PV.RPC("RPC_SetCurrentPlayer",RpcTarget.Others,current);
+                    ChangeState(EGameState.SELECTING);
                     PV.RPC("RPC_ChangeState",RpcTarget.Others,1);
-                    ChangeState(EGameState.SELECTING);                        
 				}
                 break;
             case EGameState.SELECTING:
@@ -79,6 +81,7 @@ public class GamePlayManager : MonoBehaviour
 						{
                             attackingDrones.Add(currentAttackingDrone);
                             panel.gameObject.SetActive(true);
+                            ActivateArrows(true);
 						}
 					}   
 				}
@@ -94,32 +97,42 @@ public class GamePlayManager : MonoBehaviour
 						{
                             currentAttackingDrone.GetComponent<BigDrone>().target = drone;
                             attacking = false;
+                            ActivateArrows(attacking);
 						}
 					}
 					
 				}
                 //Si el tiempo llega a 0 se canvia el estado a attacking
-		        if(currentTime<0)
+		        if(currentTime<0 && PhotonNetwork.IsMasterClient)
 		        {
                     ChangeState(EGameState.ATTACKING);
                     PV.RPC("RPC_ChangeState",RpcTarget.Others,2);
 		        }
                 break;
             case EGameState.ATTACKING:
-                foreach(Transform drone in attackingDrones)
+                currentTime-=Time.deltaTime;
+				if(firstTime)
 				{
-                    drone.GetComponent<BigDrone>().Attack();
-                    PV.RPC("RPC_ApplyDamage",RpcTarget.Others, drone.GetComponent<BigDrone>().damage,drone.GetComponent<BigDrone>().target.GetComponent<BigDrone>().id);
+                    foreach(Transform drone in attackingDrones)
+				    {
+                        BigDrone current = drone.GetComponent<BigDrone>();
+                        BigDrone target = current.target.GetComponent<BigDrone>();
+                        current.Attack();
+                        PV.RPC("RPC_ApplyDamage",RpcTarget.Others, current.damage,target.PV.ViewID);
+				    }
+                    firstTime = false;
 				}
-                current++;
-                if(current>2)
-                    current = 1;
-                SetCurrentPlayer(current);
-                PV.RPC("RPC_SetCurrentPlayer",RpcTarget.Others,current);
-                ChangeState(EGameState.SELECTING);
-                PV.RPC("RPC_ChangeState",RpcTarget.Others,1);
-
+                
+				if(PhotonNetwork.IsMasterClient && currentTime<=0)
+				{
+                    ChangeTurn();
+                    SetCurrentPlayer(current);
+                    PV.RPC("RPC_SetCurrentPlayer",RpcTarget.Others,current);
+                    ChangeState(EGameState.SELECTING);
+                    PV.RPC("RPC_ChangeState",RpcTarget.Others,1);                
+				}
                 break;
+                
 		}        
     }    
     void ChangeState(EGameState nextState)
@@ -133,17 +146,22 @@ public class GamePlayManager : MonoBehaviour
                 currentTime = timeToSelect;
                 break;
             case EGameState.ATTACKING:
+                currentTime = timeAttacking;
                 break;
 		}
 		switch(currentState)
 		{            
-            case EGameState.PREPARE:
+            case EGameState.PREPARE: 
+                BigDrone[] drones = FindObjectsOfType<BigDrone>();
+                for(int i = 0; i<drones.Length;i++)
+                    avatars.Add(drones[i]);
                 break;
             case EGameState.SELECTING:
                 attacking = false;
                 break;  
             case EGameState.ATTACKING:
                 attackingDrones.Clear();
+                firstTime = true;
                 break;
 		}
         currentState = nextState;
@@ -185,8 +203,22 @@ public class GamePlayManager : MonoBehaviour
             players[i].DamageSoldier(damage,id);
 		}
 	}
-    
-	    
+    void ChangeTurn()
+	{
+        current++;
+        if(current>2)
+            current = 1;        
+	}
+    void ActivateArrows(bool must)
+	{
+        foreach(BigDrone drone in avatars)
+		{
+            if(currentPlayer.GetMySoldiers().Contains(drone.transform))
+                continue;
+
+            drone.ShowArrow(must);
+		}
+	}
 }
 
 
