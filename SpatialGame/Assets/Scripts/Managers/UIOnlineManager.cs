@@ -9,9 +9,28 @@ public class UIOnlineManager : MonoBehaviour
     Text currentPlayerTurnText;
     [SerializeField]
     GamePlayManager gamePlayManager;
+    BigDrone currentDrone;
+    public List<Image> energyPlayer1;
+    public List<Image> energyPlayer2;
+    [SerializeField]
+    GameObject panel;
 
-    public void BasicAttack()
+    public void ChangeAttackDamage(float newDamage)
 	{
-        gamePlayManager.attacking = true;
+        currentDrone.SetDamage(newDamage);        
+	}
+    public void SetEnergyCost(int energy)
+	{
+        if(energy>=currentDrone.Getplayer().GetCurrentEnergy())
+            currentDrone.SetEnergyCost(energy);
+	}
+
+    public void SetCurrentDrone(BigDrone drone)
+	{
+        currentDrone = drone;
+	}
+    public void HidePanel()
+	{
+        panel.SetActive(false);
 	}
 }

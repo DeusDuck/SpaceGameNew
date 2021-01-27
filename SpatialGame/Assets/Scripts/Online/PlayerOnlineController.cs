@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class PlayerOnlineController : MonoBehaviour
 {
@@ -9,9 +10,14 @@ public class PlayerOnlineController : MonoBehaviour
     PhotonView PV;
     GamePlayManager gamePlayManager;
     [SerializeField]
-    List<Transform> mySoldiers;
+    List<BigDrone> mySoldiers;
     public string path;
     public int myTeam;
+    [SerializeField]
+    int currentEnergy;
+    [SerializeField]
+    int maxEnergy;
+    List<Image> energyImages = new List<Image>();
 
     // Start is called before the first frame update
     void Awake()
@@ -22,6 +28,7 @@ public class PlayerOnlineController : MonoBehaviour
     }
 	private void Start()
 	{
+        Recharge();
 		if(PV.IsMine)
 		{
             PV.RPC("RPC_GetTeam",RpcTarget.MasterClient);
@@ -29,21 +36,23 @@ public class PlayerOnlineController : MonoBehaviour
 			{
                 for(int i = 0; i<GameSetUp.gameSetUp.spawningPointsLocal.Length; i++)
 			    {
-				    GameObject obj = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsLocal[i].position,GameSetUp.gameSetUp.spawningPointsLocal[i].rotation,0);
-				    mySoldiers.Add(obj.transform);
+				    mySoldiers.Add(PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsLocal[i].position,GameSetUp.gameSetUp.spawningPointsLocal[i].rotation,0).GetComponent<BigDrone>());
 			    }
 			}
 			else
 			{
                 for(int i = 0; i<GameSetUp.gameSetUp.spawningPointsOther.Length; i++)
 			    {
-				    GameObject obj = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsOther[i].position,GameSetUp.gameSetUp.spawningPointsOther[i].rotation,0);
-				    mySoldiers.Add(obj.transform);
+				    mySoldiers.Add(PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsOther[i].position,GameSetUp.gameSetUp.spawningPointsOther[i].rotation,0).GetComponent<BigDrone>());
 			    }	
 			}
 		}
+
+        foreach(BigDrone drone in mySoldiers)
+		{
+            drone.SetPlayerController(this, gamePlayManager);
+		}
 	}
-	public void AddSoldier(Transform soldier){mySoldiers.Add(soldier);}
     [PunRPC]
     void RPC_GetTeam()
 	{
@@ -57,17 +66,66 @@ public class PlayerOnlineController : MonoBehaviour
         myTeam = team;
 	}
     public PhotonView GetPV(){return PV;}
-    public List<Transform> GetMySoldiers(){return mySoldiers;}
+    public List<BigDrone> GetMySoldiers(){return mySoldiers;}
     public void DamageSoldier(float damage, int id)
 	{
-        foreach(Transform t in mySoldiers)
+        foreach(BigDrone current in mySoldiers)
 		{
-            BigDrone current = t.GetComponent<BigDrone>();
             if(current.PV.ViewID == id)
 			{
                 current.TakeDamage(damage);
                 break;
 			}
+		}
+	}
+    public void SpendEnergy(int energy)
+	{
+        if(currentEnergy-energy>=0)
+            currentEnergy-=energy;
+
+        for(int i = maxEnergy-1; i>=0; i--)
+		{
+            energyImages[i].color = Color.white;
+		}
+	}
+    public void Recharge()
+	{
+        currentEnergy = maxEnergy;
+
+        for(int i = 0; i<energyImages.Count; i++)
+		{
+            energyImages[i].color = Color.cyan;
+		}
+	}
+    public void AddMoreEnergy()
+	{
+        if(maxEnergy<energyImages.Count)
+            maxEnergy++;
+
+        UpdateMaxEnergyImage();
+        Recharge();
+	}
+    public void SetEnergyImages()
+	{
+        if(myTeam == 1)
+		{
+            foreach(Image image in gamePlayManager.GetUIManager().energyPlayer2)
+                energyImages.Add(image);
+		}
+        else
+           foreach(Image image in gamePlayManager.GetUIManager().energyPlayer1)
+                energyImages.Add(image);
+	}
+    //Retorna una lista de int, el primero siempre sera la energia que tiene y el segundo la energia maxima
+    public int GetCurrentEnergy()
+	{        
+        return currentEnergy;
+	}
+    void UpdateMaxEnergyImage()
+	{
+        for(int i = 0; i<maxEnergy; i++)
+		{
+            energyImages[i].gameObject.SetActive(true);           
 		}
 	}
 }

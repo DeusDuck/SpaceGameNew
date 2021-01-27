@@ -26,11 +26,13 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField]
     Transform panel;
     int current = 0;
-    List<Transform> attackingDrones = new List<Transform>();
+    List<BigDrone> attackingDrones = new List<BigDrone>();
     public bool attacking;
-    Transform currentAttackingDrone;
+    BigDrone currentAttackingDrone;
     public List<BigDrone> avatars = new List<BigDrone>();
     bool firstTime = true;
+    [SerializeField]
+    UIOnlineManager UIManager;
         
     
     public enum EGameState
@@ -42,7 +44,7 @@ public class GamePlayManager : MonoBehaviour
     void Start()
     {
         //Setea la partida, determina con un rnd el primer jugador en atacar
-        currentTime = timeToPrepare;
+        currentTime = timeToPrepare;        
     }
 
     // Update is called once per frame
@@ -75,13 +77,14 @@ public class GamePlayManager : MonoBehaviour
                    
                     if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
 					{                       
-                        currentAttackingDrone = hit.transform.GetComponent<Transform>();
+                        currentAttackingDrone = hit.transform.GetComponent<BigDrone>();
 
 						if(currentAttackingDrone!=null && currentPlayer.GetMySoldiers().Contains(currentAttackingDrone) && !attackingDrones.Contains(currentAttackingDrone))
 						{
                             attackingDrones.Add(currentAttackingDrone);
                             panel.gameObject.SetActive(true);
                             ActivateArrows(true);
+                            UIManager.SetCurrentDrone(currentAttackingDrone);
 						}
 					}   
 				}
@@ -91,11 +94,11 @@ public class GamePlayManager : MonoBehaviour
                     
                     if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
 					{
-                        Transform drone = hit.transform.GetComponent<Transform>();
+                        BigDrone drone = hit.transform.GetComponent<BigDrone>();
 
                         if(drone!=null && !currentPlayer.GetMySoldiers().Contains(drone))
 						{
-                            currentAttackingDrone.GetComponent<BigDrone>().target = drone;
+                            currentAttackingDrone.target = drone;
                             attacking = false;
                             ActivateArrows(attacking);
 						}
@@ -113,12 +116,10 @@ public class GamePlayManager : MonoBehaviour
                 currentTime-=Time.deltaTime;
 				if(firstTime)
 				{
-                    foreach(Transform drone in attackingDrones)
-				    {
-                        BigDrone current = drone.GetComponent<BigDrone>();
-                        BigDrone target = current.target.GetComponent<BigDrone>();
-                        current.Attack();
-                        PV.RPC("RPC_ApplyDamage",RpcTarget.Others, current.damage,target.PV.ViewID);
+                    foreach(BigDrone drone in attackingDrones)
+                    {
+                        drone.Attack();
+                        PV.RPC("RPC_ApplyDamage",RpcTarget.Others, drone.damage,drone.target.PV.ViewID);
 				    }
                     firstTime = false;
 				}
@@ -144,6 +145,11 @@ public class GamePlayManager : MonoBehaviour
             
             case EGameState.SELECTING:
                 currentTime = timeToSelect;
+				if(PhotonNetwork.IsMasterClient)
+				{
+                    AddEnergy();
+                    PV.RPC("RPC_AddMoreEnergy",RpcTarget.Others);
+				}
                 break;
             case EGameState.ATTACKING:
                 currentTime = timeAttacking;
@@ -154,7 +160,13 @@ public class GamePlayManager : MonoBehaviour
             case EGameState.PREPARE: 
                 BigDrone[] drones = FindObjectsOfType<BigDrone>();
                 for(int i = 0; i<drones.Length;i++)
-                    avatars.Add(drones[i]);
+                    avatars.Add(drones[i]); 
+                foreach(PlayerOnlineController player in players)
+				{
+                    player.SetEnergyImages();
+                    player.AddMoreEnergy();
+				}
+                    
                 break;
             case EGameState.SELECTING:
                 attacking = false;
@@ -203,6 +215,18 @@ public class GamePlayManager : MonoBehaviour
             players[i].DamageSoldier(damage,id);
 		}
 	}
+    [PunRPC]
+    void RPC_AddMoreEnergy()
+	{
+        AddEnergy();
+	}
+    void AddEnergy()
+	{
+        foreach(PlayerOnlineController player in players)
+		{
+            player.AddMoreEnergy();
+		}
+	}
     void ChangeTurn()
 	{
         current++;
@@ -213,12 +237,13 @@ public class GamePlayManager : MonoBehaviour
 	{
         foreach(BigDrone drone in avatars)
 		{
-            if(currentPlayer.GetMySoldiers().Contains(drone.transform))
+            if(currentPlayer.GetMySoldiers().Contains(drone))
                 continue;
 
             drone.ShowArrow(must);
 		}
 	}
+    public UIOnlineManager GetUIManager(){return UIManager;}
 }
 
 

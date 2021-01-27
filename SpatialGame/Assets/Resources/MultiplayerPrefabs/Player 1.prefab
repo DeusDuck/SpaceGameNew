@@ -143,9 +143,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PV: {fileID: 6302386137897929138}
   mySoldiers: []
-  playerID: 0
   path: MultiplayerPrefabs/Commander
   myTeam: 0
+  currentEnergy: 0
+  maxEnergy: 0
 --- !u!114 &6302386137897929138
 MonoBehaviour:
   m_ObjectHideFlags: 0

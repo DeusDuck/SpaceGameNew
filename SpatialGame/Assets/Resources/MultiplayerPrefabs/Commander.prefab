@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 8023697706822480231}
   - component: {fileID: 3182711469067774638}
   - component: {fileID: 5194150819085322954}
-  - component: {fileID: 515184050869541562}
+  - component: {fileID: 4347738667007325342}
   m_Layer: 10
   m_Name: Commander
   m_TagString: Untagged
@@ -257,7 +257,7 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!65 &515184050869541562
+--- !u!65 &4347738667007325342
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,8 +268,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.109409, y: 22.440535, z: 1}
-  m_Center: {x: 0.27180034, y: 8.543545, z: 0}
+  m_Size: {x: 10.911703, y: 22.601473, z: 0.24668741}
+  m_Center: {x: 0.1881963, y: 8.665703, z: 0.018868923}
 --- !u!1 &2599942166155277715
 GameObject:
   m_ObjectHideFlags: 0

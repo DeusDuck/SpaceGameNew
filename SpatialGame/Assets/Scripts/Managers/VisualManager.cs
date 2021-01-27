@@ -69,6 +69,9 @@ public class VisualManager : MonoBehaviour
 
     [Header("Other Variables")]
     int numberOfPlayers;
+    int minutes;
+    float seconds;
+    float currentTime;
     
     public enum VisualState
     {
@@ -78,7 +81,8 @@ public class VisualManager : MonoBehaviour
 
 	private void Update()
 	{
-		onlineCounterText.text = OnlineManager.instance.GetCurrentNumberOfPlayers.ToString() + " / 2";
+        if(onlineCounterText.gameObject.activeInHierarchy)
+		    CalculateTime();
 	}
 	//Activa el menu de construcción
 	public void DisplayBuildingMenu()
@@ -237,4 +241,16 @@ public class VisualManager : MonoBehaviour
         woodText.text = wood.ToString();
     }
     public void StopCameraMovement(bool stop){cameraMovement.StopCameraMovement(stop);}
+    void CalculateTime()
+	{
+        seconds+=Time.deltaTime;
+
+		if(seconds>=60)
+		{
+            minutes++;
+            seconds = 0;
+		}
+
+        onlineCounterText.text = "Searching...   " + minutes.ToString("00") + " : " + seconds.ToString("00");
+	}
 }

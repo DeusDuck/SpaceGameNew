@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 455940153196692012}
-  - component: {fileID: 3143370921043192203}
   - component: {fileID: 5962854990814206035}
   - component: {fileID: 6238542503538373682}
+  - component: {fileID: 5391398609412385980}
   m_Layer: 10
   m_Name: Combat_Drone
   m_TagString: Untagged
@@ -35,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3143370921043192203
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 373532342852372261}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.7602887, y: 3.9195538, z: 0.2}
-  m_Center: {x: 0.13696408, y: 1.2785234, z: 0}
 --- !u!114 &5962854990814206035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +82,19 @@ MonoBehaviour:
   myChasis: {fileID: 0}
   target: {fileID: 0}
   PV: {fileID: 5962854990814206035}
+--- !u!65 &5391398609412385980
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373532342852372261}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.7008548, y: 3.2779903, z: 0.24898925}
+  m_Center: {x: 0.011027098, y: 1.1389952, z: 0.0000067800283}
 --- !u!1 &408014943977014346
 GameObject:
   m_ObjectHideFlags: 0

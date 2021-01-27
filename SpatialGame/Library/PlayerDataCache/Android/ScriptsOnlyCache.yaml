@@ -603,7 +603,7 @@ ScriptsOnlyBuild:
     className: UserIdField
   - hash:
       serializedVersion: 2
-      Hash: 5ab3c90254b34cefb221a3cc2d0e4398
+      Hash: 28f79f5ddaca7c21143e27b64d8427ed
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GamePlayManager
@@ -1653,7 +1653,7 @@ ScriptsOnlyBuild:
     className: TransitionDictionaryExample
   - hash:
       serializedVersion: 2
-      Hash: b4b14ad4ac955464cd2889cd0f1dcaa1
+      Hash: fb95a6e3a520a28c9c179b2cc32dca44
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIOnlineManager
@@ -1959,7 +1959,7 @@ ScriptsOnlyBuild:
     className: SplineWalker
   - hash:
       serializedVersion: 2
-      Hash: 81aa12aea439578007c0e2611a712818
+      Hash: d449452329b9b7ef2c1d890df5a4fd86
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerOnlineController
@@ -2805,7 +2805,7 @@ ScriptsOnlyBuild:
     className: WorldGenerator
   - hash:
       serializedVersion: 2
-      Hash: 03f917e8420bbabd76dda8b56d6df50c
+      Hash: 7c2ac543239987616fb15ea2ccb7ab3a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BigDrone

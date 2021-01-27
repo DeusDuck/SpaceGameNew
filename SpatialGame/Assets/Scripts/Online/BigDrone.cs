@@ -30,8 +30,10 @@ public class BigDrone : MonoBehaviour,IControlable
     Chasis myChasis;
     [Space(5)]
 
-    public Transform target;
+    public BigDrone target;
     public PhotonView PV;
+    PlayerOnlineController myPlayerController;
+    GamePlayManager gamePlayManager;
 	public void TakeDamage(float _damage)
 	{
 		currentHealth-=_damage;
@@ -71,10 +73,26 @@ public class BigDrone : MonoBehaviour,IControlable
     }
     public void Attack()
 	{
-        target.GetComponent<BigDrone>().TakeDamage(damage);
+        if(target!=null)
+            target.TakeDamage(damage);
 	}
     public void ShowArrow(bool must)
 	{
         arrowImage.gameObject.SetActive(must);
 	}
+    public void SetDamage(float newDamage)
+	{
+        damage = newDamage;
+	}
+    public void SetEnergyCost(int _energyCost)
+	{
+		if(_energyCost<=myPlayerController.GetCurrentEnergy())
+		{
+            myPlayerController.SpendEnergy(_energyCost);
+            gamePlayManager.GetUIManager().HidePanel();
+            gamePlayManager.attacking = true;
+		}            
+	}
+    public void SetPlayerController(PlayerOnlineController player, GamePlayManager manager){myPlayerController = player; gamePlayManager = manager;}
+    public PlayerOnlineController Getplayer(){return myPlayerController;}
 }
