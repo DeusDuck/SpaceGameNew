@@ -1,0 +1,139 @@
+
+Dron_storage_side_layersArranged.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Container
+  rotate: false
+  xy: 2, 943
+  size: 935, 1099
+  orig: 935, 1099
+  offset: 0, 0
+  index: -1
+arm
+  rotate: true
+  xy: 939, 1769
+  size: 273, 488
+  orig: 273, 488
+  offset: 0, 0
+  index: -1
+chest
+  rotate: true
+  xy: 1324, 93
+  size: 380, 441
+  orig: 380, 441
+  offset: 0, 0
+  index: -1
+elbow 1
+  rotate: false
+  xy: 926, 39
+  size: 141, 141
+  orig: 141, 141
+  offset: 0, 0
+  index: -1
+elbow 2
+  rotate: false
+  xy: 1082, 1651
+  size: 116, 116
+  orig: 116, 116
+  offset: 0, 0
+  index: -1
+forearm 1
+  rotate: true
+  xy: 825, 182
+  size: 291, 497
+  orig: 291, 497
+  offset: 0, 0
+  index: -1
+forearm 2
+  rotate: true
+  xy: 395, 21
+  size: 352, 359
+  orig: 352, 359
+  offset: 0, 0
+  index: -1
+hand
+  rotate: true
+  xy: 756, 20
+  size: 160, 168
+  orig: 160, 168
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 375
+  size: 821, 566
+  orig: 821, 566
+  offset: 0, 0
+  index: -1
+index 1
+  rotate: true
+  xy: 939, 1488
+  size: 136, 106
+  orig: 136, 106
+  offset: 0, 0
+  index: -1
+index 2
+  rotate: true
+  xy: 1200, 1621
+  size: 146, 111
+  orig: 146, 111
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 2, 2
+  size: 391, 371
+  orig: 391, 371
+  offset: 0, 0
+  index: -1
+pinky1
+  rotate: true
+  xy: 1435, 15
+  size: 76, 133
+  orig: 76, 133
+  offset: 0, 0
+  index: -1
+pinky2
+  rotate: true
+  xy: 756, 221
+  size: 152, 61
+  orig: 152, 61
+  offset: 0, 0
+  index: -1
+shoulder
+  rotate: false
+  xy: 939, 1626
+  size: 141, 141
+  orig: 141, 141
+  offset: 0, 0
+  index: -1
+thumb 1
+  rotate: false
+  xy: 1429, 1684
+  size: 275, 358
+  orig: 275, 358
+  offset: 0, 0
+  index: -1
+thumb 2
+  rotate: false
+  xy: 1298, 11
+  size: 135, 80
+  orig: 135, 80
+  offset: 0, 0
+  index: -1
+torso
+  rotate: true
+  xy: 825, 475
+  size: 466, 609
+  orig: 466, 609
+  offset: 0, 0
+  index: -1
+wrist
+  rotate: true
+  xy: 1069, 58
+  size: 122, 227
+  orig: 122, 227
+  offset: 0, 0
+  index: -1

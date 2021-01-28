@@ -28,6 +28,8 @@ public class BigDrone : MonoBehaviour,IControlable
     List<Weapon> myWeapons;
     [SerializeField]
     Chasis myChasis;
+    [SerializeField]
+    Bullets myBullet;
     [Space(5)]
 
     public BigDrone target;
@@ -88,6 +90,7 @@ public class BigDrone : MonoBehaviour,IControlable
 	{
 		if(_energyCost<=myPlayerController.GetCurrentEnergy())
 		{
+            Debug.Log(_energyCost);
             myPlayerController.SpendEnergy(_energyCost);
             gamePlayManager.GetUIManager().HidePanel();
             gamePlayManager.attacking = true;
@@ -95,4 +98,9 @@ public class BigDrone : MonoBehaviour,IControlable
 	}
     public void SetPlayerController(PlayerOnlineController player, GamePlayManager manager){myPlayerController = player; gamePlayManager = manager;}
     public PlayerOnlineController Getplayer(){return myPlayerController;}
+    public void SetBullet(Bullets currentBullet)
+    {
+        myBullet = currentBullet;
+        damage = myBullet.GetDamage();
+    }
 }

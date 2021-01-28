@@ -19,10 +19,14 @@ public class UIOnlineManager : MonoBehaviour
 	{
         currentDrone.SetDamage(newDamage);        
 	}
+    public void ChangeBullet(Bullets currentBullet)
+	{
+        currentDrone.SetBullet(currentBullet);
+	}
     public void SetEnergyCost(int energy)
 	{
-        if(energy>=currentDrone.Getplayer().GetCurrentEnergy())
-            currentDrone.SetEnergyCost(energy);
+		if(energy<=currentDrone.Getplayer().GetCurrentEnergy())
+            currentDrone.SetEnergyCost(energy);            
 	}
 
     public void SetCurrentDrone(BigDrone drone)

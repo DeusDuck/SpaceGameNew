@@ -95,7 +95,6 @@ public class GamePlayManager : MonoBehaviour
                     if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
 					{
                         BigDrone drone = hit.transform.GetComponent<BigDrone>();
-
                         if(drone!=null && !currentPlayer.GetMySoldiers().Contains(drone))
 						{
                             currentAttackingDrone.target = drone;
@@ -118,6 +117,9 @@ public class GamePlayManager : MonoBehaviour
 				{
                     foreach(BigDrone drone in attackingDrones)
                     {
+                       if(drone.target == null)
+                            continue;
+
                         drone.Attack();
                         PV.RPC("RPC_ApplyDamage",RpcTarget.Others, drone.damage,drone.target.PV.ViewID);
 				    }

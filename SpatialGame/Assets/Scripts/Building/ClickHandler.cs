@@ -28,7 +28,6 @@ public class ClickHandler : MonoBehaviour
                     }
                     if(hitInfo.collider.transform.tag == "Building")
                     {                
-                        Debug.Log("olaaa");
                         visualManager.ShowBuildingsMenu(hitInfo.collider.transform);
                     }
                 }

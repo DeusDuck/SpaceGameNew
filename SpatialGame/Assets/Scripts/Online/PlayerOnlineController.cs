@@ -80,13 +80,17 @@ public class PlayerOnlineController : MonoBehaviour
 	}
     public void SpendEnergy(int energy)
 	{
-        if(currentEnergy-energy>=0)
+		if(energy!=0 && currentEnergy-energy>=0)
+		{
             currentEnergy-=energy;
 
-        for(int i = maxEnergy-1; i>=0; i--)
-		{
-            energyImages[i].color = Color.white;
-		}
+            int diference = maxEnergy-currentEnergy;
+
+            for(int i = diference - 1; i>=0; i--)
+		    {
+                energyImages[i].color = Color.white;
+		    }
+		}            
 	}
     public void Recharge()
 	{
@@ -94,7 +98,7 @@ public class PlayerOnlineController : MonoBehaviour
 
         for(int i = 0; i<energyImages.Count; i++)
 		{
-            energyImages[i].color = Color.cyan;
+            energyImages[i].color = Color.red;
 		}
 	}
     public void AddMoreEnergy()

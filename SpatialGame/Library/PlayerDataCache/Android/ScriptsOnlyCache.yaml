@@ -3,12 +3,12 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - BigDrone
     - BuildingType
+    - Bullets
     - ButtonNPC
     - CameraMovement
     - Chasis
     - ClickHandler
     - CloningRoom
-    - CombatInfo
     - Drone
     - DronesRoom
     - GamePlayManager
@@ -175,6 +175,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 16526}
     - Class: 114
       Script: {instanceID: 16684}
+    - Class: 114
+      Script: {instanceID: 28270}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1275,12 +1277,6 @@ ScriptsOnlyBuild:
     className: PunCockpitEmbed
   - hash:
       serializedVersion: 2
-      Hash: 0fda71b3b4a0e26a689f7617480448ae
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CombatInfo
-  - hash:
-      serializedVersion: 2
       Hash: 4413b36bd4dfd5d2fe8e8e1c24c94e44
     assemblyName: spine-unity.dll
     namespaceName: Spine.Unity
@@ -1513,12 +1509,6 @@ ScriptsOnlyBuild:
     assemblyName: spine-unity.dll
     namespaceName: Spine.Unity
     className: SkeletonMecanim
-  - hash:
-      serializedVersion: 2
-      Hash: 06e5cb7d592c2ea6def91ab1a0c930ce
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CombatPositions
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -2805,7 +2795,7 @@ ScriptsOnlyBuild:
     className: WorldGenerator
   - hash:
       serializedVersion: 2
-      Hash: 7c2ac543239987616fb15ea2ccb7ab3a
+      Hash: bc9e2d5a9d6572bd99e72ef72f94cc13
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BigDrone
@@ -2911,6 +2901,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: b32b5d16b19965061ab8443d7543099e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Bullets
   platform: 13
   scenePathNames:
   - Assets/Scenes/Pruebas Enric/EstacionEspacial.unity

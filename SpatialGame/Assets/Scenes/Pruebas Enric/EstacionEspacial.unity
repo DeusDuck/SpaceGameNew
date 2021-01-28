@@ -5000,9 +5000,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0d36b4fd59dc74da6029e1781ab162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldiers:
-  - Cube
-  - Sphere
 --- !u!4 &1216807361
 Transform:
   m_ObjectHideFlags: 0

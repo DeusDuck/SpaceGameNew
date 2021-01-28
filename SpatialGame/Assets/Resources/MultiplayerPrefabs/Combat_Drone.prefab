@@ -80,6 +80,7 @@ MonoBehaviour:
   resistance: 0
   myWeapons: []
   myChasis: {fileID: 0}
+  myBullet: {fileID: 0}
   target: {fileID: 0}
   PV: {fileID: 5962854990814206035}
 --- !u!65 &5391398609412385980

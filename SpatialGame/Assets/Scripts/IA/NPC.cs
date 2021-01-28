@@ -175,6 +175,7 @@ public class NPC : MonoBehaviour
     {
         if(currentAnimationName == anim.name)
             return;
+
         mySkeleton.state.SetAnimation(0, anim, loop).TimeScale = timeScale;
         currentAnimationName = anim.name;
     }
