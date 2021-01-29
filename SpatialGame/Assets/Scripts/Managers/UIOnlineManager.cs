@@ -37,4 +37,15 @@ public class UIOnlineManager : MonoBehaviour
 	{
         panel.SetActive(false);
 	}
+    public void ShowAvailableDrones()
+	{
+        foreach(BigDrone drone in gamePlayManager.avatars)
+		{
+            if(gamePlayManager.attackingDrones.Contains(drone) || gamePlayManager.movingDrones.Contains(drone)
+                || !gamePlayManager.currentPlayer.GetMySoldiers().Contains(drone))
+                continue;
+
+            drone.ShowArrow(true);
+		}
+	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 public class GamePlayManager : MonoBehaviour
@@ -15,6 +16,10 @@ public class GamePlayManager : MonoBehaviour
     float timeToSelect;
     [SerializeField]
     float timeAttacking;
+    [SerializeField]
+    Transform player1FacingPoint;
+    [SerializeField]
+    Transform player2FacingPoint;
     float currentTime;
     [SerializeField]
     Text time;
@@ -26,8 +31,10 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField]
     Transform panel;
     int current = 0;
-    List<BigDrone> attackingDrones = new List<BigDrone>();
+    public List<BigDrone> attackingDrones = new List<BigDrone>();
+    public List<BigDrone> movingDrones = new List<BigDrone>();
     public bool attacking;
+    bool moving;
     BigDrone currentAttackingDrone;
     public List<BigDrone> avatars = new List<BigDrone>();
     bool firstTime = true;
@@ -68,42 +75,60 @@ public class GamePlayManager : MonoBehaviour
                 //Resta el tiempo en hacer una acción
                 currentTime-=Time.deltaTime;
                 time.text = currentTime.ToString("F0");
-                
-				if(Input.GetMouseButtonDown(0) && currentPlayer.GetPV().IsMine && !attacking)
-				{                    
-                    //Mira que jugador has selecionado para hacerle daño
-                    //Touch touch = Input.GetTouch(0);
-					Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);  
+                //if(!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                if(!EventSystem.current.IsPointerOverGameObject())
+                {
+				    if(Input.GetMouseButtonDown(0) && currentPlayer.GetPV().IsMine && !attacking && !moving)
+				    {                    
+                        //Mira que jugador has selecionado para hacerle daño
+                        //Touch touch = Input.GetTouch(0);
+					    Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);  
                    
-                    if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
-					{                       
-                        currentAttackingDrone = hit.transform.GetComponent<BigDrone>();
+                        if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
+					    {                       
+                            currentAttackingDrone = hit.transform.GetComponent<BigDrone>();
 
-						if(currentAttackingDrone!=null && currentPlayer.GetMySoldiers().Contains(currentAttackingDrone) && !attackingDrones.Contains(currentAttackingDrone))
-						{
-                            attackingDrones.Add(currentAttackingDrone);
-                            panel.gameObject.SetActive(true);
-                            ActivateArrows(true);
-                            UIManager.SetCurrentDrone(currentAttackingDrone);
-						}
-					}   
-				}
-				if(attacking && Input.GetMouseButtonDown(0))
-				{                    
-                    Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);  
+						    if(currentAttackingDrone!=null)
+						    {
+                                if(currentPlayer.GetMySoldiers().Contains(currentAttackingDrone) && !attackingDrones.Contains(currentAttackingDrone))
+							    {
+                                    panel.gameObject.SetActive(true);
+                                    ActivateAlliesArrows(false);
+                                    UIManager.SetCurrentDrone(currentAttackingDrone);
+							    }                           
+						    }
+
+
+					    }   
+				    }
+				    if((moving || attacking) && Input.GetMouseButtonDown(0))
+				    {                    
+                        Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);  
                     
-                    if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
-					{
-                        BigDrone drone = hit.transform.GetComponent<BigDrone>();
-                        if(drone!=null && !currentPlayer.GetMySoldiers().Contains(drone))
-						{
-                            currentAttackingDrone.target = drone;
-                            attacking = false;
-                            ActivateArrows(attacking);
-						}
-					}
+                        if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
+					    {
+                            BigDrone drone = hit.transform.GetComponent<BigDrone>();
+                            if(drone!=null) 
+						    {
+                                currentAttackingDrone.target = drone;
+							    if(!currentPlayer.GetMySoldiers().Contains(drone))
+							    {
+                                    attacking = false;
+                                    ActivateEnemyArrows(attacking);
+                                    ActivateAlliesArrows(!attacking);
+							    }
+							    else
+							    {                 
+                                    currentAttackingDrone.MoveToTargetPosition();
+                                    moving = false;
+                                    ActivateEnemyArrows(false);
+                                    ActivateAlliesArrows(true);
+							    }
+						    }
+					    }
 					
-				}
+				    }
+                }
                 //Si el tiempo llega a 0 se canvia el estado a attacking
 		        if(currentTime<0 && PhotonNetwork.IsMasterClient)
 		        {
@@ -126,7 +151,7 @@ public class GamePlayManager : MonoBehaviour
                     firstTime = false;
 				}
                 
-				if(PhotonNetwork.IsMasterClient && currentTime<=0)
+				if(currentTime<=0 && PhotonNetwork.IsMasterClient)
 				{
                     ChangeTurn();
                     SetCurrentPlayer(current);
@@ -147,6 +172,7 @@ public class GamePlayManager : MonoBehaviour
             
             case EGameState.SELECTING:
                 currentTime = timeToSelect;
+                ActivateAlliesArrows(true);
 				if(PhotonNetwork.IsMasterClient)
 				{
                     AddEnergy();
@@ -165,16 +191,24 @@ public class GamePlayManager : MonoBehaviour
                     avatars.Add(drones[i]); 
                 foreach(PlayerOnlineController player in players)
 				{
+                    if(player.myTeam == 1)
+                        player.facingPoint = player2FacingPoint;
+                    else
+                        player.facingPoint = player1FacingPoint;
                     player.SetEnergyImages();
                     player.AddMoreEnergy();
 				}
-                    
+                ActivateAlliesArrows(true);
+                Camera.main.transform.LookAt(currentPlayer.facingPoint);
                 break;
             case EGameState.SELECTING:
                 attacking = false;
+                foreach(BigDrone drone in currentPlayer.GetMySoldiers())
+                    drone.ShowArrow(false);
                 break;  
             case EGameState.ATTACKING:
                 attackingDrones.Clear();
+                movingDrones.Clear();
                 firstTime = true;
                 break;
 		}
@@ -184,8 +218,6 @@ public class GamePlayManager : MonoBehaviour
     
     void SetCurrentPlayer(int team)
 	{
-        if(currentPlayer!=null)
-            currentPlayer.transform.position = Vector3.up*10f;
         for(int i = 0; i<players.Count; i++)
 		{
             if(players[i].myTeam == team)
@@ -193,8 +225,6 @@ public class GamePlayManager : MonoBehaviour
                 currentPlayer = players[i];
 			}
 		}
-        if(currentPlayer !=null)
-            currentPlayer.transform.position = Vector3.zero;
 	}
     //Setea el turno del jugador
     [PunRPC]
@@ -235,7 +265,7 @@ public class GamePlayManager : MonoBehaviour
         if(current>2)
             current = 1;        
 	}
-    void ActivateArrows(bool must)
+    public void ActivateEnemyArrows(bool must)
 	{
         foreach(BigDrone drone in avatars)
 		{
@@ -245,7 +275,34 @@ public class GamePlayManager : MonoBehaviour
             drone.ShowArrow(must);
 		}
 	}
+    public void ActivateAlliesArrows(bool must)
+	{
+        foreach(BigDrone drone in avatars)
+		{
+            if(!currentPlayer.GetMySoldiers().Contains(drone)) 
+                continue;
+
+			if(attackingDrones.Contains(drone) || movingDrones.Contains(drone))
+			{
+                drone.ShowArrow(false);
+                continue;
+			}
+
+
+            drone.ShowArrow(must);
+		}
+	}
     public UIOnlineManager GetUIManager(){return UIManager;}
+    public void SetMoving(bool must)
+	{
+        moving = must;
+        movingDrones.Add(currentAttackingDrone);
+	}
+    public void SetAttack(bool must)
+	{
+        attacking = must;
+        attackingDrones.Add(currentAttackingDrone);
+	}
 }
 
 

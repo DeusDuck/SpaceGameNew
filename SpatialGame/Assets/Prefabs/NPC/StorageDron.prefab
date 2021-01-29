@@ -138,7 +138,7 @@ MonoBehaviour:
   myRoom: {fileID: 0}
   mySkeleton: {fileID: 560843954733537373}
   idle: {fileID: 11400000, guid: 2e0ab5b17e69df54391770866c52ab6f, type: 2}
-  recollecting: {fileID: 11400000, guid: 2c4f1c6d85146e3479d2d74f5c86f209, type: 2}
+  recollecting: {fileID: 11400000, guid: 1070f0e87eac4434ca8d73a5d41c0443, type: 2}
   currentState: 0
   timeTravelling: 10
 --- !u!195 &6463641237475970990

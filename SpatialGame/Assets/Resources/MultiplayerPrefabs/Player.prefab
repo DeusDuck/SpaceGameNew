@@ -143,7 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PV: {fileID: 6302386137897929138}
   mySoldiers: []
-  path: MultiplayerPrefabs/Combat_Drone
+  facingPoint: {fileID: 0}
+  path: MultiplayerPrefabs/CombatDrone
   myTeam: 0
   currentEnergy: 0
   maxEnergy: 0

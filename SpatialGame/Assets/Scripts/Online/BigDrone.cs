@@ -20,6 +20,8 @@ public class BigDrone : MonoBehaviour,IControlable
     public float criticalProb;
     public float avoidanceProb;
     public float resistance;
+    public float movingSpeed;
+    public float distanceToStop;
     [Space(5)]
 
     [Header ("Weapons")]
@@ -36,6 +38,9 @@ public class BigDrone : MonoBehaviour,IControlable
     public PhotonView PV;
     PlayerOnlineController myPlayerController;
     GamePlayManager gamePlayManager;
+    [SerializeField]
+    Transform currentPosition;
+    bool move;
 	public void TakeDamage(float _damage)
 	{
 		currentHealth-=_damage;
@@ -46,9 +51,25 @@ public class BigDrone : MonoBehaviour,IControlable
 	void Start()
     {
         SetUpStats();
+        FaceEnemies();
     }
-
-    void SetUpStats()
+	private void Update()
+	{
+		if(move)
+		{
+            if(Vector3.Distance(transform.position,target.GetPosition().position)>distanceToStop && Vector3.Distance(target.GetPosition().position,transform.position)>distanceToStop)
+                MoveToTargetPosition();
+			else
+			{
+                Transform targetPos = target.GetPosition();
+                target.SetPosition(currentPosition);
+                currentPosition = targetPos;
+                move = false;
+			}
+                
+		}
+	}
+	void SetUpStats()
 	{
         foreach(Weapon weapon in myWeapons)
 		{
@@ -90,10 +111,10 @@ public class BigDrone : MonoBehaviour,IControlable
 	{
 		if(_energyCost<=myPlayerController.GetCurrentEnergy())
 		{
-            Debug.Log(_energyCost);
             myPlayerController.SpendEnergy(_energyCost);
             gamePlayManager.GetUIManager().HidePanel();
-            gamePlayManager.attacking = true;
+            gamePlayManager.SetAttack(true);
+            gamePlayManager.ActivateEnemyArrows(true);
 		}            
 	}
     public void SetPlayerController(PlayerOnlineController player, GamePlayManager manager){myPlayerController = player; gamePlayManager = manager;}
@@ -103,4 +124,24 @@ public class BigDrone : MonoBehaviour,IControlable
         myBullet = currentBullet;
         damage = myBullet.GetDamage();
     }
+    public void SetPosition(Transform next){currentPosition = next;}
+    public Transform GetPosition(){return currentPosition;}
+    public void MoveToTargetPosition()
+	{
+        move = true;
+        Transform nextPos = target.GetPosition();		            
+        target.MoveToPosition(currentPosition);
+        transform.position = Vector3.Lerp(transform.position, nextPos.position, movingSpeed*Time.deltaTime);		        
+	}
+    public void MoveToPosition(Transform next)
+	{
+        transform.position = Vector3.Lerp(transform.position, next.position, movingSpeed*Time.deltaTime);
+	}
+    void FaceEnemies()
+	{
+        if(gamePlayManager.transform.position.x>transform.position.x)
+            transform.localScale = new Vector3(-1,1,1);
+        else
+            transform.localScale = new Vector3(1,1,1);
+	}
 }

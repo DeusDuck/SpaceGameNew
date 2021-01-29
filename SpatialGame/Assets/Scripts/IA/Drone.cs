@@ -50,10 +50,11 @@ public class Drone : MonoBehaviour
                 break;
             case EState.RECOLLECTING:
                 myAgent.SetDestination(currentTarget.position);
-				if(Vector3.Distance(transform.position, currentTarget.position)<=4.0f)
+				if(Vector3.Distance(transform.position, currentTarget.position)<=2.0f)
 				{
                     if(currentTime == 0)
                         SetAnimationAsset(recollecting,false,1);
+                    transform.localScale = new Vector3(0.05f,0.05f,1);
                     currentTime+=Time.deltaTime;
                     if(currentTime>=2.0f)
                         ChangeState(EState.IDLE);

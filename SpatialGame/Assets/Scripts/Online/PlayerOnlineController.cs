@@ -11,6 +11,7 @@ public class PlayerOnlineController : MonoBehaviour
     GamePlayManager gamePlayManager;
     [SerializeField]
     List<BigDrone> mySoldiers;
+    public Transform facingPoint;
     public string path;
     public int myTeam;
     [SerializeField]
@@ -36,14 +37,18 @@ public class PlayerOnlineController : MonoBehaviour
 			{
                 for(int i = 0; i<GameSetUp.gameSetUp.spawningPointsLocal.Length; i++)
 			    {
-				    mySoldiers.Add(PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsLocal[i].position,GameSetUp.gameSetUp.spawningPointsLocal[i].rotation,0).GetComponent<BigDrone>());
+                    BigDrone current = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsLocal[i].position,GameSetUp.gameSetUp.spawningPointsLocal[i].rotation,0).GetComponent<BigDrone>();
+				    mySoldiers.Add(current);
+                    current.SetPosition(GameSetUp.gameSetUp.spawningPointsLocal[i]);
 			    }
 			}
 			else
 			{
                 for(int i = 0; i<GameSetUp.gameSetUp.spawningPointsOther.Length; i++)
 			    {
-				    mySoldiers.Add(PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsOther[i].position,GameSetUp.gameSetUp.spawningPointsOther[i].rotation,0).GetComponent<BigDrone>());
+                    BigDrone current = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsOther[i].position,GameSetUp.gameSetUp.spawningPointsOther[i].rotation,0).GetComponent<BigDrone>();
+				    mySoldiers.Add(current);
+                    current.SetPosition(GameSetUp.gameSetUp.spawningPointsOther[i]);
 			    }	
 			}
 		}
@@ -131,5 +136,5 @@ public class PlayerOnlineController : MonoBehaviour
 		{
             energyImages[i].gameObject.SetActive(true);           
 		}
-	}
+	}    
 }

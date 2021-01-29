@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PV: {fileID: 6302386137897929138}
   mySoldiers: []
-  path: MultiplayerPrefabs/Commander
+  path: MultiplayerPrefabs/RedCombatDrone
   myTeam: 0
   currentEnergy: 0
   maxEnergy: 0

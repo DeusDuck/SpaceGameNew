@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 3182711469067774638}
   - component: {fileID: 5194150819085322954}
   - component: {fileID: 4347738667007325342}
+  - component: {fileID: -4149776175432066394}
   m_Layer: 10
   m_Name: Commander
   m_TagString: Untagged
@@ -231,11 +232,14 @@ MonoBehaviour:
   criticalProb: 0
   avoidanceProb: 0
   resistance: 0
+  movingSpeed: 10
+  distanceToStop: 0.5
   myWeapons: []
   myChasis: {fileID: 0}
   myBullet: {fileID: 0}
   target: {fileID: 0}
   PV: {fileID: 5194150819085322954}
+  currentPosition: {fileID: 0}
 --- !u!114 &5194150819085322954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +258,8 @@ MonoBehaviour:
   observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -4149776175432066394}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -269,8 +274,24 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.911703, y: 22.601473, z: 0.24668741}
-  m_Center: {x: 0.1881963, y: 8.665703, z: 0.018868923}
+  m_Size: {x: 10.911704, y: 22.601473, z: 0.06464475}
+  m_Center: {x: 0.1881965, y: 8.665703, z: -0.0059550963}
+--- !u!114 &-4149776175432066394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424794354730230599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2599942166155277715
 GameObject:
   m_ObjectHideFlags: 0
