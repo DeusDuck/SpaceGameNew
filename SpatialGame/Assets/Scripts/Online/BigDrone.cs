@@ -40,6 +40,8 @@ public class BigDrone : MonoBehaviour,IControlable
     GamePlayManager gamePlayManager;
     [SerializeField]
     Transform currentPosition;
+    [SerializeField]
+    SpriteRenderer mySprite;
     bool move;
 	public void TakeDamage(float _damage)
 	{
@@ -50,8 +52,7 @@ public class BigDrone : MonoBehaviour,IControlable
 	// Start is called before the first frame update
 	void Start()
     {
-        SetUpStats();
-        FaceEnemies();
+        SetUpStats();        
     }
 	private void Update()
 	{
@@ -117,7 +118,8 @@ public class BigDrone : MonoBehaviour,IControlable
             gamePlayManager.ActivateEnemyArrows(true);
 		}            
 	}
-    public void SetPlayerController(PlayerOnlineController player, GamePlayManager manager){myPlayerController = player; gamePlayManager = manager;}
+    public void SetPlayerController(PlayerOnlineController player){myPlayerController = player;}
+    public void SetGamePlayManager(GamePlayManager manager){ gamePlayManager = manager;}
     public PlayerOnlineController Getplayer(){return myPlayerController;}
     public void SetBullet(Bullets currentBullet)
     {
@@ -137,11 +139,15 @@ public class BigDrone : MonoBehaviour,IControlable
 	{
         transform.position = Vector3.Lerp(transform.position, next.position, movingSpeed*Time.deltaTime);
 	}
-    void FaceEnemies()
+    public void FaceEnemies()
 	{
         if(gamePlayManager.transform.position.x>transform.position.x)
             transform.localScale = new Vector3(-1,1,1);
         else
             transform.localScale = new Vector3(1,1,1);
+	}
+    public SpriteRenderer GetMySprite()
+	{
+        return mySprite;
 	}
 }

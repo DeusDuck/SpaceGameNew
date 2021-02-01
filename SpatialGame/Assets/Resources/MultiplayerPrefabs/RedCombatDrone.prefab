@@ -240,6 +240,7 @@ MonoBehaviour:
   target: {fileID: 0}
   PV: {fileID: 5194150819085322954}
   currentPosition: {fileID: 0}
+  mySprite: {fileID: 1224072141598482536}
 --- !u!114 &5194150819085322954
 MonoBehaviour:
   m_ObjectHideFlags: 0

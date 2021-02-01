@@ -8,7 +8,9 @@ public class PlayerOnlineController : MonoBehaviour
 {
     [SerializeField]
     PhotonView PV;
-    GamePlayManager gamePlayManager;
+    public GamePlayManager gamePlayManager;
+    [SerializeField]
+    Color notMyTurn;
     [SerializeField]
     List<BigDrone> mySoldiers;
     public Transform facingPoint;
@@ -55,7 +57,7 @@ public class PlayerOnlineController : MonoBehaviour
 
         foreach(BigDrone drone in mySoldiers)
 		{
-            drone.SetPlayerController(this, gamePlayManager);
+            drone.SetPlayerController(this);
 		}
 	}
     [PunRPC]
@@ -72,6 +74,7 @@ public class PlayerOnlineController : MonoBehaviour
 	}
     public PhotonView GetPV(){return PV;}
     public List<BigDrone> GetMySoldiers(){return mySoldiers;}
+    public void AddSoldier(BigDrone drone){mySoldiers.Add(drone);}
     public void DamageSoldier(float damage, int id)
 	{
         foreach(BigDrone current in mySoldiers)
@@ -136,5 +139,23 @@ public class PlayerOnlineController : MonoBehaviour
 		{
             energyImages[i].gameObject.SetActive(true);           
 		}
-	}    
+	}
+    public void ChangeMyColorTurn(bool must)
+	{
+        
+		if(must)
+		{
+            foreach(BigDrone drone in mySoldiers)
+			{
+                drone.GetMySprite().color = notMyTurn;
+			}
+		}
+		else
+		{
+            foreach(BigDrone drone in mySoldiers)
+			{
+                drone.GetMySprite().color = Color.white;
+			}
+		}
+	}
 }

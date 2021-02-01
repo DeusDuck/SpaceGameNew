@@ -31,8 +31,8 @@ Transform:
   m_LocalPosition: {x: 4.67, y: 1.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3339406725231118765}
   - {fileID: 6467789944740322867}
+  - {fileID: 3339406725231118765}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -88,6 +88,7 @@ MonoBehaviour:
   target: {fileID: 0}
   PV: {fileID: 5962854990814206035}
   currentPosition: {fileID: 0}
+  mySprite: {fileID: 8081790361264772757}
 --- !u!65 &5391398609412385980
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -300,7 +301,7 @@ RectTransform:
   - {fileID: 6346068651864066500}
   - {fileID: 1166093634368777577}
   m_Father: {fileID: 455940153196692012}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -472,7 +473,7 @@ Transform:
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children: []
   m_Father: {fileID: 455940153196692012}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8081790361264772757
 SpriteRenderer:

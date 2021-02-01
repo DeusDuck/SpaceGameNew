@@ -142,6 +142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PV: {fileID: 6302386137897929138}
+  gamePlayManager: {fileID: 0}
+  notMyTurn: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   mySoldiers: []
   facingPoint: {fileID: 0}
   path: MultiplayerPrefabs/CombatDrone

@@ -37,9 +37,12 @@ public class Drone : MonoBehaviour
 	{		
         switch(currentState)
         {
+            //Hace que se quede en su posicion inicial
             case EState.IDLE:
-                myAgent.SetDestination(currentTarget.position);
+                if(Vector3.Distance(transform.position, currentTarget.position)>=2.0f)
+                    myAgent.SetDestination(currentTarget.position);
                 break;
+            //El dron se va a recolectar durante un tiempo establecido
             case EState.FETCHING:
                 myAgent.SetDestination(currentTarget.position);
                 TurnAroundCharacter();
@@ -48,6 +51,7 @@ public class Drone : MonoBehaviour
                 if(currentTimeTravelling<=0)
                     ChangeState(EState.RECOLLECTING);
                 break;
+            //El dron va ala posicion de recolectar y cambia su animacion
             case EState.RECOLLECTING:
                 myAgent.SetDestination(currentTarget.position);
 				if(Vector3.Distance(transform.position, currentTarget.position)<=2.0f)
@@ -63,6 +67,7 @@ public class Drone : MonoBehaviour
                 break;
         }
 	}
+    //Cambia el estado de el dron
     public void ChangeState(EState nextState)
     {
         switch(nextState)
@@ -92,6 +97,7 @@ public class Drone : MonoBehaviour
         }
         currentState = nextState;
     }
+    //Le da un nuevo target
 	public void SetTarget(Transform target)
     {
         currentTarget = target;
@@ -99,6 +105,7 @@ public class Drone : MonoBehaviour
     public float GetTimeTravelling(){return timeTravelling;}
     public Transform GetHomePosition(){return homePosition;}
 
+    //Da la vuelta al sprite dependiendo de donde se encuentra  el target
     void TurnAroundCharacter()
     {
         if(myAgent.destination.x<=transform.position.x)
@@ -106,6 +113,7 @@ public class Drone : MonoBehaviour
         else
             transform.localScale = new Vector3(0.05f,0.05f,1);
     }
+    //Cambia la animacion
     void SetAnimationAsset(AnimationReferenceAsset anim, bool loop, float timeScale)
     {
         if(currentAnimName == anim.name)

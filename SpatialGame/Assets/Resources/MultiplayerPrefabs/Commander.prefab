@@ -240,6 +240,7 @@ MonoBehaviour:
   target: {fileID: 0}
   PV: {fileID: 5194150819085322954}
   currentPosition: {fileID: 0}
+  mySprite: {fileID: 7454472125644295628}
 --- !u!114 &5194150819085322954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,7 +516,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1103715605790133649, guid: 81dc192111136c841ab8cc95d7f6c226, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
