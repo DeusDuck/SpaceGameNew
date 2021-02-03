@@ -28,23 +28,26 @@ public class DronesRoom : MonoBehaviour
     }
 	private void Update()
 	{
+        //Updates el tiempo en el canvas
 		if(travellingDrones.Count>0)
         {
-            droneTime.text = minutes.ToString("00") + " : " + seconds.ToString("00");            
-        }            
+            droneTime.text = minutes.ToString("00") + " : " + seconds.ToString("00");
+		}          
 	}
 	public List<Drone> GetDrones()
     {
         return availableDrones;
     }
+    //Activa el drone que has pulsado
     public void SetWorkingDrone(Drone drone)
     {
-        drone.SetTarget(takeOffPosition);
-        drone.ChangeState(Drone.EState.FETCHING);
-        availableDrones.Remove(drone);
-        travellingDrones.Add(drone);
-        droneTime.gameObject.SetActive(true);        
+        drone.SetTarget(takeOffPosition);//Le da el punto de salida
+        drone.ChangeState(Drone.EState.FETCHING);//Cambia el estado del dron
+        availableDrones.Remove(drone);//Quita el dron de la lista de availableDrones
+        travellingDrones.Add(drone);//lo añade a la lista de drones viajando
+        droneTime.gameObject.SetActive(true);//Activa el reloj        
     }
+    //Calcula los minutos y segundos que el dron tiene que estar viajando
     public void CalculateTime(float time)
     {
         minutes = time / 60;
@@ -60,19 +63,21 @@ public class DronesRoom : MonoBehaviour
     }
     public void DroneReturned(Drone drone)
     {
-        travellingDrones.Remove(drone);
-        availableDrones.Add(drone);
-        droneTime.gameObject.SetActive(false);
+        travellingDrones.Remove(drone);//Cuando ha vuelto lo añade a los drones disponibles
+        availableDrones.Add(drone);//Lo quita de los drones viajando
+        droneTime.gameObject.SetActive(false);//Desactiva el tiempo
         int rnd = Random.Range(10,1000);
         rock = rnd;
         rnd = Random.Range(10,1000);
         iron = rnd;
         rnd = Random.Range(10,1000);        
         wood = rnd;
-        resourceManager.AddResourceInventory(rock,iron,wood);
+        //Calcula los recursos encontrados
+        resourceManager.AddResourceInventory(rock,iron,wood);//Los añade a los recursos
     }
-    public Transform GetRecollectingPosition(){return recollectionPosition;}
-    public void SetResourceManager(ResourceManager manager){resourceManager = manager;}
+    public Transform GetRecollectingPosition(){return recollectionPosition;}//Devuelve la posicion de recogida de recursos
+    public void SetResourceManager(ResourceManager manager){resourceManager = manager;}//Setter del resource manager
+    //Activa el gameObject de los drones
     public void ActivateDrones()
     {
         foreach(Drone d in availableDrones)

@@ -1,0 +1,167 @@
+
+DogAlien.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+OG
+  rotate: false
+  xy: 2, 2
+  size: 1865, 835
+  orig: 1865, 835
+  offset: 0, 0
+  index: -1
+arm_L
+  rotate: true
+  xy: 1187, 1700
+  size: 200, 331
+  orig: 200, 331
+  offset: 0, 0
+  index: -1
+arm_R
+  rotate: false
+  xy: 508, 1760
+  size: 193, 190
+  orig: 193, 190
+  offset: 0, 0
+  index: -1
+elbow_L
+  rotate: true
+  xy: 1742, 1646
+  size: 254, 260
+  orig: 254, 260
+  offset: 0, 0
+  index: -1
+elbow_R
+  rotate: true
+  xy: 971, 1706
+  size: 198, 214
+  orig: 198, 214
+  offset: 0, 0
+  index: -1
+foot_L
+  rotate: false
+  xy: 1025, 1917
+  size: 120, 113
+  orig: 120, 113
+  offset: 0, 0
+  index: -1
+foot_R
+  rotate: false
+  xy: 588, 1952
+  size: 155, 78
+  orig: 155, 78
+  offset: 0, 0
+  index: -1
+hand_L
+  rotate: false
+  xy: 1147, 1906
+  size: 223, 124
+  orig: 223, 124
+  offset: 0, 0
+  index: -1
+hand_R
+  rotate: false
+  xy: 2, 1814
+  size: 256, 137
+  orig: 256, 137
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 1539
+  size: 584, 219
+  orig: 584, 219
+  offset: 0, 0
+  index: -1
+hips
+  rotate: false
+  xy: 1496, 1308
+  size: 472, 336
+  orig: 472, 336
+  offset: 0, 0
+  index: -1
+jaw
+  rotate: false
+  xy: 1372, 1902
+  size: 341, 128
+  orig: 341, 128
+  offset: 0, 0
+  index: -1
+knee2_L
+  rotate: true
+  xy: 260, 1810
+  size: 141, 246
+  orig: 141, 246
+  offset: 0, 0
+  index: -1
+knee2_R
+  rotate: false
+  xy: 1715, 1902
+  size: 166, 128
+  orig: 166, 128
+  offset: 0, 0
+  index: -1
+knee_L
+  rotate: false
+  xy: 745, 1926
+  size: 113, 104
+  orig: 113, 104
+  offset: 0, 0
+  index: -1
+knee_R
+  rotate: false
+  xy: 860, 1926
+  size: 163, 104
+  orig: 163, 104
+  offset: 0, 0
+  index: -1
+leg_L
+  rotate: true
+  xy: 703, 1739
+  size: 185, 266
+  orig: 185, 266
+  offset: 0, 0
+  index: -1
+leg_R
+  rotate: false
+  xy: 1520, 1684
+  size: 220, 216
+  orig: 220, 216
+  offset: 0, 0
+  index: -1
+tail
+  rotate: false
+  xy: 588, 1498
+  size: 906, 200
+  orig: 906, 200
+  offset: 0, 0
+  index: -1
+tail_bent
+  rotate: false
+  xy: 2, 1271
+  size: 864, 225
+  orig: 864, 225
+  offset: 0, 0
+  index: -1
+tongue
+  rotate: false
+  xy: 2, 1953
+  size: 289, 77
+  orig: 289, 77
+  offset: 0, 0
+  index: -1
+tongue_bent
+  rotate: false
+  xy: 293, 1953
+  size: 293, 77
+  orig: 293, 77
+  offset: 0, 0
+  index: -1
+torso
+  rotate: false
+  xy: 868, 839
+  size: 742, 467
+  orig: 742, 467
+  offset: 0, 0
+  index: -1

@@ -776,6 +776,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StorageDron
       objectReference: {fileID: 0}
+    - target: {fileID: 1890307267439796890, guid: 8dcd513576edfad4aaa069246d61fc24, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3137278953666694376, guid: 8dcd513576edfad4aaa069246d61fc24, type: 3}
       propertyPath: homePosition
       value: 
@@ -880,6 +884,10 @@ PrefabInstance:
     - target: {fileID: 1890307267439796890, guid: 8dcd513576edfad4aaa069246d61fc24, type: 3}
       propertyPath: m_Name
       value: StorageDron
+      objectReference: {fileID: 0}
+    - target: {fileID: 1890307267439796890, guid: 8dcd513576edfad4aaa069246d61fc24, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3137278953666694376, guid: 8dcd513576edfad4aaa069246d61fc24, type: 3}
       propertyPath: homePosition

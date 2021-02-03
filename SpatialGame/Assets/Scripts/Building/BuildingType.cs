@@ -16,13 +16,28 @@ public class BuildingType : MonoBehaviour
        RIGHT,LEFT,TOP,BOTTOM
     }
     public List<ExitsPosition> currentExits;
+    
+    [Header("Building Attributes")]
+    [Space(5)]
     [SerializeField]
-    Transform zoomObjective;    
+    GameObject meshObject;
     [SerializeField]
-    List<Transform> buildingPositions;
+    BoxCollider myCollider;
+    [SerializeField]
+    NavMeshSurface myNavMesh;
+    [SerializeField]
+    Transform zoomObjective;   
     public NodeManager myNodeManager;
     public Node myNode;
-    public float builtTime;
+    [SerializeField]
+    LayerMask buildingLayer;
+    bool canBeBuilt = false;
+    [SerializeField]
+    int numOfNodes;
+    [Space(5)]
+
+    [Header("Anchors")]
+    [Space(5)]
     [SerializeField]
     Transform anchorPointLeft;
     [SerializeField]
@@ -32,22 +47,19 @@ public class BuildingType : MonoBehaviour
     [SerializeField]
     Transform anchorPointBottom;
     [SerializeField]
-    GameObject meshObject;
-    [SerializeField]
-    BoxCollider myCollider;
+    List<Transform> buildingPositions;
+    [Space(5)]
+    
+    [Header("Building Costs")]
+    [Space(5)]
     [SerializeField]
     int oxigenCost = 0;
     [SerializeField]
     int moneyCost = 0;
     [SerializeField]
     int foodCost = 0;
-    [SerializeField]
-    NavMeshSurface myNavMesh;
-    [SerializeField]
-    LayerMask buildingLayer;
-    bool canBeBuilt = false;
-    [SerializeField]
-    int numOfNodes;
+    public float builtTime;    
+    
 
 	private void OnDrawGizmos()
 	{
@@ -86,6 +98,14 @@ public class BuildingType : MonoBehaviour
             pipe.RotateTillConnect(); 
         }                        
     }
+    public void ActivateDrones()
+	{
+        DronesRoom room = GetComponent<DronesRoom>();
+        if(room != null)
+		{
+            room.ActivateDrones();
+		}
+	}
     public void ChangeMaterial(Material currentMaterial)
     { 
         MeshRenderer[] childRenderer = meshObject.GetComponentsInChildren<MeshRenderer>(); 

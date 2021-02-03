@@ -1080,6 +1080,17 @@ MonoBehaviour:
   avatars: []
   UIManager: {fileID: 1676515127}
   facingSpeed: 22
+  nextTeam: 1
+  spawningPointsLocal:
+  - {fileID: 651406825}
+  - {fileID: 1153242243}
+  - {fileID: 1399230310}
+  - {fileID: 188745936}
+  spawningPointsOther:
+  - {fileID: 418105848}
+  - {fileID: 962039267}
+  - {fileID: 1852838182}
+  - {fileID: 1795060265}
   currentState: 0
 --- !u!4 &454280443
 Transform:
@@ -1446,7 +1457,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &726680905
 GameObject:
@@ -2479,7 +2490,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1423084698
 GameObject:

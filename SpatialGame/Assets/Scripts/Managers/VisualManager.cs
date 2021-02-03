@@ -68,10 +68,8 @@ public class VisualManager : MonoBehaviour
     [Space(5)]
 
     [Header("Other Variables")]
-    int numberOfPlayers;
     int minutes;
     float seconds;
-    float currentTime;
     
     public enum VisualState
     {

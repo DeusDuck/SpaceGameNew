@@ -113,6 +113,7 @@ public class Node : MonoBehaviour
                 {
                     myBuildingType.SetCanBeBuild(false);
                     myBuildingType.HasToChangeMat();
+                    myBuildingType.ActivateDrones();
                     myBuildingType = null;
                     availableBuilding = null;
                 }   

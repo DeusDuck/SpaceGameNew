@@ -1293,7 +1293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9804754b0eeee4da5bda068824a6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentNPC: {fileID: 2690465592985869721, guid: c4c6c99c1380b57489bd2c4a6161d21a, type: 3}
+  currentNPC: {fileID: 4822587758068156473, guid: d86b3e03f717fa7479309de0efac23bd, type: 3}
 --- !u!114 &305564188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1582,7 +1582,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1.5369263, y: 32.341003}
+  m_AnchoredPosition: {x: -1.5369873, y: 32.341003}
   m_SizeDelta: {x: 84.610596, y: 70.43021}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &388476319
@@ -1727,18 +1727,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 749390322}
-        m_TargetAssemblyTypeName: CameraMovement, Assembly-CSharp
-        m_MethodName: StopCameraMovement
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &416304473
 MonoBehaviour:
@@ -1969,6 +1957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dc11397c94ab54bbfd3c052f6373bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentNPC: []
 --- !u!4 &433447369
 Transform:
   m_ObjectHideFlags: 0
@@ -4971,49 +4960,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210711541}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1216807359
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1216807361}
-  - component: {fileID: 1216807360}
-  m_Layer: 0
-  m_Name: CombatInfo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1216807360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1216807359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da0d36b4fd59dc74da6029e1781ab162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1216807361
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1216807359}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1277139529
 GameObject:
   m_ObjectHideFlags: 0
@@ -5483,6 +5429,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1368711169}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1384817285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1384817287}
+  - component: {fileID: 1384817286}
+  m_Layer: 0
+  m_Name: ShipAttackManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1384817286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384817285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fb0f0372b1bb04ba2ece215f1da53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcManager: {fileID: 433447368}
+  dogBasic: {fileID: 2603485958825877735, guid: b5b12635eb899154c8a82f367b2b9018, type: 3}
+  randomPositionRadius: 1000
+--- !u!4 &1384817287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384817285}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1389289704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6063,7 +6055,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 57.7, y: 56}
+  m_AnchoredPosition: {x: 57.69995, y: 56}
   m_SizeDelta: {x: 54.514313, y: 53.487648}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1529884378
@@ -11297,27 +11289,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentType: 0
   currentExits: 0100000000000000
-  zoomObjective: {fileID: 2501920679215256572}
-  buildingPositions:
-  - {fileID: 2099352570113820001}
-  - {fileID: 3431292463150084723}
-  myNodeManager: {fileID: 0}
-  myNode: {fileID: 0}
-  builtTime: 10
-  anchorPointLeft: {fileID: 3431292463150084723}
-  anchorPointRight: {fileID: 2099352570113820001}
-  anchorPointTop: {fileID: 0}
-  anchorPointBottom: {fileID: 0}
   meshObject: {fileID: 8341090042601516936}
   myCollider: {fileID: 3548737897246840135}
-  oxigenCost: 5
-  moneyCost: 10
-  foodCost: 5
   myNavMesh: {fileID: 683736812574957174}
+  zoomObjective: {fileID: 2501920679215256572}
+  myNodeManager: {fileID: 0}
+  myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
   numOfNodes: 0
+  anchorPointLeft: {fileID: 3431292463150084723}
+  anchorPointRight: {fileID: 2099352570113820001}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions:
+  - {fileID: 2099352570113820001}
+  - {fileID: 3431292463150084723}
+  oxigenCost: 5
+  moneyCost: 10
+  foodCost: 5
+  builtTime: 10
 --- !u!1 &5480507590637405195
 GameObject:
   m_ObjectHideFlags: 0

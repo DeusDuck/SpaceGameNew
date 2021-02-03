@@ -27,7 +27,6 @@ public class PlayerOnlineController : MonoBehaviour
     {
         gamePlayManager = FindObjectOfType<GamePlayManager>();
         gamePlayManager.AddPlayer(this);
-        GameSetUp.gameSetUp.players.Add(this);
     }
 	private void Start()
 	{
@@ -37,20 +36,20 @@ public class PlayerOnlineController : MonoBehaviour
             PV.RPC("RPC_GetTeam",RpcTarget.MasterClient);
             if(myTeam == 1)
 			{
-                for(int i = 0; i<GameSetUp.gameSetUp.spawningPointsLocal.Length; i++)
+                for(int i = 0; i<GamePlayManager.instance.spawningPointsLocal.Length; i++)
 			    {
-                    BigDrone current = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsLocal[i].position,GameSetUp.gameSetUp.spawningPointsLocal[i].rotation,0).GetComponent<BigDrone>();
+                    BigDrone current = PhotonNetwork.Instantiate(path, GamePlayManager.instance.spawningPointsLocal[i].position,GamePlayManager.instance.spawningPointsLocal[i].rotation,0).GetComponent<BigDrone>();
 				    mySoldiers.Add(current);
-                    current.SetPosition(GameSetUp.gameSetUp.spawningPointsLocal[i]);
+                    current.SetPosition(GamePlayManager.instance.spawningPointsLocal[i]);
 			    }
 			}
 			else
 			{
-                for(int i = 0; i<GameSetUp.gameSetUp.spawningPointsOther.Length; i++)
+                for(int i = 0; i<GamePlayManager.instance.spawningPointsOther.Length; i++)
 			    {
-                    BigDrone current = PhotonNetwork.Instantiate(path, GameSetUp.gameSetUp.spawningPointsOther[i].position,GameSetUp.gameSetUp.spawningPointsOther[i].rotation,0).GetComponent<BigDrone>();
+                    BigDrone current = PhotonNetwork.Instantiate(path, GamePlayManager.instance.spawningPointsOther[i].position,GamePlayManager.instance.spawningPointsOther[i].rotation,0).GetComponent<BigDrone>();
 				    mySoldiers.Add(current);
-                    current.SetPosition(GameSetUp.gameSetUp.spawningPointsOther[i]);
+                    current.SetPosition(GamePlayManager.instance.spawningPointsOther[i]);
 			    }	
 			}
 		}
@@ -63,8 +62,8 @@ public class PlayerOnlineController : MonoBehaviour
     [PunRPC]
     void RPC_GetTeam()
 	{
-        myTeam = GameSetUp.gameSetUp.nextTeam;
-        GameSetUp.gameSetUp.UpdateTeam();
+        myTeam = GamePlayManager.instance.nextTeam;
+        GamePlayManager.instance.UpdateTeam();
         PV.RPC("RPC_SetPlayerTeam",RpcTarget.OthersBuffered,myTeam);
 	}
     [PunRPC]

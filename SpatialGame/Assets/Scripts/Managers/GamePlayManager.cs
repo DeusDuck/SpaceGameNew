@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public class GamePlayManager : MonoBehaviour
+public class GamePlayManager : MonoBehaviourPunCallbacks
 {
     //Esta clase se encarga de controlar el gameplay online
     [SerializeField]
@@ -42,6 +42,11 @@ public class GamePlayManager : MonoBehaviour
     UIOnlineManager UIManager;
     [SerializeField]
     float facingSpeed;
+    public static GamePlayManager instance;
+    public int nextTeam = 1;
+
+    public Transform[] spawningPointsLocal;
+    public Transform[] spawningPointsOther;	
         
     
     public enum EGameState
@@ -55,7 +60,11 @@ public class GamePlayManager : MonoBehaviour
         //Setea la partida, determina con un rnd el primer jugador en atacar
         currentTime = timeToPrepare;        
     }
-
+    public override void OnEnable()
+	{
+        if(GamePlayManager.instance==null)
+			GamePlayManager.instance = this;
+	}
     // Update is called once per frame
     void Update()
     { 
@@ -67,10 +76,7 @@ public class GamePlayManager : MonoBehaviour
 				if(currentTime<=0 && PhotonNetwork.IsMasterClient)
                 {                    
                     ChangeTurn();
-                    SetCurrentPlayer(current);
-                    PV.RPC("RPC_SetCurrentPlayer",RpcTarget.Others,current);
-                    ChangeState(EGameState.SELECTING);
-                    PV.RPC("RPC_ChangeState",RpcTarget.Others,1);
+                    
 				}
                 break;
             case EGameState.SELECTING:
@@ -160,11 +166,7 @@ public class GamePlayManager : MonoBehaviour
                 
 				if(currentTime<=0 && PhotonNetwork.IsMasterClient)
 				{
-                    ChangeTurn();
-                    SetCurrentPlayer(current);
-                    PV.RPC("RPC_SetCurrentPlayer",RpcTarget.Others,current);
-                    ChangeState(EGameState.SELECTING);
-                    PV.RPC("RPC_ChangeState",RpcTarget.Others,1);                
+                    ChangeTurn();                                   
 				}
                 break;
                 
@@ -296,7 +298,11 @@ public class GamePlayManager : MonoBehaviour
 	{
         current++;
         if(current>2)
-            current = 1;        
+            current = 1;   
+        SetCurrentPlayer(current);
+        PV.RPC("RPC_SetCurrentPlayer",RpcTarget.Others,current);
+        ChangeState(EGameState.SELECTING);
+        PV.RPC("RPC_ChangeState",RpcTarget.Others,1);
 	}
     public void ActivateEnemyArrows(bool must)
 	{
@@ -374,6 +380,17 @@ public class GamePlayManager : MonoBehaviour
 			    }
 			}
             
+		}
+	}
+    public void UpdateTeam()
+	{
+		if(nextTeam == 1)
+		{
+			nextTeam = 2;
+		}
+		else
+		{
+			nextTeam = 1;
 		}
 	}
 }

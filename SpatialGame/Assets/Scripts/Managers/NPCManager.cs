@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPCManager : MonoBehaviour
 {
     //Se encarga de settear los NPC de la nave
+    [SerializeField]
     List<NPC> currentNPC = new List<NPC>();
     List<ResourcesRoom> oxigenBuildings = new List<ResourcesRoom>();
     List<ResourcesRoom> foodBuildings = new List<ResourcesRoom>();
@@ -107,4 +108,8 @@ public class NPCManager : MonoBehaviour
         current.GetWorkingRoom().StartCounter(true);
         current.GetWorkingRoom().AddWorker();
     }
+    public NPC GetNPC()
+	{
+        return currentNPC[0];
+	}
 }
