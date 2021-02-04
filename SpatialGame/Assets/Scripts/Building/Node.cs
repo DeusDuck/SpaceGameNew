@@ -26,7 +26,6 @@ public class Node : MonoBehaviour
     [SerializeField]
     bool isBuilt = false;
     float builtTime;
-    float currentBuildTime;
     MeshRenderer[] mat;
 
 	private void OnDrawGizmos()
@@ -36,10 +35,11 @@ public class Node : MonoBehaviour
 	}
 	private void Update()
 	{
-		if(builtTime!=0)
+		if(builtTime>=0)
         {            
-            currentBuildTime+=Time.deltaTime;
-            if(currentBuildTime>=builtTime)
+            builtTime-=Time.deltaTime;
+            myBuildingType.UpdateThreshold(builtTime);
+            if(builtTime<=0)
             {
                 Renderer[] childRenderer = availableBuilding.transform.GetComponentsInChildren<MeshRenderer>();
                 for(int i = 0; i<childRenderer.Length; i++)
@@ -53,8 +53,6 @@ public class Node : MonoBehaviour
                     NavMeshManager.AddPipe(myBuildingType.GetComponent<PipeRoom>());
                     NavMeshManager.CalculateOffMeshLinks();
                 }
-                currentBuildTime = 0;
-                builtTime = 0;
                 myNodeManager.BuildNode(this);    
             }
         }
@@ -131,7 +129,7 @@ public class Node : MonoBehaviour
         if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)               
             myBuildingType.ConnectPipe();               
 
-       myBuildingType.ChangeMaterial(availableMat);       
+       myBuildingType.ChangeMaterial(myNodeManager.buildingMaterial);       
     }
     //Canvia el material del edificio y setea el nodo a construido
     public void BuildBuilding(MeshRenderer[] actualMat, BuildingType type)

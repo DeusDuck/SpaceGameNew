@@ -4,22 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 using Spine.Unity;
 
-public class Drone : MonoBehaviour
-{
-    [SerializeField]
-    NavMeshAgent myAgent;
+public class Drone : AnimationManager
+{    
     Transform currentTarget;
     [SerializeField]
     Transform homePosition;
     [SerializeField]
-    DronesRoom myRoom;
-    [SerializeField]
-    SkeletonAnimation mySkeleton;
-    [SerializeField]
-    AnimationReferenceAsset idle;
+    DronesRoom myRoom;    
     [SerializeField]
     AnimationReferenceAsset recollecting;
-    string currentAnimName;
     float currentTime = 0.0f;
     public enum EState
     {
@@ -30,7 +23,7 @@ public class Drone : MonoBehaviour
     float currentTimeTravelling;
 	private void Start()
 	{
-        myAgent.updateRotation = false;
+        base.myAgent.updateRotation = false;
         currentTarget = homePosition;
 	}
 	private void Update()
@@ -40,11 +33,11 @@ public class Drone : MonoBehaviour
             //Hace que se quede en su posicion inicial
             case EState.IDLE:
                 if(Vector3.Distance(transform.position, currentTarget.position)>=2.0f)
-                    myAgent.SetDestination(currentTarget.position);
+                    base.myAgent.SetDestination(currentTarget.position);
                 break;
             //El dron se va a recolectar durante un tiempo establecido
             case EState.FETCHING:
-                myAgent.SetDestination(currentTarget.position);
+                base.myAgent.SetDestination(currentTarget.position);
                 TurnAroundCharacter();
                 currentTimeTravelling-=Time.deltaTime;
                 myRoom.CalculateTime(currentTimeTravelling);
@@ -109,19 +102,13 @@ public class Drone : MonoBehaviour
     public Transform GetHomePosition(){return homePosition;}
 
     //Da la vuelta al sprite dependiendo de donde se encuentra  el target
-    void TurnAroundCharacter()
+    public override void TurnAroundCharacter(float scale = 0.05f)
     {
-        if(myAgent.destination.x<=transform.position.x)
-            transform.localScale = new Vector3(-0.05f,0.05f,1);
-        else
-            transform.localScale = new Vector3(0.05f,0.05f,1);
+       base.TurnAroundCharacter(scale);
     }
     //Cambia la animacion
-    void SetAnimationAsset(AnimationReferenceAsset anim, bool loop, float timeScale)
+    public override void SetAnimationAsset(AnimationReferenceAsset anim, bool loop, float timeScale)
     {
-        if(currentAnimName == anim.name)
-            return;
-        mySkeleton.state.SetAnimation(0, anim, loop).TimeScale = timeScale;
-        currentAnimName = anim.name;
+        base.SetAnimationAsset(anim,loop,timeScale);
     }
 }

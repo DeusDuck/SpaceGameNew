@@ -11,11 +11,8 @@ public class ShipAttacksManager : MonoBehaviour
     GameObject dogBasic;
     [SerializeField]
     float randomPositionRadius;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    int numberOfenemies;
 
     // Update is called once per frame
     void Update()
@@ -24,10 +21,12 @@ public class ShipAttacksManager : MonoBehaviour
             AttackShip();
     }
     void AttackShip()
-	{
-        Debug.Log("olaaa");
-        DogAlien dog = Instantiate(dogBasic,RandomNavmeshLocation(),dogBasic.transform.rotation).GetComponent<DogAlien>();
-        dog.Target = npcManager.GetNPC().transform;
+	{   
+        for(int i = 1; i<=numberOfenemies; i++)
+		{
+            DogAlien dog = Instantiate(dogBasic,RandomNavmeshLocation(),dogBasic.transform.rotation).GetComponent<DogAlien>();
+            dog.Target = npcManager.GetNPC().transform;
+		}        
 	}
     Vector3 RandomNavmeshLocation() 
     {

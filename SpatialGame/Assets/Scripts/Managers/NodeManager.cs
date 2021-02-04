@@ -7,6 +7,7 @@ public class NodeManager : MonoBehaviour
     public Transform spawningPoint;
     public Material availablePositionMat;
     public Material unAvailablePositionMat;
+    public Material buildingMaterial;
     public GameObject currentBuilding;
     public MeshRenderer[] currentMats;
     [SerializeField]

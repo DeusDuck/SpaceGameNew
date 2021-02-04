@@ -206,4 +206,13 @@ public class BuildingType : MonoBehaviour
         else
             ChangeMaterial(myNodeManager.unAvailablePositionMat);         
     }
+    public void UpdateThreshold(float threshold)
+	{   
+        float current = 1-threshold/builtTime;
+        MeshRenderer[] childRenderer = meshObject.GetComponentsInChildren<MeshRenderer>(); 
+        foreach(MeshRenderer rnd in childRenderer)
+        {
+            rnd.material.SetFloat("_TimeThreshold",current);          
+        }
+	}
 }

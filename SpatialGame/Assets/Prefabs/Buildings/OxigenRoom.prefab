@@ -88,27 +88,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentType: 1
   currentExits: 0000000001000000
-  zoomObjective: {fileID: 1661360392431445560}
-  buildingPositions:
-  - {fileID: 7247590726007362482}
-  - {fileID: 689784948455571778}
-  myNodeManager: {fileID: 0}
-  myNode: {fileID: 0}
-  builtTime: 10
-  anchorPointLeft: {fileID: 7247590726007362482}
-  anchorPointRight: {fileID: 689784948455571778}
-  anchorPointTop: {fileID: 0}
-  anchorPointBottom: {fileID: 0}
   meshObject: {fileID: 1841945773362400693}
   myCollider: {fileID: 4468848133554097822}
-  oxigenCost: 10
-  moneyCost: 10
-  foodCost: 10
   myNavMesh: {fileID: 1518433497328545786}
+  zoomObjective: {fileID: 1661360392431445560}
+  myNodeManager: {fileID: 0}
+  myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
   numOfNodes: 0
+  anchorPointLeft: {fileID: 7247590726007362482}
+  anchorPointRight: {fileID: 689784948455571778}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions:
+  - {fileID: 7247590726007362482}
+  - {fileID: 689784948455571778}
+  oxigenCost: 10
+  moneyCost: 10
+  foodCost: 10
+  builtTime: 10
 --- !u!114 &1518433497328545786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +547,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c10d60f3a0f03a74fb2cab1e050908ad, type: 3}
       propertyPath: m_Name
       value: Sala6-Cobertura
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c10d60f3a0f03a74fb2cab1e050908ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c10d60f3a0f03a74fb2cab1e050908ad, type: 3}

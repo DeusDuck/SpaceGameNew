@@ -7,6 +7,8 @@ public class NPCManager : MonoBehaviour
     //Se encarga de settear los NPC de la nave
     [SerializeField]
     List<NPC> currentNPC = new List<NPC>();
+    [SerializeField]
+    List<NPC> targetedNPC = new List<NPC>();
     List<ResourcesRoom> oxigenBuildings = new List<ResourcesRoom>();
     List<ResourcesRoom> foodBuildings = new List<ResourcesRoom>();
     List<ResourcesRoom> moneyBuildings = new List<ResourcesRoom>();
@@ -110,6 +112,15 @@ public class NPCManager : MonoBehaviour
     }
     public NPC GetNPC()
 	{
-        return currentNPC[0];
+        foreach(NPC current in currentNPC)
+		{
+            if(targetedNPC.Contains(current))
+                continue;
+
+            targetedNPC.Add(current);
+            return current;            
+		}
+        int index = Random.Range(0,targetedNPC.Count);
+        return targetedNPC[index];
 	}
 }

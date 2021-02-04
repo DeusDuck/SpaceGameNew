@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using Spine.Unity;
 
-public class NPC : MonoBehaviour
+public class NPC : AnimationManager
 {
     public float walkingSpeed;
     public float randomPositionRadius;
     public float timeToChat;
-    public float timeToWait;
-    public NavMeshAgent myAgent;
+    public float timeToWait;    
     
     public enum EState
     { 
@@ -23,22 +22,15 @@ public class NPC : MonoBehaviour
     }
     public EType currentType;
     Vector3 currentTarget;
-    float currentTime;
-    [SerializeField]
-    SkeletonAnimation mySkeleton;
-    [SerializeField]
-    AnimationReferenceAsset idle;
-    [SerializeField]
-    AnimationReferenceAsset walk;
-    string currentAnimationName;
+    float currentTime;   
     NPCManager myManager;
     ResourcesRoom currentRoom;
 
     // Start is called before the first frame update
     void Start()
     {
-        myAgent.updateRotation = false;
-        myAgent.speed = walkingSpeed; 
+        base.myAgent.updateRotation = false;
+        base.myAgent.speed = walkingSpeed; 
     }
 
     // Update is called once per frame
@@ -164,20 +156,13 @@ public class NPC : MonoBehaviour
             ChangeState(EState.RANDOM_POS); 
         }            
     }   
-    void TurnAroundCharacter()
+    public  override void TurnAroundCharacter(float scale = 0.08f)
     {
-        if(myAgent.velocity.x<0)
-            transform.localScale = new Vector3(-0.08f,0.08f,1);
-        else
-            transform.localScale = new Vector3(0.08f,0.08f,1);
+        base.TurnAroundCharacter(scale);
     }
-    void SetAnimationAsset(AnimationReferenceAsset anim, bool loop, float timeScale)
+    public override void SetAnimationAsset(AnimationReferenceAsset anim, bool loop, float timeScale)
     {
-        if(currentAnimationName == anim.name)
-            return;
-
-        mySkeleton.state.SetAnimation(0, anim, loop).TimeScale = timeScale;
-        currentAnimationName = anim.name;
+        base.SetAnimationAsset(anim,loop,timeScale);
     }
 	#region Setter and Getters
     public void SetManager(NPCManager manager){myManager = manager;}

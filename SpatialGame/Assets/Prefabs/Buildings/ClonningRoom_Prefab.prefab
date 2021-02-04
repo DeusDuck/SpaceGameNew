@@ -804,27 +804,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentType: 0
   currentExits: 0100000000000000
-  zoomObjective: {fileID: 5541969502223260076}
-  buildingPositions:
-  - {fileID: 8319268323195129649}
-  - {fileID: 4742284001917384739}
-  myNodeManager: {fileID: 0}
-  myNode: {fileID: 0}
-  builtTime: 10
-  anchorPointLeft: {fileID: 4742284001917384739}
-  anchorPointRight: {fileID: 8319268323195129649}
-  anchorPointTop: {fileID: 0}
-  anchorPointBottom: {fileID: 0}
   meshObject: {fileID: 2130234849557685720}
   myCollider: {fileID: 6876497644019638039}
-  oxigenCost: 5
-  moneyCost: 10
-  foodCost: 5
   myNavMesh: {fileID: 7434461663776461862}
+  zoomObjective: {fileID: 5541969502223260076}
+  myNodeManager: {fileID: 0}
+  myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
   numOfNodes: 0
+  anchorPointLeft: {fileID: 4742284001917384739}
+  anchorPointRight: {fileID: 8319268323195129649}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions:
+  - {fileID: 8319268323195129649}
+  - {fileID: 4742284001917384739}
+  oxigenCost: 5
+  moneyCost: 10
+  foodCost: 5
+  builtTime: 10
 --- !u!114 &5313800814001789978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1232,9 +1232,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6197380558025857291, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -6197380558025857291, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3116700728909940516, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -3116700728909940516, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1285628716733793434, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1285628716733793434, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ff000124600d9ad479408c0329f08818, type: 3}
       propertyPath: m_Name
       value: "Sala1-Clonaci\xF3n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346861712312923029, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346861712312923029, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158703531778699406, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8428371408011465926, guid: ff000124600d9ad479408c0329f08818, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff000124600d9ad479408c0329f08818, type: 3}
