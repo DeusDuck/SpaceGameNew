@@ -83,7 +83,6 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
                 //Resta el tiempo en hacer una acción
                 currentTime-=Time.deltaTime;
                 time.text = currentTime.ToString("F0");
-                FaceCurrentPlayer();
                 //Mira que no estes tocando un elemento de la UI
                 //if(!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 if(!EventSystem.current.IsPointerOverGameObject())
@@ -217,13 +216,8 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 
                     player.SetEnergyImages();
                     player.AddMoreEnergy();
-                    if(currentPlayer == player)
-                        player.ChangeMyColorTurn(false);
-                    else
-                        player.ChangeMyColorTurn(true);
 				}
                 ActivateAlliesArrows(true);
-                FaceCurrentPlayer();
                 
                 break;
                 //Desactiva el modo ataque y las flechas de los aliados del currentPlayer
@@ -251,7 +245,6 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 	{
         for(int i = 0; i<players.Count; i++)
 		{
-            players[i].ChangeMyColorTurn(players[i].myTeam != team);
             if(players[i].myTeam == team)
 			{                   
                 currentPlayer = players[i];                
@@ -341,11 +334,6 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 	{
         attacking = must;
         attackingDrones.Add(currentAttackingDrone);
-	}
-    void FaceCurrentPlayer()
-	{
-        Vector3 vec = currentPlayer.facingPoint.position - Camera.main.transform.position;
-        Camera.main.transform.rotation = Quaternion.RotateTowards( Camera.main.transform.rotation, Quaternion.LookRotation(vec), Time.deltaTime * facingSpeed);
 	}
     public void SkipTurn()
 	{

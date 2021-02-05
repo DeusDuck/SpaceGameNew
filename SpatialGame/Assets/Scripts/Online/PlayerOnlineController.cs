@@ -138,23 +138,5 @@ public class PlayerOnlineController : MonoBehaviour
 		{
             energyImages[i].gameObject.SetActive(true);           
 		}
-	}
-    public void ChangeMyColorTurn(bool must)
-	{
-        
-		if(must)
-		{
-            foreach(BigDrone drone in mySoldiers)
-			{
-                drone.GetMySprite().color = notMyTurn;
-			}
-		}
-		else
-		{
-            foreach(BigDrone drone in mySoldiers)
-			{
-                drone.GetMySprite().color = Color.white;
-			}
-		}
-	}
+	}    
 }
