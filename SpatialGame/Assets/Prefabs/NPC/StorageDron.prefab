@@ -133,11 +133,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc84d1cafaee88941850d9f56954363f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySkeleton: {fileID: 560843954733537373}
+  idle: {fileID: 11400000, guid: 2e0ab5b17e69df54391770866c52ab6f, type: 2}
+  walk: {fileID: 0}
   myAgent: {fileID: 6463641237475970990}
   homePosition: {fileID: 0}
   myRoom: {fileID: 0}
-  mySkeleton: {fileID: 560843954733537373}
-  idle: {fileID: 11400000, guid: 2e0ab5b17e69df54391770866c52ab6f, type: 2}
   recollecting: {fileID: 11400000, guid: 1070f0e87eac4434ca8d73a5d41c0443, type: 2}
   currentState: 0
   timeTravelling: 10
@@ -162,4 +163,4 @@ NavMeshAgent:
   m_Height: 37.92491
   m_BaseOffset: 18.962456
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0

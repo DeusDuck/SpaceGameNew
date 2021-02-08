@@ -80,17 +80,9 @@ public class DogAlien : AnimationManager
 	public override void TurnAroundCharacter(float scale = 0.08f)
 	{
 		if(myAgent.velocity.x>=0)
-		{
-            Debug.Log("Buenas");
-            transform.localScale = new Vector3(-scale,scale,1);
-		}
-		else
-		{
-            Debug.Log("Deuu");
             transform.localScale = new Vector3(scale,scale,1);
-		}
-            
-
+		else
+            transform.localScale = new Vector3(-scale,scale,1);
 	}
 	#region Setters and Getters
 

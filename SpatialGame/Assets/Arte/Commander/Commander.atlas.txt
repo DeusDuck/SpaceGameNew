@@ -1,0 +1,251 @@
+
+Commander.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+AIM_arm_L
+  rotate: false
+  xy: 811, 240
+  size: 134, 197
+  orig: 134, 197
+  offset: 0, 0
+  index: -1
+AIM_arm_R
+  rotate: true
+  xy: 947, 267
+  size: 133, 170
+  orig: 133, 170
+  offset: 0, 0
+  index: -1
+AIM_elbow_L
+  rotate: false
+  xy: 1113, 428
+  size: 148, 132
+  orig: 148, 132
+  offset: 0, 0
+  index: -1
+AIM_elbow_R
+  rotate: true
+  xy: 299, 289
+  size: 217, 115
+  orig: 217, 115
+  offset: 0, 0
+  index: -1
+AIM_finger_R
+  rotate: false
+  xy: 659, 1239
+  size: 91, 52
+  orig: 91, 52
+  offset: 0, 0
+  index: -1
+AIM_hand_L
+  rotate: true
+  xy: 401, 33
+  size: 128, 95
+  orig: 128, 95
+  offset: 0, 0
+  index: -1
+AIM_hand_R
+  rotate: true
+  xy: 580, 61
+  size: 151, 88
+  orig: 151, 88
+  offset: 0, 0
+  index: -1
+AIM_weapon_1
+  rotate: true
+  xy: 652, 214
+  size: 712, 157
+  orig: 712, 157
+  offset: 0, 0
+  index: -1
+AIM_weapon_2
+  rotate: true
+  xy: 420, 163
+  size: 611, 158
+  orig: 611, 158
+  offset: 0, 0
+  index: -1
+AIM_weapon_3
+  rotate: true
+  xy: 461, 1022
+  size: 704, 196
+  orig: 704, 196
+  offset: 0, 0
+  index: -1
+AIM_weapon_4
+  rotate: false
+  xy: 2, 1728
+  size: 821, 244
+  orig: 821, 244
+  offset: 0, 0
+  index: -1
+arm_L
+  rotate: false
+  xy: 811, 32
+  size: 105, 206
+  orig: 105, 206
+  offset: 0, 0
+  index: -1
+arm_R
+  rotate: false
+  xy: 811, 439
+  size: 151, 240
+  orig: 151, 240
+  offset: 0, 0
+  index: -1
+belt
+  rotate: true
+  xy: 1496, 401
+  size: 303, 133
+  orig: 303, 133
+  offset: 0, 0
+  index: -1
+elbow_L
+  rotate: false
+  xy: 811, 681
+  size: 170, 245
+  orig: 170, 245
+  offset: 0, 0
+  index: -1
+elbow_R
+  rotate: true
+  xy: 964, 402
+  size: 172, 147
+  orig: 172, 147
+  offset: 0, 0
+  index: -1
+fingers_L
+  rotate: false
+  xy: 299, 213
+  size: 83, 74
+  orig: 83, 74
+  offset: 0, 0
+  index: -1
+foot_L
+  rotate: true
+  xy: 1119, 245
+  size: 181, 128
+  orig: 181, 128
+  offset: 0, 0
+  index: -1
+foot_R
+  rotate: true
+  xy: 659, 1293
+  size: 94, 158
+  orig: 94, 158
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 420, 776
+  size: 244, 230
+  orig: 244, 230
+  offset: 0, 0
+  index: -1
+knee_L
+  rotate: false
+  xy: 2, 152
+  size: 112, 354
+  orig: 112, 354
+  offset: 0, 0
+  index: -1
+knee_R
+  rotate: false
+  xy: 983, 576
+  size: 161, 350
+  orig: 161, 350
+  offset: 0, 0
+  index: -1
+leg_L
+  rotate: false
+  xy: 116, 186
+  size: 181, 320
+  orig: 181, 320
+  offset: 0, 0
+  index: -1
+leg_R
+  rotate: true
+  xy: 1146, 562
+  size: 142, 348
+  orig: 142, 348
+  offset: 0, 0
+  index: -1
+legbelts_L
+  rotate: true
+  xy: 116, 26
+  size: 158, 283
+  orig: 158, 283
+  offset: 0, 0
+  index: -1
+legbelts_R
+  rotate: false
+  xy: 659, 1389
+  size: 163, 337
+  orig: 163, 337
+  offset: 0, 0
+  index: -1
+neck
+  rotate: true
+  xy: 659, 928
+  size: 304, 571
+  orig: 304, 571
+  offset: 0, 0
+  index: -1
+pelvis
+  rotate: false
+  xy: 1353, 1277
+  size: 296, 238
+  orig: 296, 238
+  offset: 0, 0
+  index: -1
+shoulder_L
+  rotate: false
+  xy: 2, 2
+  size: 107, 148
+  orig: 107, 148
+  offset: 0, 0
+  index: -1
+shoulder_R
+  rotate: false
+  xy: 947, 95
+  size: 115, 170
+  orig: 115, 170
+  offset: 0, 0
+  index: -1
+torso
+  rotate: false
+  xy: 1353, 1517
+  size: 337, 455
+  orig: 337, 455
+  offset: 0, 0
+  index: -1
+weapon 4
+  rotate: true
+  xy: 825, 1234
+  size: 738, 526
+  orig: 738, 526
+  offset: 0, 0
+  index: -1
+weapon_1
+  rotate: true
+  xy: 2, 1120
+  size: 606, 457
+  orig: 606, 457
+  offset: 0, 0
+  index: -1
+weapon_2
+  rotate: true
+  xy: 1232, 706
+  size: 526, 367
+  orig: 526, 367
+  offset: 0, 0
+  index: -1
+weapon_3
+  rotate: true
+  xy: 2, 508
+  size: 610, 416
+  orig: 610, 416
+  offset: 0, 0
+  index: -1

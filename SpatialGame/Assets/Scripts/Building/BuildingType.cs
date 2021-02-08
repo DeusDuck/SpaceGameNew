@@ -120,16 +120,19 @@ public class BuildingType : MonoBehaviour
         foreach(Transform t in buildingPositions)
         {
             Collider[] colliders = Physics.OverlapSphere(t.position, 1.0f,buildingLayer);
-            
-            foreach(Collider col in colliders)
-            {
-                if(col.transform == transform)
-                    continue;
-               if(col.transform.GetComponentInParent<Node>().GetIsBuilt())
-               {
-                    trans.Add(t);  
-               }                                      
-            }
+			if(colliders.Length>1)
+			{
+                foreach(Collider col in colliders)
+                {
+                    if(col.transform == transform)
+                        continue;
+
+                   if(col.transform.GetComponentInParent<Node>().GetIsBuilt())
+                   {
+                        trans.Add(t);  
+                   }                                      
+                }
+			}            
         }
         foreach(Transform t in trans)
         {

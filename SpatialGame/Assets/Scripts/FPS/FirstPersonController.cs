@@ -5,28 +5,27 @@ using UnityEngine;
 public class FirstPersonController : MonoBehaviour
 {
     [SerializeField]
-    float walkingSpeed;
-    [SerializeField]
     float rotationSpeed;
-    [SerializeField]
-    Joystick moveJoystick;
     [SerializeField]
     Joystick cameraJoystick;
     [SerializeField]
-    CharacterController controller;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Transform cameraHolder;
+    float pitch = 0.0f, yaw = 0.0f;
+    [SerializeField]
+    bool invertCamera;
 
     // Update is called once per frame
     void Update()
-    {
-        Vector3 direction = moveJoystick.Direction.normalized;
-        Vector3 cameraDirection = cameraJoystick.Direction.normalized;
-        direction.z = direction.y;
-        direction.y = 0;
-        controller.Move(direction*walkingSpeed*Time.deltaTime);
+    {       
+
+        pitch += cameraJoystick.Direction.normalized.y * rotationSpeed*Time.deltaTime;
+        yaw += cameraJoystick.Direction.normalized.x * rotationSpeed*Time.deltaTime;
+        
+        pitch = Mathf.Clamp(pitch, -80,80);       
+        
+        if(invertCamera)
+            cameraHolder.rotation = Quaternion.Euler(-pitch, yaw ,0);
+        else
+            cameraHolder.rotation = Quaternion.Euler(pitch, yaw ,0);
     }
 }

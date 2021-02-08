@@ -35,7 +35,7 @@ public class Node : MonoBehaviour
 	}
 	private void Update()
 	{
-		if(builtTime>=0)
+		if(builtTime>0)
         {            
             builtTime-=Time.deltaTime;
             myBuildingType.UpdateThreshold(builtTime);
@@ -79,7 +79,7 @@ public class Node : MonoBehaviour
                 }
                 else
                 {
-                    myBuildingType.ChangeMaterial(myNodeManager.unAvailablePositionMat);
+                    //myBuildingType.ChangeMaterial(myNodeManager.unAvailablePositionMat);
                     if(myNodeManager.HasNeightboorsWithPipes(this) && myBuildingType.GetNumOfNodes() <= 1)
                     {
                          
@@ -104,17 +104,21 @@ public class Node : MonoBehaviour
         if(col.tag == "Building")
         {
             Node parent = col.GetComponentInParent<Node>();
+            BuildingType type = col.GetComponent<BuildingType>();
             if(parent==null || !parent.GetIsBuilt())
             {
-                myBuildingType.RemoveNode();
-                if(myBuildingType && builtTime==0)
-                {
-                    myBuildingType.SetCanBeBuild(false);
-                    myBuildingType.HasToChangeMat();
-                    myBuildingType.ActivateDrones();
-                    myBuildingType = null;
-                    availableBuilding = null;
-                }   
+                type.RemoveNode();
+                if(myBuildingType!=null)
+                {                    
+                    if(myBuildingType && builtTime==0)
+                    {
+                        myBuildingType.SetCanBeBuild(false);
+                        myBuildingType.HasToChangeMat();
+                        myBuildingType.ActivateDrones();
+                        myBuildingType = null;
+                        availableBuilding = null;
+                    }   
+                }                    
             }                     
         }
     }
@@ -169,16 +173,22 @@ public class Node : MonoBehaviour
         
         if(xDiference>=yDiference)
         {
-            if(node.transform.position.x>transform.position.x)
-                rightNeightboor = node;
+			if(node.transform.position.x>transform.position.x)
+			{
+                if(rightNeightboor==null)
+                    rightNeightboor = node;
+			}                
             else
-                leftNeightboor = node;
+                if(leftNeightboor==null)
+                    leftNeightboor = node;
         }else
         {
             if(node.transform.position.y>transform.position.y)
-                topNeightboor = node;
+                if(topNeightboor==null)
+                    topNeightboor = node;
             else
-                bottomNeightboor = node;
+                if(bottomNeightboor==null)
+                    bottomNeightboor = node;
         }
     }
     public Node GetTopNode(){return topNeightboor;}

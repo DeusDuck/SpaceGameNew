@@ -142,7 +142,7 @@ NavMeshAgent:
   m_Height: 19.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &6914175166987656210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,13 +155,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119bd01c7be7718449a677ee111dd455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySkeleton: {fileID: 3516909393755983468}
+  idle: {fileID: 11400000, guid: aff2982cb1e41b44a8e43b5406b2bb23, type: 2}
+  walk: {fileID: 11400000, guid: e98886f188041264faaf5248028ea3a0, type: 2}
+  myAgent: {fileID: 7537997209320386956}
   walkingSpeed: 1.2
   randomPositionRadius: 50
   timeToChat: 5
   timeToWait: 5
-  myAgent: {fileID: 7537997209320386956}
   currentState: 1
   currentType: 1
-  mySkeleton: {fileID: 3516909393755983468}
-  idle: {fileID: 11400000, guid: aff2982cb1e41b44a8e43b5406b2bb23, type: 2}
-  walk: {fileID: 11400000, guid: e98886f188041264faaf5248028ea3a0, type: 2}

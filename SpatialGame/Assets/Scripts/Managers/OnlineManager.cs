@@ -9,7 +9,8 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 {
 	public static OnlineManager instance;
 	[SerializeField]
-	GameSettings gameSettings;	
+	GameSettings gameSettings;
+	
 	private void Awake()
 	{
 		if(instance == null)

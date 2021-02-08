@@ -24,6 +24,7 @@ public class NodeManager : MonoBehaviour
     List<Node> buildNodes;
     List<Node> neightboors;    
     public VisualManager visualManager;
+    
 
     // Start is called before the first frame update
     void Start()

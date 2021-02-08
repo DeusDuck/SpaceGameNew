@@ -1,0 +1,7 @@
+{45059b7d-6d2f-4d82-80c3-0d29a85874a4} bank:/FX
+{19692479-b1eb-4284-9b7a-1f9e8b43e03d} bank:/Master
+{817404ad-c090-0ec6-1d33-95607ab0e6a5} bank:/Master.strings
+{418cc4b1-ed02-4780-8abf-0d9fea63ff94} bank:/Musica
+{2426a9cd-acbc-4efb-a8ba-3c4503b60451} bus:/
+{c153a7be-f645-4091-afc0-c9b92f289496} bus:/Reverb
+{5cdac974-4527-41a0-991a-04afd77be83d} event:/Ambiente

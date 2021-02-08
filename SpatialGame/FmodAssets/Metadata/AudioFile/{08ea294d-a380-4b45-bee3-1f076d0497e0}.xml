@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{08ea294d-a380-4b45-bee3-1f076d0497e0}">
+		<property name="assetPath">
+			<value>GatoExplota.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ac5526a7-4ac2-42a4-bb01-494c34d185a3}</destination>
+		</relationship>
+	</object>
+</objects>

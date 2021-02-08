@@ -219,10 +219,11 @@ public class PipeRoom : MonoBehaviour
     public Transform GetLink(){return currentLink;}
     public void CreateLink()
     {
-        if(myNode.GetTopNode()!=null)
+        if(myNode.GetTopNode()!=null && myNode.GetIsBuilt())
         {
             PipeRoom neightBoor = myNode.GetTopNode().GetBuildingType().GetComponent<PipeRoom>();
-            offMeshLink.endTransform = neightBoor.GetLink();
+            if(neightBoor!=null)
+                offMeshLink.endTransform = neightBoor.GetLink();
         }        
     }
     void SetActiveNavMesh()

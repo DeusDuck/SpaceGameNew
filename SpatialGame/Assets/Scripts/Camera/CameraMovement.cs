@@ -13,6 +13,9 @@ public class CameraMovement : MonoBehaviour
     [Range(0,50f)]
     float movementSpeed;
     [SerializeField]
+    float closeMovementSpeed;
+    float currentSpeed;
+    [SerializeField]
     float maxZoomDist;
     [SerializeField]
     float minZoomDist;
@@ -46,6 +49,7 @@ public class CameraMovement : MonoBehaviour
             myCamera = Camera.main;
         initCameraPosition = myCamera.transform.position;
         currentZoomTarget = transform;
+        currentSpeed = movementSpeed;
     }
 
     private void Update()
@@ -66,13 +70,13 @@ public class CameraMovement : MonoBehaviour
             if (touch.phase == TouchPhase.Moved && canMove)
             {
                 if(direction.y>0 && (transform.position.y-myCamera.transform.position.y)<=maxYDist) 
-                    myCamera.transform.position += Vector3.up * direction.y * movementSpeed * Time.deltaTime;
+                    myCamera.transform.position += Vector3.up * direction.y * currentSpeed * Time.deltaTime;
                 if(direction.y<0 && (transform.position.y-myCamera.transform.position.y)>=minYDist) 
-                    myCamera.transform.position += Vector3.up * direction.y * movementSpeed * Time.deltaTime;
+                    myCamera.transform.position += Vector3.up * direction.y * currentSpeed * Time.deltaTime;
                 if(direction.x<0 && (transform.position.x-myCamera.transform.position.x)<=maxXDist) 
-                    myCamera.transform.position += Vector3.right * direction.x * movementSpeed * Time.deltaTime;
+                    myCamera.transform.position += Vector3.right * direction.x * currentSpeed * Time.deltaTime;
                 if(direction.x>0 && (transform.position.x-myCamera.transform.position.x)>=minXDist) 
-                    myCamera.transform.position += Vector3.right * direction.x * movementSpeed * Time.deltaTime;
+                    myCamera.transform.position += Vector3.right * direction.x * currentSpeed * Time.deltaTime;
             } 
             if(touch.tapCount>=2)
             {                    
@@ -94,10 +98,12 @@ public class CameraMovement : MonoBehaviour
             {
                 getVisual.SetState(VisualManager.VisualState.MOVING_AROUND);
                 visualManager.ChangeState(getVisual);
+                currentSpeed = movementSpeed;
             }else if(Vector3.Distance(myCamera.transform.position,currentZoomTarget.position)<=distToChange)
             {
                 getVisual.SetState(VisualManager.VisualState.ON_ROOM);
                 visualManager.ChangeState(getVisual);
+                currentSpeed = closeMovementSpeed;
             }
 
         }
@@ -111,7 +117,8 @@ public class CameraMovement : MonoBehaviour
             {
                 goToTarget = false;                
                 getVisual.SetState(VisualManager.VisualState.ON_ROOM);
-                visualManager.ChangeState(getVisual);                
+                visualManager.ChangeState(getVisual); 
+                currentSpeed = closeMovementSpeed;
             }            
         }       
 

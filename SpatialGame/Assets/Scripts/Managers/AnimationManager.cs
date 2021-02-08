@@ -18,7 +18,7 @@ public class AnimationManager : MonoBehaviour
 
     public virtual void TurnAroundCharacter(float scale)
     {
-        if(myAgent.destination.x<=transform.position.x)
+        if(myAgent.velocity.x<=0)
             transform.localScale = new Vector3(-scale,scale,1);
         else
             transform.localScale = new Vector3(scale,scale,1);
