@@ -36,7 +36,8 @@ public class VisualManager : MonoBehaviour
     [SerializeField]
     Button inventoryButton;
     GameObject currentRoom;
-    Button onlineButton;
+    [SerializeField]
+    Button upgradeRoom;
     [Space(5)]
 
     [Header("Text Fields")]
@@ -115,11 +116,12 @@ public class VisualManager : MonoBehaviour
             ShowGameObject(eraseButton.gameObject);
             eraseButton.onClick.RemoveAllListeners();
             eraseButton.onClick.AddListener(delegate{clickHandler.nodeManager.EraseBuilding(type.myNode);});
-        }        
+        }         
         switch(type.GetBuildingType())
         {
             case BuildingType.EBuildingType.CLONING:
                 Button[] buttons = AISelection.GetComponentsInChildren<Button>();
+                upgradeRoom.gameObject.SetActive(true);
                 foreach(Button b in buttons)
                 {
                     if(b.transform.tag == "CloseButton")
@@ -134,6 +136,7 @@ public class VisualManager : MonoBehaviour
             case BuildingType.EBuildingType.DRONES:                
                 Button[] dronesButton = droneSelectionMenu.GetComponentsInChildren<Button>();
                 List<Drone> drones = type.transform.GetComponent<DronesRoom>().GetDrones();
+                upgradeRoom.gameObject.SetActive(true);
                 for(int i = 0; i<dronesButton.Length; i++)
                 {                    
                     Drone current = drones[i];
@@ -156,6 +159,9 @@ public class VisualManager : MonoBehaviour
                 }
                 break;
             case BuildingType.EBuildingType.RESOURCES:
+                upgradeRoom.gameObject.SetActive(true);
+                var resourceRoom = building.GetComponent<ResourcesRoom>();
+                upgradeRoom.onClick.AddListener(delegate{resourceRoom.UpgrateRoom();});
                 break;
         }
     }

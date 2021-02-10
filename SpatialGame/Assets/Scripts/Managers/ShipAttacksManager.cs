@@ -25,7 +25,10 @@ public class ShipAttacksManager : MonoBehaviour
         for(int i = 1; i<=numberOfenemies; i++)
 		{
             DogAlien dog = Instantiate(dogBasic,RandomNavmeshLocation(),dogBasic.transform.rotation).GetComponent<DogAlien>();
-            dog.Target = npcManager.GetNPC().transform;
+            NPC current = npcManager.GetNPC();
+            dog.AttackingPosition = current.GetAttackingPosition();
+            dog.Target = current;
+            current.SetAttackingPositions();
 		}        
 	}
     Vector3 RandomNavmeshLocation() 

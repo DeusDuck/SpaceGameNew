@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using Spine.Unity;
 
-public class NPC : AnimationManager
+public class NPC : NPCController
 {
     public float walkingSpeed;
     public float randomPositionRadius;
     public float timeToChat;
-    public float timeToWait;    
+    public float timeToWait;
     
     public enum EState
     { 
@@ -22,15 +22,21 @@ public class NPC : AnimationManager
     }
     public EType currentType;
     Vector3 currentTarget;
+    Transform currentWorkingPosition;
     float currentTime;   
     NPCManager myManager;
     ResourcesRoom currentRoom;
+    [SerializeField]
+    List<Transform> attackingPositions;
+    List<Transform> occupiedPosition = new List<Transform>();
+    Transform currentAttackingPos;
 
     // Start is called before the first frame update
     void Start()
     {
         base.myAgent.updateRotation = false;
         base.myAgent.speed = walkingSpeed; 
+        currentAttackingPos = attackingPositions[0];
     }
 
     // Update is called once per frame
@@ -144,18 +150,7 @@ public class NPC : AnimationManager
          }
          return finalPosition;
     }
-    public void SetDestination(Transform target)
-    {
-        if(target !=null)
-        {
-            currentTarget = target.position;
-            ChangeState(EState.MOVING);
-        }
-        else
-        {
-            ChangeState(EState.RANDOM_POS); 
-        }            
-    }   
+    
     public  override void TurnAroundCharacter(float scale = 0.08f)
     {
         base.TurnAroundCharacter(scale);
@@ -164,9 +159,54 @@ public class NPC : AnimationManager
     {
         base.SetAnimationAsset(anim,loop,timeScale);
     }
+	public override void TakeDamage(float damage)
+	{
+		base.TakeDamage(damage);
+        if(base.currentHealth<=0)
+            Die();
+	}
+    void Die()
+	{
+        currentRoom.FreeWorkingPosition(currentWorkingPosition);
+        currentRoom.RemoveWorker();
+        myManager.RemoveNPC(this);
+        Destroy(gameObject);
+	}
 	#region Setter and Getters
-    public void SetManager(NPCManager manager){myManager = manager;}
+	public void SetManager(NPCManager manager){myManager = manager;}
     public void SetBuilding(ResourcesRoom room){ currentRoom = room;}
     public ResourcesRoom GetWorkingRoom(){return currentRoom;}
+    public Transform GetAttackingPosition()
+	{
+        return currentAttackingPos;
+	}
+    public void SetAttackingPositions()
+	{
+        attackingPositions.Remove(currentAttackingPos);
+        occupiedPosition.Add(currentAttackingPos);
+
+        if(attackingPositions.Count==0)
+            currentAttackingPos = null;
+
+        foreach(Transform t in attackingPositions)
+		{
+            if(currentAttackingPos==t)
+                continue;
+            currentAttackingPos = t;
+		}
+	}
+    public void SetDestination(Transform target)
+    {
+        if(target !=null)
+        {
+            currentTarget = target.position;
+            currentWorkingPosition = target;
+            ChangeState(EState.MOVING);
+        }
+        else
+        {
+            ChangeState(EState.RANDOM_POS); 
+        }            
+    }   
 	#endregion
 }

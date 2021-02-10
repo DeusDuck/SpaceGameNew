@@ -72,8 +72,8 @@ public class NPCManager : MonoBehaviour
                     break;
             }       
     }
-    //Añade un NPC a la lista y le asigna un trabajo
-    public void AddNPC(NPC npc)
+	//Añade un NPC a la lista y le asigna un trabajo
+	public void AddNPC(NPC npc)
     {
         currentNPC.Add(npc);
         AssignJob(npc);
@@ -110,6 +110,11 @@ public class NPCManager : MonoBehaviour
         current.GetWorkingRoom().StartCounter(true);
         current.GetWorkingRoom().AddWorker();
     }
+    public void RemoveNPC(NPC current)
+	{
+        currentNPC.Remove(current);
+	}
+    //Da un NPC aleatorio si este no ha sido cogido por otro enemigo
     public NPC GetNPC()
 	{
         foreach(NPC current in currentNPC)
@@ -122,5 +127,5 @@ public class NPCManager : MonoBehaviour
 		}
         int index = Random.Range(0,targetedNPC.Count);
         return targetedNPC[index];
-	}
+	}    
 }

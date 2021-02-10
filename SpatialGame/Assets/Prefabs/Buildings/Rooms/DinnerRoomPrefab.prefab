@@ -245,6 +245,9 @@ MonoBehaviour:
   - {fileID: 48112336612956102}
   - {fileID: 5575228582662293704}
   - {fileID: 5819002615998461514}
+  oxigenCost: 20
+  moneyCost: 50
+  foodCost: 30
 --- !u!65 &2207343542343230707
 BoxCollider:
   m_ObjectHideFlags: 0

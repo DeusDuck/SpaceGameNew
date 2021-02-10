@@ -60,8 +60,8 @@ public class Node : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if(isBuilt)
-            return;
+        /*if(isBuilt)
+            return;*/
         if(col.tag == "Building")
         {
             myBuildingType = col.GetComponent<BuildingType>();
@@ -79,10 +79,8 @@ public class Node : MonoBehaviour
                 }
                 else
                 {
-                    //myBuildingType.ChangeMaterial(myNodeManager.unAvailablePositionMat);
                     if(myNodeManager.HasNeightboorsWithPipes(this) && myBuildingType.GetNumOfNodes() <= 1)
-                    {
-                         
+                    {                         
                         myBuildingType.SetCanBeBuild(true);
                         myBuildingType.HasToChangeMat();
                         availableBuilding = myBuildingType.gameObject;
@@ -104,10 +102,10 @@ public class Node : MonoBehaviour
         if(col.tag == "Building")
         {
             Node parent = col.GetComponentInParent<Node>();
-            BuildingType type = col.GetComponent<BuildingType>();
+            
             if(parent==null || !parent.GetIsBuilt())
             {
-                type.RemoveNode();
+                myBuildingType.RemoveNode();
                 if(myBuildingType!=null)
                 {                    
                     if(myBuildingType && builtTime==0)
@@ -174,20 +172,14 @@ public class Node : MonoBehaviour
         if(xDiference>=yDiference)
         {
 			if(node.transform.position.x>transform.position.x)
-			{
-                if(rightNeightboor==null)
-                    rightNeightboor = node;
-			}                
+                    rightNeightboor = node;                
             else
-                if(leftNeightboor==null)
                     leftNeightboor = node;
         }else
         {
             if(node.transform.position.y>transform.position.y)
-                if(topNeightboor==null)
                     topNeightboor = node;
             else
-                if(bottomNeightboor==null)
                     bottomNeightboor = node;
         }
     }

@@ -289,7 +289,7 @@ MonoBehaviour:
   oxigenCost: 0
   moneyCost: 5
   foodCost: 0
-  builtTime: 5
+  builtTime: 1
 --- !u!114 &4751748324870348779
 MonoBehaviour:
   m_ObjectHideFlags: 0

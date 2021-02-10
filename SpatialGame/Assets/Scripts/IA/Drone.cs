@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Spine.Unity;
 
-public class Drone : AnimationManager
+public class Drone : NPCController
 {    
     Transform currentTarget;
     [SerializeField]

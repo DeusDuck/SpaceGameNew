@@ -34,17 +34,14 @@ public class NodeManager : MonoBehaviour
         neightboors = new List<Node>();        
         
         Node nodeToBuild =Instantiate(node,transform.position,transform.rotation);        
-        GameObject building = Instantiate(currentBuilding,transform.position,currentBuilding.transform.rotation,nodeToBuild.transform);
-        nodeToBuild.InitNode(this,building.GetComponent<BuildingType>()); 
+        BuildingType building = Instantiate(currentBuilding,transform.position,currentBuilding.transform.rotation,nodeToBuild.transform).GetComponent<BuildingType>();
+        nodeToBuild.InitNode(this,building); 
         currentMats = currentBuilding.transform.GetComponentsInChildren<MeshRenderer>();
-        nodeToBuild.SetAvailableBuilding(building,availablePositionMat);        
+        nodeToBuild.SetAvailableBuilding(building.gameObject,availablePositionMat);        
         nodeToBuild.GetBuildingType().builtTime = 0.01f;
         
-        nodeToBuild.GetBuildingType().myNodeManager = this;
-        nodeToBuild.BuildBuilding(currentMats,building.GetComponent<BuildingType>());        
+        nodeToBuild.BuildBuilding(currentMats,building);        
         nodeToBuild.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);        
-        AddBuildNode(nodeToBuild);
-        CreateNodesNeightboors();
         currentBuilding = null;
     }
     void Update()
@@ -76,9 +73,11 @@ public class NodeManager : MonoBehaviour
     void CreateNodesNeightboors()
     {
         BuildingType type;
+
         foreach(Node build in buildNodes)
         {
             type = build.GetBuildingType();
+           
             if(type.GetCurrentBuildingPositions().Count == 0)
                 continue;
 
