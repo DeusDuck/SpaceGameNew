@@ -13,12 +13,22 @@ public class ShipAttacksManager : MonoBehaviour
     float randomPositionRadius;
     [SerializeField]
     int numberOfenemies;
+    [SerializeField]
+    float assaultTime;
+    float currentTime;
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        //Esto esta hecho a modo de Debug 
+        if(assaultTime == 0)
+            return;
+        currentTime+=Time.deltaTime;
+		if(currentTime>=assaultTime)
+		{
             AttackShip();
+            currentTime = 0;
+		}           
     }
     void AttackShip()
 	{   

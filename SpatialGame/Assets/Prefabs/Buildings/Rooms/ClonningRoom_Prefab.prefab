@@ -3774,6 +3774,7 @@ MonoBehaviour:
   myNavMesh: {fileID: 4939892970141618336}
   zoomObjective: {fileID: 8019647476758388010}
   myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
@@ -3789,6 +3790,9 @@ MonoBehaviour:
   oxigenCost: 5
   moneyCost: 10
   foodCost: 5
+  upgrateCostOxigen: 10
+  upgrateCostMoney: 10
+  upgrateCostFood: 10
   builtTime: 10
 --- !u!114 &7646246484166858908
 MonoBehaviour:

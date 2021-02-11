@@ -8,8 +8,6 @@ public class Node : MonoBehaviour
     [SerializeField]
     GameObject availableBuilding;
     [SerializeField]
-    LayerMask buildingLayer;
-    [SerializeField]
     NodeManager myNodeManager;
     [SerializeField]
     BuildingType myBuildingType;
@@ -60,8 +58,8 @@ public class Node : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        /*if(isBuilt)
-            return;*/
+        if(isBuilt)
+            return;
         if(col.tag == "Building")
         {
             myBuildingType = col.GetComponent<BuildingType>();
@@ -102,18 +100,16 @@ public class Node : MonoBehaviour
         if(col.tag == "Building")
         {
             Node parent = col.GetComponentInParent<Node>();
-            
+            BuildingType type = col.GetComponent<BuildingType>();
             if(parent==null || !parent.GetIsBuilt())
             {
-                myBuildingType.RemoveNode();
-                if(myBuildingType!=null)
+                type.RemoveNode();
+                if(type!=null)
                 {                    
-                    if(myBuildingType && builtTime==0)
+                    if(type && builtTime==0)
                     {
-                        myBuildingType.SetCanBeBuild(false);
-                        myBuildingType.HasToChangeMat();
-                        myBuildingType.ActivateDrones();
-                        myBuildingType = null;
+                        type.SetCanBeBuild(false);
+                        type.HasToChangeMat();
                         availableBuilding = null;
                     }   
                 }                    

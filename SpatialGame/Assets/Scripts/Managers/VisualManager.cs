@@ -111,17 +111,19 @@ public class VisualManager : MonoBehaviour
     {
         //Dependiendo del tipo de edificio que selecciones, enseñará un menú u otro.
         var type = building.GetComponent<BuildingType>();
+        
         if(type.myNode != null && type.myNode.GetIsBuilt())
         {
             ShowGameObject(eraseButton.gameObject);
             eraseButton.onClick.RemoveAllListeners();
             eraseButton.onClick.AddListener(delegate{clickHandler.nodeManager.EraseBuilding(type.myNode);});
+            upgradeRoom.onClick.AddListener(delegate{type.UpgrateRoom();});
+            upgradeRoom.interactable = type.CanBeUpgrated();
         }         
         switch(type.GetBuildingType())
         {
             case BuildingType.EBuildingType.CLONING:
                 Button[] buttons = AISelection.GetComponentsInChildren<Button>();
-                upgradeRoom.gameObject.SetActive(true);
                 foreach(Button b in buttons)
                 {
                     if(b.transform.tag == "CloseButton")
@@ -136,7 +138,6 @@ public class VisualManager : MonoBehaviour
             case BuildingType.EBuildingType.DRONES:                
                 Button[] dronesButton = droneSelectionMenu.GetComponentsInChildren<Button>();
                 List<Drone> drones = type.transform.GetComponent<DronesRoom>().GetDrones();
-                upgradeRoom.gameObject.SetActive(true);
                 for(int i = 0; i<dronesButton.Length; i++)
                 {                    
                     Drone current = drones[i];
@@ -158,10 +159,9 @@ public class VisualManager : MonoBehaviour
                     buildPipe.onClick.AddListener(delegate{clickHandler.nodeManager.BuildPipe(building);});
                 }
                 break;
-            case BuildingType.EBuildingType.RESOURCES:
-                upgradeRoom.gameObject.SetActive(true);
-                var resourceRoom = building.GetComponent<ResourcesRoom>();
-                upgradeRoom.onClick.AddListener(delegate{resourceRoom.UpgrateRoom();});
+            case BuildingType.EBuildingType.RESOURCES:    
+                
+                
                 break;
         }
     }
@@ -187,6 +187,7 @@ public class VisualManager : MonoBehaviour
                     break;
                 case VisualState.ON_ROOM:
                     StopCameraMovement(false);
+                    upgradeRoom.gameObject.SetActive(true);
                     if(currentRoom.GetComponent<CloningRoom>())
                     {
                         currentRoom.GetComponent<CloningRoom>().DisplayProgessBar(true);
@@ -206,6 +207,7 @@ public class VisualManager : MonoBehaviour
                     HideBuildingMenu();
                     break;
                 case VisualState.ON_ROOM:
+                    upgradeRoom.gameObject.SetActive(false);
                     if(currentRoom.GetComponent<CloningRoom>())
                     {
                         currentRoom.GetComponent<CloningRoom>().DisplayProgessBar(false);

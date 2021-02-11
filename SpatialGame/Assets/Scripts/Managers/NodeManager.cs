@@ -224,6 +224,7 @@ public class NodeManager : MonoBehaviour
     }
     public void BuildNode(Node currentNode)
     {            
+        currentNode.GetBuildingType().myResourceManager = resourceManager;
         if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.CLONING)
             currentNode.GetComponentInChildren<CloningRoom>().SetNPCManager(npcManager);
         else if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.RESOURCES)
@@ -231,8 +232,7 @@ public class NodeManager : MonoBehaviour
             ResourcesRoom room = currentNode.GetBuildingType().transform.GetComponent<ResourcesRoom>();
             if(room!=null)
             {
-                npcManager.AddBuilding(room);
-                room.SetResourceManager(resourceManager);
+                npcManager.AddBuilding(room);                
             }
         }else if(currentNode.GetBuildingType().GetBuildingType() == BuildingType.EBuildingType.DRONES)
         {

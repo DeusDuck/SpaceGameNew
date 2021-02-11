@@ -167,7 +167,7 @@ MonoBehaviour:
   timeToChat: 5
   timeToWait: 5
   currentState: 1
-  currentType: 1
+  currentType: 0
   attackingPositions:
   - {fileID: 2255134018120703136}
   - {fileID: 6496277839792145918}

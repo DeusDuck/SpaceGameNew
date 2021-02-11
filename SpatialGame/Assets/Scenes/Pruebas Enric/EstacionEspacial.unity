@@ -5737,6 +5737,7 @@ MonoBehaviour:
   dogBasic: {fileID: 7019639044688059962, guid: b5b12635eb899154c8a82f367b2b9018, type: 3}
   randomPositionRadius: 1000
   numberOfenemies: 3
+  assaultTime: 0
 --- !u!4 &1384817287
 Transform:
   m_ObjectHideFlags: 0
@@ -12048,6 +12049,7 @@ MonoBehaviour:
   myNavMesh: {fileID: 2056304390977604563}
   zoomObjective: {fileID: 1119043606981631576}
   myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
@@ -12063,6 +12065,9 @@ MonoBehaviour:
   oxigenCost: 0
   moneyCost: 0
   foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
   builtTime: 2
 --- !u!114 &2181736668345082055
 MonoBehaviour:
@@ -16138,6 +16143,7 @@ MonoBehaviour:
   myNavMesh: {fileID: 683736812574957174}
   zoomObjective: {fileID: 2501920679215256572}
   myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
@@ -16153,6 +16159,9 @@ MonoBehaviour:
   oxigenCost: 5
   moneyCost: 10
   foodCost: 5
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
   builtTime: 10
 --- !u!1 &5428814070912044496
 GameObject:
@@ -17050,6 +17059,7 @@ MonoBehaviour:
   myNavMesh: {fileID: 2623843169879184986}
   zoomObjective: {fileID: 3387840020020464970}
   myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
@@ -17065,6 +17075,9 @@ MonoBehaviour:
   oxigenCost: 5
   moneyCost: 5
   foodCost: 5
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
   builtTime: 10
 --- !u!23 &6457330025343959391
 MeshRenderer:
@@ -17630,6 +17643,7 @@ MonoBehaviour:
   myNavMesh: {fileID: 7976252592259512170}
   zoomObjective: {fileID: 47456130755475290}
   myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
@@ -17645,6 +17659,9 @@ MonoBehaviour:
   oxigenCost: 5
   moneyCost: 20
   foodCost: 10
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
   builtTime: 10
 --- !u!4 &6997657597674645599
 Transform:
@@ -20060,6 +20077,7 @@ MonoBehaviour:
   myNavMesh: {fileID: 1518433498642026258}
   zoomObjective: {fileID: 1661360393727592144}
   myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
@@ -20075,6 +20093,9 @@ MonoBehaviour:
   oxigenCost: 10
   moneyCost: 10
   foodCost: 10
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
   builtTime: 10
 --- !u!23 &9046881504214172361
 MeshRenderer:

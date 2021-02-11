@@ -28,6 +28,7 @@ public class BuildingType : MonoBehaviour
     [SerializeField]
     Transform zoomObjective;   
     public NodeManager myNodeManager;
+    public ResourceManager myResourceManager;
     public Node myNode;
     [SerializeField]
     LayerMask buildingLayer;
@@ -58,6 +59,12 @@ public class BuildingType : MonoBehaviour
     int moneyCost = 0;
     [SerializeField]
     int foodCost = 0;
+    [SerializeField]
+    int upgrateCostOxigen = 0;
+    [SerializeField]
+    int upgrateCostMoney = 0;
+    [SerializeField]
+    int upgrateCostFood = 0;
     public float builtTime;    
     
 
@@ -217,5 +224,19 @@ public class BuildingType : MonoBehaviour
         {
             rnd.material.SetFloat("_TimeThreshold",current);          
         }
+	}
+    public void UpgrateRoom()
+	{
+        int[] currency = {upgrateCostOxigen,upgrateCostMoney,upgrateCostFood};
+        List<int> costs = myResourceManager.GetAllResources();
+        if(CanBeUpgrated())
+		{
+            myResourceManager.SpendResources(currency);
+		}
+	}
+    public bool CanBeUpgrated()
+	{
+        List<int> costs = myResourceManager.GetAllResources();
+        return (costs[0]>=upgrateCostFood && costs[1]>= upgrateCostMoney && costs[2]>= upgrateCostOxigen);
 	}
 }
