@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CloningRoom : MonoBehaviour
+public class CloningRoom : BuildingType
 {
     GameObject NPC;
     float currentTimeToSpawn;

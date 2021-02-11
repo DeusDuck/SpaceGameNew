@@ -98,7 +98,7 @@ public class NodeManager : MonoBehaviour
             }
         }
     }
-    //Da a los nodos el edificio a construir
+    //Crea los edificios al pulsar en la UI
     
     public void CreateBuilding(GameObject building)
     {
@@ -238,8 +238,7 @@ public class NodeManager : MonoBehaviour
         {
             DronesRoom room = currentNode.GetBuildingType().transform.GetComponent<DronesRoom>();
 			if(room!=null)
-			{
-                room.SetResourceManager(resourceManager);
+			{               
                 room.ActivateDrones();
 			}
         }

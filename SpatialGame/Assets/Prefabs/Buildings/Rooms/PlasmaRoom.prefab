@@ -560,7 +560,6 @@ GameObject:
   - component: {fileID: 3806122925203162816}
   - component: {fileID: 6735019116986593967}
   - component: {fileID: 3891277427022874545}
-  - component: {fileID: 5469335598353230175}
   - component: {fileID: 4008620427247635998}
   - component: {fileID: -6238181205767790744}
   m_Layer: 8
@@ -636,41 +635,6 @@ MonoBehaviour:
   m_VoxelSize: 0.1
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &5469335598353230175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4582905262633180282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c880d8892316147bc7664bc653e95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentType: 1
-  currentExits: 0000000001000000
-  meshObject: {fileID: 6942727013300198479}
-  myCollider: {fileID: 6735019116986593967}
-  myNavMesh: {fileID: 3891277427022874545}
-  zoomObjective: {fileID: 4426297129260424353}
-  myNodeManager: {fileID: 0}
-  myNode: {fileID: 0}
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 768
-  numOfNodes: 0
-  anchorPointLeft: {fileID: 4426297130871455520}
-  anchorPointRight: {fileID: 4426297129196474305}
-  anchorPointTop: {fileID: 0}
-  anchorPointBottom: {fileID: 0}
-  buildingPositions:
-  - {fileID: 4426297130871455520}
-  - {fileID: 4426297129196474305}
-  oxigenCost: 5
-  moneyCost: 5
-  foodCost: 5
-  builtTime: 10
 --- !u!114 &4008620427247635998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,6 +647,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696b0aa6d7ac99c4ba083985220ed42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentType: 1
+  currentExits: 0100000000000000
+  meshObject: {fileID: 6942727013300198479}
+  myCollider: {fileID: 6735019116986593967}
+  myNavMesh: {fileID: 3891277427022874545}
+  zoomObjective: {fileID: 4426297129260424353}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 768
+  numOfNodes: 0
+  anchorPointLeft: {fileID: 4426297130871455520}
+  anchorPointRight: {fileID: 4426297129196474305}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions:
+  - {fileID: 4426297130871455520}
+  - {fileID: 4426297129196474305}
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 6
   currentResource: 2
   amountOfResourcesToGive: 10
   timeToCollectResources: 2

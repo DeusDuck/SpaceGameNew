@@ -2737,7 +2737,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582011781}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
@@ -12744,6 +12744,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696b0aa6d7ac99c4ba083985220ed42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentType: 0
+  currentExits: 
+  meshObject: {fileID: 0}
+  myCollider: {fileID: 0}
+  myNavMesh: {fileID: 0}
+  zoomObjective: {fileID: 0}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  numOfNodes: 0
+  anchorPointLeft: {fileID: 0}
+  anchorPointRight: {fileID: 0}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions: []
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 0
   currentResource: 2
   amountOfResourcesToGive: 10
   timeToCollectResources: 2
@@ -12757,9 +12782,6 @@ MonoBehaviour:
   - {fileID: 3485192180772765490}
   - {fileID: 5054541589859881141}
   - {fileID: 2582161270814814087}
-  oxigenCost: 0
-  moneyCost: 0
-  foodCost: 0
 --- !u!23 &2725459346705253444
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12911,6 +12933,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7cc72660eca53f4badb4f62abb901de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentType: 0
+  currentExits: 
+  meshObject: {fileID: 0}
+  myCollider: {fileID: 0}
+  myNavMesh: {fileID: 0}
+  zoomObjective: {fileID: 0}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  numOfNodes: 0
+  anchorPointLeft: {fileID: 0}
+  anchorPointRight: {fileID: 0}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions: []
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 0
   timeToSpawn: 2
   spawnPos: {fileID: 3715374678256554165}
   progressBarBack: {fileID: 6801344701023597151}
@@ -18182,6 +18229,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696b0aa6d7ac99c4ba083985220ed42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentType: 0
+  currentExits: 
+  meshObject: {fileID: 0}
+  myCollider: {fileID: 0}
+  myNavMesh: {fileID: 0}
+  zoomObjective: {fileID: 0}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  numOfNodes: 0
+  anchorPointLeft: {fileID: 0}
+  anchorPointRight: {fileID: 0}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions: []
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 0
   currentResource: 0
   amountOfResourcesToGive: 10
   timeToCollectResources: 2
@@ -18195,9 +18267,6 @@ MonoBehaviour:
   - {fileID: 4380538608542399704}
   - {fileID: 8160260389538128854}
   - {fileID: 7827644559340641620}
-  oxigenCost: 0
-  moneyCost: 0
-  foodCost: 0
 --- !u!1 &7551097088542011084
 GameObject:
   m_ObjectHideFlags: 0
@@ -18996,6 +19065,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5fa8c1f15f7a5418892a1197f488df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentType: 0
+  currentExits: 
+  meshObject: {fileID: 0}
+  myCollider: {fileID: 0}
+  myNavMesh: {fileID: 0}
+  zoomObjective: {fileID: 0}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  numOfNodes: 0
+  anchorPointLeft: {fileID: 0}
+  anchorPointRight: {fileID: 0}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions: []
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 0
   availableDrones:
   - {fileID: 4627147765429674982}
   - {fileID: 4914988946717526824}
@@ -19949,6 +20043,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696b0aa6d7ac99c4ba083985220ed42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentType: 0
+  currentExits: 
+  meshObject: {fileID: 0}
+  myCollider: {fileID: 0}
+  myNavMesh: {fileID: 0}
+  zoomObjective: {fileID: 0}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  numOfNodes: 0
+  anchorPointLeft: {fileID: 0}
+  anchorPointRight: {fileID: 0}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions: []
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 0
   currentResource: 1
   amountOfResourcesToGive: 10
   timeToCollectResources: 2
@@ -19962,9 +20081,6 @@ MonoBehaviour:
   - {fileID: 2418733930106828128}
   - {fileID: 2987519901905242660}
   - {fileID: 1118153433490127029}
-  oxigenCost: 0
-  moneyCost: 0
-  foodCost: 0
 --- !u!1 &9004241966776690246
 GameObject:
   m_ObjectHideFlags: 0

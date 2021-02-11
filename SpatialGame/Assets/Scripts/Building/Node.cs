@@ -121,11 +121,14 @@ public class Node : MonoBehaviour
     {
         availableBuilding = _building;            
         myBuildingType = availableBuilding.transform.GetComponent<BuildingType>();
-        myBuildingType.myNode = this;
+        //myBuildingType.myNode = this;
         myBuildingType.SetManager(myNodeManager);
         myNodeManager.UpdateNodeDistance(this);
-        if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)               
-            myBuildingType.ConnectPipe();               
+        if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)
+		{
+            myBuildingType.ConnectPipe(); 
+		}               
+                          
 
        myBuildingType.ChangeMaterial(myNodeManager.buildingMaterial);       
     }

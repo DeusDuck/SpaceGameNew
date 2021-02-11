@@ -3717,11 +3717,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 531924677859125272}
-  - component: {fileID: 500592881313316473}
   - component: {fileID: 7646246484166858908}
   - component: {fileID: 4939892970141618336}
   - component: {fileID: 8992772739815414673}
   - component: {fileID: 7578613437447123632}
+  - component: {fileID: 3748083054378659674}
   m_Layer: 8
   m_Name: ClonningRoom_Prefab
   m_TagString: Building
@@ -3755,45 +3755,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &500592881313316473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8442451801512893765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c880d8892316147bc7664bc653e95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentType: 0
-  currentExits: 0100000000000000
-  meshObject: {fileID: 4481812025400451422}
-  myCollider: {fileID: 8992772739815414673}
-  myNavMesh: {fileID: 4939892970141618336}
-  zoomObjective: {fileID: 8019647476758388010}
-  myNodeManager: {fileID: 0}
-  myResourceManager: {fileID: 0}
-  myNode: {fileID: 0}
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 768
-  numOfNodes: 0
-  anchorPointLeft: {fileID: 7092464803227630757}
-  anchorPointRight: {fileID: 5823575928809114551}
-  anchorPointTop: {fileID: 0}
-  anchorPointBottom: {fileID: 0}
-  buildingPositions:
-  - {fileID: 5823575928809114551}
-  - {fileID: 7092464803227630757}
-  oxigenCost: 5
-  moneyCost: 10
-  foodCost: 5
-  upgrateCostOxigen: 10
-  upgrateCostMoney: 10
-  upgrateCostFood: 10
-  builtTime: 10
 --- !u!114 &7646246484166858908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3806,6 +3767,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7cc72660eca53f4badb4f62abb901de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentType: 0
+  currentExits: 0000000001000000
+  meshObject: {fileID: 4481812025400451422}
+  myCollider: {fileID: 8992772739815414673}
+  myNavMesh: {fileID: 4939892970141618336}
+  zoomObjective: {fileID: 8019647476758388010}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  numOfNodes: 0
+  anchorPointLeft: {fileID: 7092464803227630757}
+  anchorPointRight: {fileID: 5823575928809114551}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions:
+  - {fileID: 7092464803227630757}
+  - {fileID: 5823575928809114551}
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 0
   timeToSpawn: 2
   spawnPos: {fileID: 9114354274491981411}
   progressBarBack: {fileID: 1409665722667367561}
@@ -3872,6 +3860,45 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   lightmapID: 0
+--- !u!114 &3748083054378659674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8442451801512893765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5c880d8892316147bc7664bc653e95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentType: 0
+  currentExits: 0100000000000000
+  meshObject: {fileID: 4481812025400451422}
+  myCollider: {fileID: 8992772739815414673}
+  myNavMesh: {fileID: 4939892970141618336}
+  zoomObjective: {fileID: 8019647476758388010}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  numOfNodes: 0
+  anchorPointLeft: {fileID: 7092464803227630757}
+  anchorPointRight: {fileID: 5823575928809114551}
+  anchorPointTop: {fileID: 0}
+  anchorPointBottom: {fileID: 0}
+  buildingPositions:
+  - {fileID: 5823575928809114551}
+  - {fileID: 7092464803227630757}
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 5
 --- !u!1 &8653824903238777173
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourcesRoom : MonoBehaviour
+public class ResourcesRoom : BuildingType
 {
     int numberOfWorkers = 0; 
     bool startCounting;
@@ -20,13 +20,6 @@ public class ResourcesRoom : MonoBehaviour
     List<Transform> availableWorkingPositions;
     [SerializeField]
     List<Transform> workingPositions;
-    ResourceManager myResourceManager;
-    [SerializeField]
-    int oxigenCost;
-    [SerializeField]
-    int moneyCost;
-    [SerializeField]
-    int foodCost; 
 
 	private void Update()
 	{
@@ -58,16 +51,7 @@ public class ResourcesRoom : MonoBehaviour
             availableWorkingPositions.Add(position);
             workingPositions.Remove(position);
 		}
-	}
-    public void UpgrateRoom()
-	{
-        int[] currency = {oxigenCost,moneyCost,foodCost};
-        List<int> costs = myResourceManager.GetAllResources();
-        if(costs[0]>=foodCost && costs[1]>= moneyCost && costs[2]>= oxigenCost)
-		{
-            myResourceManager.SpendResources(currency);
-		}
-	}
+	}    
     public bool IsBuildingFull(){return availableWorkingPositions.Count == 0;}
     public void AddWorker(){numberOfWorkers++;}
     public void RemoveWorker(){numberOfWorkers--;}

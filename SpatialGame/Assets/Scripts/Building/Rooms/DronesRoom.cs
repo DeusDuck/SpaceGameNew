@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DronesRoom : MonoBehaviour
+public class DronesRoom : BuildingType
 {
     [SerializeField]
     List<Drone> availableDrones;
@@ -15,7 +15,6 @@ public class DronesRoom : MonoBehaviour
     Transform recollectionPosition;
     [SerializeField]
     Text droneTime;
-    ResourceManager resourceManager;
     int rock;
     int wood;
     int iron;
@@ -73,10 +72,9 @@ public class DronesRoom : MonoBehaviour
         rnd = Random.Range(10,1000);        
         wood = rnd;
         //Calcula los recursos encontrados
-        resourceManager.AddResourceInventory(rock,iron,wood);//Los añade a los recursos
+        myResourceManager.AddResourceInventory(rock,iron,wood);//Los añade a los recursos
     }
-    public Transform GetRecollectingPosition(){return recollectionPosition;}//Devuelve la posicion de recogida de recursos
-    public void SetResourceManager(ResourceManager manager){resourceManager = manager;}//Setter del resource manager
+    public Transform GetRecollectingPosition(){return recollectionPosition;}//Devuelve la posicion de recogida de recursos    
     //Activa el gameObject de los drones
     public void ActivateDrones()
     {
