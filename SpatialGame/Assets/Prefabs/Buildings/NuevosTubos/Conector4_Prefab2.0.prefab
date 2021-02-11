@@ -220,7 +220,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3288437126031206936}
-  - component: {fileID: 728845026725771905}
   - component: {fileID: 4751748324870348779}
   - component: {fileID: 7550983701597489683}
   - component: {fileID: 8583236417798025544}
@@ -253,7 +252,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &728845026725771905
+--- !u!114 &4751748324870348779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -262,16 +261,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 9067870194466294586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c880d8892316147bc7664bc653e95c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6225ff2953d69aa40a974ac5cf8f7693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 2
-  currentExits: 02000000010000000300000000000000
+  currentExits: 00000000010000000200000003000000
   meshObject: {fileID: 6476752519705773629}
   myCollider: {fileID: 8583236417798025544}
-  myNavMesh: {fileID: 7550983701597489683}
+  myNavMesh: {fileID: 0}
   zoomObjective: {fileID: 1108673423990741094}
   myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
     serializedVersion: 2
@@ -287,26 +287,12 @@ MonoBehaviour:
   - {fileID: 8867623650731410629}
   - {fileID: 3595647935947794551}
   oxigenCost: 0
-  moneyCost: 5
+  moneyCost: 0
   foodCost: 0
-  builtTime: 1
---- !u!114 &4751748324870348779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9067870194466294586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6225ff2953d69aa40a974ac5cf8f7693, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: {fileID: 728845026725771905}
-  anchorPointLeft: {fileID: 4177613953952762309}
-  anchorPointRight: {fileID: 6207646724297702085}
-  anchorPointTop: {fileID: 8867623650731410629}
-  anchorPointBottom: {fileID: 3595647935947794551}
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 2
   linkLeft: {fileID: 0}
   linkRight: {fileID: 0}
   linkTop: {fileID: 0}
@@ -316,9 +302,6 @@ MonoBehaviour:
   navMeshLongRight: {fileID: 0}
   navMeshShortTop: {fileID: 0}
   navMeshShortBottom: {fileID: 0}
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 256
   mustChangeNavMesh: 0
 --- !u!114 &7550983701597489683
 MonoBehaviour:

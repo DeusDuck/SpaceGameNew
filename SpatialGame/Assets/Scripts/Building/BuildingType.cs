@@ -40,13 +40,13 @@ public class BuildingType : MonoBehaviour
     [Header("Anchors")]
     [Space(5)]
     [SerializeField]
-    Transform anchorPointLeft;
+    protected Transform anchorPointLeft;
     [SerializeField]
-    Transform anchorPointRight;
+    protected Transform anchorPointRight;
     [SerializeField]
-    Transform anchorPointTop;
+    protected Transform anchorPointTop;
     [SerializeField]
-    Transform anchorPointBottom;
+    protected Transform anchorPointBottom;
     [SerializeField]
     List<Transform> buildingPositions;
     [Space(5)]
@@ -101,7 +101,7 @@ public class BuildingType : MonoBehaviour
         PipeRoom pipe = GetComponent<PipeRoom>();
         if(pipe!=null)
         {
-            pipe.SetPipe(myNodeManager,myNode,currentExits);
+            pipe.SetPipe(myNodeManager,myNode);
             pipe.RotateTillConnect(); 
         }                        
     }

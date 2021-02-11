@@ -433,7 +433,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4731100968525648891}
-  - component: {fileID: 6592922621625966518}
   - component: {fileID: 969816974646514872}
   - component: {fileID: 5829360589524604130}
   - component: {fileID: 7916224114648952013}
@@ -466,41 +465,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6592922621625966518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8868220479882028855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c880d8892316147bc7664bc653e95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentType: 2
-  currentExits: 0200000001000000
-  meshObject: {fileID: 7158771629278481183}
-  myCollider: {fileID: 5829360589524604130}
-  myNavMesh: {fileID: 4505768360272886619}
-  zoomObjective: {fileID: 1429612036967639137}
-  myNodeManager: {fileID: 0}
-  myNode: {fileID: 0}
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 768
-  numOfNodes: 0
-  anchorPointLeft: {fileID: 717888942374626709}
-  anchorPointRight: {fileID: 0}
-  anchorPointTop: {fileID: 5275110763123908665}
-  anchorPointBottom: {fileID: 0}
-  buildingPositions:
-  - {fileID: 5275110763123908665}
-  - {fileID: 717888942374626709}
-  oxigenCost: 0
-  moneyCost: 5
-  foodCost: 0
-  builtTime: 1
 --- !u!114 &969816974646514872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,11 +477,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6225ff2953d69aa40a974ac5cf8f7693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myType: {fileID: 6592922621625966518}
+  currentType: 2
+  currentExits: 0200000001000000
+  meshObject: {fileID: 7158771629278481183}
+  myCollider: {fileID: 5829360589524604130}
+  myNavMesh: {fileID: 0}
+  zoomObjective: {fileID: 1429612036967639137}
+  myNodeManager: {fileID: 0}
+  myResourceManager: {fileID: 0}
+  myNode: {fileID: 0}
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 768
+  numOfNodes: 0
   anchorPointLeft: {fileID: 717888942374626709}
   anchorPointRight: {fileID: 0}
   anchorPointTop: {fileID: 5275110763123908665}
   anchorPointBottom: {fileID: 0}
+  buildingPositions:
+  - {fileID: 717888942374626709}
+  - {fileID: 5275110763123908665}
+  oxigenCost: 0
+  moneyCost: 0
+  foodCost: 0
+  upgrateCostOxigen: 0
+  upgrateCostMoney: 0
+  upgrateCostFood: 0
+  builtTime: 1
   linkLeft: {fileID: 5366968690408227393}
   linkRight: {fileID: 1319328931671268265}
   linkTop: {fileID: 5502746557062451698}
@@ -527,9 +513,6 @@ MonoBehaviour:
   navMeshLongRight: {fileID: 6722029204391150391}
   navMeshShortTop: {fileID: 22756891258387033}
   navMeshShortBottom: {fileID: 2826274110073449166}
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 256
   mustChangeNavMesh: 1
 --- !u!65 &5829360589524604130
 BoxCollider:

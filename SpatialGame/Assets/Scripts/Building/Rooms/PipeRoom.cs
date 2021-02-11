@@ -3,21 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PipeRoom : MonoBehaviour
-{
-    [SerializeField]
-    BuildingType myType;
-    [SerializeField]
-    Transform anchorPointLeft;
-    [SerializeField]
-    Transform anchorPointRight;
-    [SerializeField]
-    Transform anchorPointTop;
-    [SerializeField]
-    Transform anchorPointBottom;
-    List<BuildingType.ExitsPosition> myExits;
-    NodeManager myNodeManager;
-    Node myNode;
+public class PipeRoom : BuildingType
+{          
     [SerializeField]
     Transform linkLeft;
     [SerializeField]
@@ -36,9 +23,7 @@ public class PipeRoom : MonoBehaviour
     [SerializeField]
     Transform navMeshShortTop;
     [SerializeField]
-    Transform navMeshShortBottom;
-    [SerializeField]
-    LayerMask buildingLayer;
+    Transform navMeshShortBottom;    
     Transform initBottomTransform;
     Transform initTopTransform;
     Transform initLeftTranform;
@@ -69,16 +54,16 @@ public class PipeRoom : MonoBehaviour
         Node right = myNode.GetRightNode();
 
         if(up!=null && up.GetIsBuilt())
-            if( up.GetBuildingType().GetExitsType().Contains(BuildingType.ExitsPosition.BOTTOM) && updatedExits.Contains(BuildingType.ExitsPosition.TOP))
+            if( up.GetBuildingType().GetExitsType().Contains(ExitsPosition.BOTTOM) && updatedExits.Contains(ExitsPosition.TOP))
                 return true;
         if(down!=null && down.GetIsBuilt())
-            if( down.GetBuildingType().GetExitsType().Contains(BuildingType.ExitsPosition.TOP) && updatedExits.Contains(BuildingType.ExitsPosition.BOTTOM))
+            if( down.GetBuildingType().GetExitsType().Contains(ExitsPosition.TOP) && updatedExits.Contains(ExitsPosition.BOTTOM))
                 return true;
         if(left!=null && left.GetIsBuilt())
-            if( left.GetBuildingType().GetExitsType().Contains(BuildingType.ExitsPosition.RIGHT) && updatedExits.Contains(BuildingType.ExitsPosition.LEFT))
+            if( left.GetBuildingType().GetExitsType().Contains(ExitsPosition.RIGHT) && updatedExits.Contains(ExitsPosition.LEFT))
                 return true;              
         if(right!=null && right.GetIsBuilt())
-            if( right.GetBuildingType().GetExitsType().Contains(BuildingType.ExitsPosition.LEFT) && updatedExits.Contains(BuildingType.ExitsPosition.RIGHT))
+            if( right.GetBuildingType().GetExitsType().Contains(ExitsPosition.LEFT) && updatedExits.Contains(ExitsPosition.RIGHT))
                 return true;
 
         return false;
@@ -89,32 +74,32 @@ public class PipeRoom : MonoBehaviour
         List<BuildingType.ExitsPosition> updatedPos = new List<BuildingType.ExitsPosition>();
         for(int i = 0; i<4;i++)
         {
-            if(CanConnect(myExits))
+            if(CanConnect(currentExits))
                 break;
-            foreach(BuildingType.ExitsPosition pos in myExits)
+            foreach(ExitsPosition pos in currentExits)
             {
                 switch(pos)
                 {
-                    case BuildingType.ExitsPosition.LEFT:
-                        updatedPos.Add(BuildingType.ExitsPosition.TOP);
+                    case ExitsPosition.LEFT:
+                        updatedPos.Add(ExitsPosition.TOP);
                         break;
-                    case BuildingType.ExitsPosition.RIGHT:
-                        updatedPos.Add(BuildingType.ExitsPosition.BOTTOM);
+                    case ExitsPosition.RIGHT:
+                        updatedPos.Add(ExitsPosition.BOTTOM);
                         break;
-                    case BuildingType.ExitsPosition.TOP:
-                        updatedPos.Add(BuildingType.ExitsPosition.RIGHT);
+                    case ExitsPosition.TOP:
+                        updatedPos.Add(ExitsPosition.RIGHT);
                         break;
-                    case BuildingType.ExitsPosition.BOTTOM:                        
-                        updatedPos.Add(BuildingType.ExitsPosition.LEFT);
+                    case ExitsPosition.BOTTOM:                        
+                        updatedPos.Add(ExitsPosition.LEFT);
                         break;
                 }
             }            
-            myExits.Clear();
+            currentExits.Clear();
             foreach(BuildingType.ExitsPosition pos in updatedPos)
             {
-                if(!myExits.Contains(pos))
+                if(!currentExits.Contains(pos))
                 {
-                    myExits.Add(pos);
+                    currentExits.Add(pos);
                 }                    
             }                
             updatedPos.Clear();
@@ -122,7 +107,7 @@ public class PipeRoom : MonoBehaviour
             UpdateExitsTransforms(true);            
         }
         transform.Rotate(0,0,degrees);         
-        myType.UpdateExits(myExits,anchorPointTop,anchorPointBottom,anchorPointLeft,anchorPointRight);
+        base.UpdateExits(currentExits,anchorPointTop,anchorPointBottom,anchorPointLeft,anchorPointRight);
         SetActiveNavMesh();
         myNodeManager.UpdateNodeDistance(myNode);
     }
@@ -157,49 +142,49 @@ public class PipeRoom : MonoBehaviour
     }
     void UpdateExits(bool clockwise = false)
     {
-        if(!myType.myNode.GetIsBuilt() && mustChangeNavMesh)
+        if(!myNode.GetIsBuilt() && mustChangeNavMesh)
         {
-            List<BuildingType.ExitsPosition> updatedPos = new List<BuildingType.ExitsPosition>();
+            List<ExitsPosition> updatedPos = new List<ExitsPosition>();
             float degrees;            
             if(clockwise)
             {
                 degrees = -90;
-                foreach(BuildingType.ExitsPosition pos in myExits)
+                foreach(ExitsPosition pos in currentExits)
                 {
                     switch(pos)
                     {
-                        case BuildingType.ExitsPosition.LEFT:
-                            updatedPos.Add(BuildingType.ExitsPosition.TOP);
+                        case ExitsPosition.LEFT:
+                            updatedPos.Add(ExitsPosition.TOP);
                             break;
-                        case BuildingType.ExitsPosition.RIGHT:
-                            updatedPos.Add(BuildingType.ExitsPosition.BOTTOM);
+                        case ExitsPosition.RIGHT:
+                            updatedPos.Add(ExitsPosition.BOTTOM);
                             break;
-                        case BuildingType.ExitsPosition.TOP:
-                            updatedPos.Add(BuildingType.ExitsPosition.RIGHT);
+                        case ExitsPosition.TOP:
+                            updatedPos.Add(ExitsPosition.RIGHT);
                             break;
-                        case BuildingType.ExitsPosition.BOTTOM:
-                            updatedPos.Add(BuildingType.ExitsPosition.LEFT);
+                        case ExitsPosition.BOTTOM:
+                            updatedPos.Add(ExitsPosition.LEFT);
                             break;
                     }
                 }            
             }else
             {
                 degrees = 90;
-                foreach(BuildingType.ExitsPosition pos in myExits)
+                foreach(ExitsPosition pos in currentExits)
                 {
                     switch(pos)
                     {
-                        case BuildingType.ExitsPosition.LEFT:                        
-                            updatedPos.Add(BuildingType.ExitsPosition.BOTTOM);
+                        case ExitsPosition.LEFT:                        
+                            updatedPos.Add(ExitsPosition.BOTTOM);
                             break;
-                        case BuildingType.ExitsPosition.RIGHT:                       
-                            updatedPos.Add(BuildingType.ExitsPosition.TOP);
+                        case ExitsPosition.RIGHT:                       
+                            updatedPos.Add(ExitsPosition.TOP);
                             break;
-                        case BuildingType.ExitsPosition.TOP:                                                
-                            updatedPos.Add(BuildingType.ExitsPosition.LEFT);
+                        case ExitsPosition.TOP:                                                
+                            updatedPos.Add(ExitsPosition.LEFT);
                             break;
-                        case BuildingType.ExitsPosition.BOTTOM:                      
-                            updatedPos.Add(BuildingType.ExitsPosition.RIGHT);                       
+                        case ExitsPosition.BOTTOM:                      
+                            updatedPos.Add(ExitsPosition.RIGHT);                       
                             break;
                     }
                 }        
@@ -208,14 +193,14 @@ public class PipeRoom : MonoBehaviour
             {
                 transform.Rotate(0,0,degrees);
                 UpdateExitsTransforms(clockwise);
-                myType.UpdateExits(updatedPos, anchorPointTop, anchorPointBottom, anchorPointLeft,anchorPointRight);
-                myExits = updatedPos;
+                base.UpdateExits(updatedPos, anchorPointTop, anchorPointBottom, anchorPointLeft,anchorPointRight);
+                currentExits = updatedPos;
                 SetActiveNavMesh();
                 myNodeManager.UpdateNodeDistance(myNode);
             }            
         }  
     }    
-    public void SetPipe(NodeManager manager, Node node, List<BuildingType.ExitsPosition> exits){myNodeManager = manager; myNode = node; myExits = exits;} 
+    public void SetPipe(NodeManager manager, Node node){myNodeManager = manager; myNode = node;} 
     public Transform GetLink(){return currentLink;}
     public void CreateLink()
     {
@@ -238,28 +223,28 @@ public class PipeRoom : MonoBehaviour
             if(Quaternion.Angle(rotation,transform.rotation) == 0)
             {
                 navMeshLongLeft.gameObject.SetActive(true);
-                myType.SetNavMeshSurface(navMeshLongLeft.GetComponent<NavMeshSurface>());
+                SetNavMeshSurface(navMeshLongLeft.GetComponent<NavMeshSurface>());
                 offMeshLink.startTransform = linkLeft;
                 currentLink = linkLeft;
             }
             if(Quaternion.Angle(rotation,transform.rotation) == 180)
             {
                 navMeshLongRight.gameObject.SetActive(true);
-                myType.SetNavMeshSurface(navMeshLongRight.GetComponent<NavMeshSurface>());
+                SetNavMeshSurface(navMeshLongRight.GetComponent<NavMeshSurface>());
                 offMeshLink.startTransform = linkRight;
                 currentLink = linkRight;
             }
-            if(Quaternion.Angle(rotation,transform.rotation) == 90 && myExits.Contains(BuildingType.ExitsPosition.BOTTOM))
+            if(Quaternion.Angle(rotation,transform.rotation) == 90 && currentExits.Contains(BuildingType.ExitsPosition.BOTTOM))
             {
                 navMeshShortTop.gameObject.SetActive(true);
-                myType.SetNavMeshSurface(navMeshShortTop.GetComponent<NavMeshSurface>());
+                SetNavMeshSurface(navMeshShortTop.GetComponent<NavMeshSurface>());
                 offMeshLink.startTransform = linkBottom;
                 currentLink = linkBottom;
             }
-            if(Quaternion.Angle(rotation,transform.rotation) == 90 && myExits.Contains(BuildingType.ExitsPosition.TOP))
+            if(Quaternion.Angle(rotation,transform.rotation) == 90 && currentExits.Contains(BuildingType.ExitsPosition.TOP))
             {
                 navMeshShortBottom.gameObject.SetActive(true);
-                myType.SetNavMeshSurface(navMeshShortBottom.GetComponent<NavMeshSurface>());
+                SetNavMeshSurface(navMeshShortBottom.GetComponent<NavMeshSurface>());
                 offMeshLink.startTransform = linkTop;
                 currentLink = linkTop;
             }
