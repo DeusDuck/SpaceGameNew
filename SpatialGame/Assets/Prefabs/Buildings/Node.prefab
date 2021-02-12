@@ -46,10 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableBuilding: {fileID: 0}
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 256
   myNodeManager: {fileID: 0}
+  myBuildingType: {fileID: 0}
   topNeightboor: {fileID: 0}
   bottomNeightboor: {fileID: 0}
   leftNeightboor: {fileID: 0}

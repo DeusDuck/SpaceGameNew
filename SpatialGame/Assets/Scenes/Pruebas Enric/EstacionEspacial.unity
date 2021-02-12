@@ -2551,8 +2551,6 @@ MonoBehaviour:
   buildingMaterial: {fileID: 2100000, guid: 6a47ec42590dd2343a827773e7db01c4, type: 2}
   currentBuilding: {fileID: 8442451801512893765, guid: 99f9908f1b2d1a1408737026b66c1d54, type: 3}
   currentMats: []
-  horizontalPipe: {fileID: 4252758226903810937, guid: 9dda47604ebcc294ca0c6bb633da28f8, type: 3}
-  verticalPipe: {fileID: 5246687853549854488, guid: 5219015b5ce17904cab81a0677dbd3eb, type: 3}
   node: {fileID: 5019261645560117542, guid: 09625ade40be7254fbd8cf683f483893, type: 3}
   npcManager: {fileID: 433447368}
   resourceManager: {fileID: 2107583585}
@@ -12054,6 +12052,9 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   numOfNodes: 0
   anchorPointLeft: {fileID: 2490508785942080840}
   anchorPointRight: {fileID: 4730099438749889702}
@@ -12756,6 +12757,9 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 0
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   numOfNodes: 0
   anchorPointLeft: {fileID: 0}
   anchorPointRight: {fileID: 0}
@@ -12943,6 +12947,9 @@ MonoBehaviour:
   myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  collisionLayer:
     serializedVersion: 2
     m_Bits: 0
   numOfNodes: 0
@@ -16195,6 +16202,9 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   numOfNodes: 0
   anchorPointLeft: {fileID: 3431292463150084723}
   anchorPointRight: {fileID: 2099352570113820001}
@@ -17111,6 +17121,9 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   numOfNodes: 0
   anchorPointLeft: {fileID: 3387840018409483979}
   anchorPointRight: {fileID: 3387840020048797226}
@@ -17695,6 +17708,9 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   numOfNodes: 0
   anchorPointLeft: {fileID: 497998627038324491}
   anchorPointRight: {fileID: 969584862843564966}
@@ -18239,6 +18255,9 @@ MonoBehaviour:
   myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  collisionLayer:
     serializedVersion: 2
     m_Bits: 0
   numOfNodes: 0
@@ -19075,6 +19094,9 @@ MonoBehaviour:
   myResourceManager: {fileID: 0}
   myNode: {fileID: 0}
   buildingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  collisionLayer:
     serializedVersion: 2
     m_Bits: 0
   numOfNodes: 0
@@ -20055,6 +20077,9 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 0
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   numOfNodes: 0
   anchorPointLeft: {fileID: 0}
   anchorPointRight: {fileID: 0}
@@ -20198,6 +20223,9 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 512
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   numOfNodes: 0
   anchorPointLeft: {fileID: 7247590727396062042}
   anchorPointRight: {fileID: 689784949843550634}

@@ -32,6 +32,8 @@ public class BuildingType : MonoBehaviour
     public Node myNode;
     [SerializeField]
     LayerMask buildingLayer;
+    [SerializeField]
+    LayerMask collisionLayer;
     bool canBeBuilt = false;
     [SerializeField]
     int numOfNodes;
@@ -48,7 +50,7 @@ public class BuildingType : MonoBehaviour
     [SerializeField]
     protected Transform anchorPointBottom;
     [SerializeField]
-    List<Transform> buildingPositions;
+    List<Transform> buildingPositions;    
     [Space(5)]
     
     [Header("Building Costs")]
@@ -68,7 +70,7 @@ public class BuildingType : MonoBehaviour
     public float builtTime;    
     
 
-	private void OnDrawGizmos()
+    private void OnDrawGizmos()
 	{
         Gizmos.color = Color.blue;
         foreach(Transform t in buildingPositions)
@@ -76,9 +78,8 @@ public class BuildingType : MonoBehaviour
             Gizmos.DrawWireSphere(t.position,1.0f);
         }
 	}	
-	
 	public List<ExitsPosition> GetExitsType(){return currentExits;}
-    public EBuildingType GetBuildingType(){return currentType; }
+    public EBuildingType GetBuildingType(){return currentType;}
     public Transform GetZoomObjective(){ return zoomObjective;}
     
     public void UpdateExits(List<ExitsPosition> updated, Transform top, Transform bottom, Transform left, Transform right)
@@ -105,14 +106,6 @@ public class BuildingType : MonoBehaviour
             pipe.RotateTillConnect(); 
         }                        
     }
-    public void ActivateDrones()
-	{
-        DronesRoom room = GetComponent<DronesRoom>();
-        if(room != null)
-		{
-            room.ActivateDrones();
-		}
-	}
     public void ChangeMaterial(Material currentMaterial)
     { 
         MeshRenderer[] childRenderer = meshObject.GetComponentsInChildren<MeshRenderer>(); 
@@ -126,8 +119,8 @@ public class BuildingType : MonoBehaviour
         List<Transform> trans = new List<Transform>();
         foreach(Transform t in buildingPositions)
         {
-            Collider[] colliders = Physics.OverlapSphere(t.position, 1.0f,buildingLayer);
-			if(colliders.Length>1)
+            Collider[] colliders = Physics.OverlapSphere(t.position, 1.0f,collisionLayer);            
+			if(colliders.Length>=1)
 			{
                 foreach(Collider col in colliders)
                 {
@@ -136,7 +129,7 @@ public class BuildingType : MonoBehaviour
 
                    if(col.transform.GetComponentInParent<Node>().GetIsBuilt())
                    {
-                        trans.Add(t);  
+                        trans.Add(t); 
                    }                                      
                 }
 			}            
@@ -146,6 +139,26 @@ public class BuildingType : MonoBehaviour
             buildingPositions.Remove(t);
         }
     }  
+    public bool CheckIfCanBeBuild()
+	{
+        foreach(Transform t in buildingPositions)
+        {
+            Collider[] colliders = Physics.OverlapSphere(t.position, 1.0f,collisionLayer);
+			if(colliders.Length>1)
+			{
+                foreach(Collider col in colliders)
+                {
+                    if(col.transform == transform)
+                        continue;
+
+                    SetCanBeBuild(false);
+                    HasToChangeMat();
+                    return false;
+                }
+			}
+        }
+        return true;
+	}
     
     public BoxCollider GetCollider(){return myCollider;}
     public int[] MyCost()
@@ -161,43 +174,56 @@ public class BuildingType : MonoBehaviour
     public bool CheckIfBuildingColliding()
     {        
         Vector3 worldCenter = myCollider.transform.TransformPoint(myCollider.center);
-        Collider[] colliders = Physics.OverlapBox(worldCenter, myCollider.size * 0.5f, transform.rotation, buildingLayer);
+        Collider[] colliders = Physics.OverlapBox(worldCenter, myCollider.size * 0.5f, transform.rotation, collisionLayer);
 
         if(colliders.Length != 0)
         {            
             foreach(Collider col in colliders)
-            {
-                if(col.tag == "Node")
+            {                
+                if(myNode.IsNeightboor(col.GetComponentInParent<Node>()) || col.transform == transform)
+                    continue;
+
+                if(col.tag == "Building")
                 {
-                    Node node = col.GetComponent<Node>();
-                    if(canBeBuilt && myNodeManager.EnoughCurrency(node) && !node.GetIsBuilt() )
-                    {
-                        if(currentType != EBuildingType.PIPE)
-						{
-                            myNodeManager.SpendResources(MyCost());
-                            col.transform.position = transform.position;
-                            transform.SetParent(col.transform);                            
-                            myNode = node;
-                            node.BuildBuilding(myNodeManager.currentMats, this);
-                            node.SetAvailableBuilding(this.gameObject,myNodeManager.availablePositionMat);                            
-						}
-						else
-						{
-                            col.transform.position = transform.position;
-                            transform.SetParent(col.transform);
-                            myNode = node;
-                            node.SetAvailableBuilding(this.gameObject,myNodeManager.availablePositionMat);
-                            myNodeManager.visualManager.ShowBuildingsMenu(transform);
-                            
-						} 
-                        return true;
-                    }                    
+                    return true;                
                 }
             }
         }
         return false;
                
-    }    
+    } 
+    public void BuildBuilding()
+	{
+        Vector3 worldCenter = myCollider.transform.TransformPoint(myCollider.center);
+        Collider[] colliders = Physics.OverlapBox(worldCenter, myCollider.size * 0.5f, transform.rotation, buildingLayer);
+
+        if(colliders.Length != 0)
+        {            
+            foreach(Collider col in colliders)
+            {                
+                Node node = col.GetComponent<Node>();
+                if(canBeBuilt && myNodeManager.EnoughCurrency(node) && !node.GetIsBuilt())
+                {
+                    if(currentType != EBuildingType.PIPE)
+			        {
+                        myNodeManager.SpendResources(MyCost());
+                        col.transform.position = transform.position;
+                        transform.SetParent(col.transform);                            
+                        node.BuildBuilding(myNodeManager.currentMats, this);
+                        node.SetAvailableBuilding(this.gameObject);                            
+			        }
+			        else
+			        {
+                        col.transform.position = transform.position;
+                        transform.SetParent(col.transform);
+                        node.SetAvailableBuilding(this.gameObject);
+                        myNodeManager.visualManager.ShowBuildingsMenu(transform);
+                            
+			        }            
+                } 
+            } 
+        }
+	}
     public void SetCanBeBuild(bool can){canBeBuilt = can;}
     public void AddNode()
     {
@@ -228,7 +254,6 @@ public class BuildingType : MonoBehaviour
     public void UpgrateRoom()
 	{
         int[] currency = {upgrateCostOxigen,upgrateCostMoney,upgrateCostFood};
-        List<int> costs = myResourceManager.GetAllResources();
         if(CanBeUpgrated())
 		{
             myResourceManager.SpendResources(currency);
@@ -239,4 +264,5 @@ public class BuildingType : MonoBehaviour
         List<int> costs = myResourceManager.GetAllResources();
         return (costs[0]>=upgrateCostFood && costs[1]>= upgrateCostMoney && costs[2]>= upgrateCostOxigen);
 	}
+    public bool GetCanBeBuilt(){return canBeBuilt;}
 }

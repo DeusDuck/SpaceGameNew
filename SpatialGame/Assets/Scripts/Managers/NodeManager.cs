@@ -11,10 +11,6 @@ public class NodeManager : MonoBehaviour
     public GameObject currentBuilding;
     public MeshRenderer[] currentMats;
     [SerializeField]
-    GameObject horizontalPipe;
-    [SerializeField]
-    GameObject verticalPipe;   
-    [SerializeField]
     Node node;
     BuildingType currentBuildingType;
     [SerializeField]
@@ -37,7 +33,7 @@ public class NodeManager : MonoBehaviour
         BuildingType building = Instantiate(currentBuilding,transform.position,currentBuilding.transform.rotation,nodeToBuild.transform).GetComponent<BuildingType>();
         nodeToBuild.InitNode(this,building); 
         currentMats = currentBuilding.transform.GetComponentsInChildren<MeshRenderer>();
-        nodeToBuild.SetAvailableBuilding(building.gameObject,availablePositionMat);        
+        nodeToBuild.SetAvailableBuilding(building.gameObject);        
         nodeToBuild.GetBuildingType().builtTime = 0.01f;
         
         nodeToBuild.BuildBuilding(currentMats,building);        
@@ -59,10 +55,14 @@ public class NodeManager : MonoBehaviour
             if(Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 BuildingType type = currentBuilding.GetComponent<BuildingType>();
-                if(!type.CheckIfBuildingColliding())
+                if(!type.GetCanBeBuilt())
                 {
-                    Destroy(currentBuilding);                    
-                }
+                    Destroy(currentBuilding);
+				}
+				else
+				{
+                    type.BuildBuilding();
+				}
                 currentBuilding = null;
                 visualManager.DisplayBuildingMenu();
                 visualManager.StopCameraMovement(false);
@@ -258,6 +258,7 @@ public class NodeManager : MonoBehaviour
             if(node.CanBeBuild())
             {
                 resourceManager.SpendResources(node.GetBuildingType().MyCost());
+                node.GetBuildingType().ChangeMaterial(buildingMaterial);
                 node.BuildBuilding(currentMats);
                 buildNodes.Add(node);
                 if(neightboors.Contains(node))
@@ -304,6 +305,6 @@ public class NodeManager : MonoBehaviour
         if(!neightboors.Contains(node))
             neightboors.Add(node);
 
-        node.SetAvailableBuilding(currentBuilding,availablePositionMat);       
-    }
+        node.SetAvailableBuilding(currentBuilding);       
+    }    
 }

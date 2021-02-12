@@ -46,7 +46,7 @@ public class PipeRoom : BuildingType
     {
         UpdateExits(clockwise);
     }
-    bool CanConnect(List<BuildingType.ExitsPosition> updatedExits)
+    bool CanConnect(List<ExitsPosition> updatedExits)
     {
         Node up = myNode.GetTopNode();
         Node down = myNode.GetBottomNode();
@@ -71,7 +71,7 @@ public class PipeRoom : BuildingType
     public void RotateTillConnect()
     {
         float degrees = 0;
-        List<BuildingType.ExitsPosition> updatedPos = new List<BuildingType.ExitsPosition>();
+        List<ExitsPosition> updatedPos = new List<ExitsPosition>();
         for(int i = 0; i<4;i++)
         {
             if(CanConnect(currentExits))
@@ -95,7 +95,7 @@ public class PipeRoom : BuildingType
                 }
             }            
             currentExits.Clear();
-            foreach(BuildingType.ExitsPosition pos in updatedPos)
+            foreach(ExitsPosition pos in updatedPos)
             {
                 if(!currentExits.Contains(pos))
                 {
@@ -197,6 +197,16 @@ public class PipeRoom : BuildingType
                 currentExits = updatedPos;
                 SetActiveNavMesh();
                 myNodeManager.UpdateNodeDistance(myNode);
+				if(CheckIfBuildingColliding())
+				{
+                    SetCanBeBuild(false);
+                    HasToChangeMat();
+				}
+				else
+				{
+                    SetCanBeBuild(true);
+                    HasToChangeMat();
+				}
             }            
         }  
     }    
@@ -204,8 +214,8 @@ public class PipeRoom : BuildingType
     public Transform GetLink(){return currentLink;}
     public void CreateLink()
     {
-        if(myNode.GetTopNode()!=null && myNode.GetIsBuilt())
-        {
+        if(myNode.GetTopNode()!=null && myNode.GetIsBuilt() && myNode.GetTopNode().GetIsBuilt())
+        {            
             PipeRoom neightBoor = myNode.GetTopNode().GetBuildingType().GetComponent<PipeRoom>();
             if(neightBoor!=null)
                 offMeshLink.endTransform = neightBoor.GetLink();

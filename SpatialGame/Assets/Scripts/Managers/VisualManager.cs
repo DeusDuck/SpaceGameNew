@@ -154,8 +154,8 @@ public class VisualManager : MonoBehaviour
                 {
                     rotateLeft.onClick.RemoveAllListeners();
                     rotateRight.onClick.RemoveAllListeners();
-                    rotateLeft.onClick.AddListener(delegate {pipe.RotatePipe();});
-                    rotateRight.onClick.AddListener(delegate{pipe.RotatePipe(true);});
+                    rotateLeft.onClick.AddListener(delegate {pipe.RotatePipe(true);});
+                    rotateRight.onClick.AddListener(delegate{pipe.RotatePipe();});
                     buildPipe.onClick.AddListener(delegate{clickHandler.nodeManager.BuildPipe(building);});
                 }
                 break;

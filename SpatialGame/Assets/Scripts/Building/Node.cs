@@ -36,9 +36,10 @@ public class Node : MonoBehaviour
 		if(builtTime>0)
         {            
             builtTime-=Time.deltaTime;
-            myBuildingType.UpdateThreshold(builtTime);
+            myBuildingType.UpdateThreshold(builtTime);            
             if(builtTime<=0)
             {
+                myBuildingType.myNode = this;
                 Renderer[] childRenderer = availableBuilding.transform.GetComponentsInChildren<MeshRenderer>();
                 for(int i = 0; i<childRenderer.Length; i++)
                     childRenderer[i].material = mat[i].sharedMaterial;
@@ -63,6 +64,8 @@ public class Node : MonoBehaviour
         if(col.tag == "Building")
         {
             myBuildingType = col.GetComponent<BuildingType>();
+           if(!myBuildingType.CheckIfCanBeBuild())
+                return;
             if(myCreator!=myBuildingType)
             {
                 myBuildingType.AddNode();
@@ -73,6 +76,7 @@ public class Node : MonoBehaviour
                         myBuildingType.SetCanBeBuild(true);
                         myBuildingType.HasToChangeMat();
                         availableBuilding = myBuildingType.gameObject;
+                         myBuildingType.myNode = this;
                     }                    
                 }
                 else
@@ -82,6 +86,7 @@ public class Node : MonoBehaviour
                         myBuildingType.SetCanBeBuild(true);
                         myBuildingType.HasToChangeMat();
                         availableBuilding = myBuildingType.gameObject;
+                        myBuildingType.myNode = this;
                     }else
                     {
                         myBuildingType.SetCanBeBuild(false);
@@ -117,20 +122,17 @@ public class Node : MonoBehaviour
         }
     }
 	//Recibe un edificio y un material y lo instancia en la escena
-	public void SetAvailableBuilding(GameObject _building, Material availableMat)
+	public void SetAvailableBuilding(GameObject _building)
     {
         availableBuilding = _building;            
         myBuildingType = availableBuilding.transform.GetComponent<BuildingType>();
-        //myBuildingType.myNode = this;
-        myBuildingType.SetManager(myNodeManager);
         myNodeManager.UpdateNodeDistance(this);
         if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)
 		{
-            myBuildingType.ConnectPipe(); 
-		}               
-                          
-
-       myBuildingType.ChangeMaterial(myNodeManager.buildingMaterial);       
+            myBuildingType.ConnectPipe();
+            return;
+		}        
+        myBuildingType.ChangeMaterial(myNodeManager.buildingMaterial);       
     }
     //Canvia el material del edificio y setea el nodo a construido
     public void BuildBuilding(MeshRenderer[] actualMat, BuildingType type)
@@ -182,6 +184,10 @@ public class Node : MonoBehaviour
                     bottomNeightboor = node;
         }
     }
+    public bool IsNeightboor(Node neight)
+	{        
+        return (neight == topNeightboor || neight == bottomNeightboor || neight == leftNeightboor || neight == rightNeightboor);
+	}
     public Node GetTopNode(){return topNeightboor;}
     public Node GetBottomNode(){return bottomNeightboor;}
     public Node GetLeftNode(){return leftNeightboor;}
@@ -189,11 +195,7 @@ public class Node : MonoBehaviour
     public bool CanBeBuild(){return canBeBuilt;}
     public void SetCanBeBuild(bool can){canBeBuilt = can;}
     public Transform GetAvailableBuildingTransform(){return availableBuilding.transform;}
-    public float GetBuiltTime(){return builtTime;}
-    bool IsNeightboor(Node node)
-    {
-        return(node == topNeightboor) || (node == bottomNeightboor) || (node==leftNeightboor) || (node == rightNeightboor);
-    }
+    public float GetBuiltTime(){return builtTime;}    
 	#endregion
 
 }
