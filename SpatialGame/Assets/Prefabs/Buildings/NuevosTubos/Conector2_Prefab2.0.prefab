@@ -562,6 +562,9 @@ MonoBehaviour:
   buildingPositions:
   - {fileID: 3410592935765575512}
   - {fileID: 332749880622794263}
+  checkers:
+  - {fileID: 5275110763123908665}
+  - {fileID: 717888942374626709}
   oxigenCost: 0
   moneyCost: 0
   foodCost: 0

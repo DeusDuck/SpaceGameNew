@@ -209,10 +209,9 @@ public class PipeRoom : BuildingType
 				}
             }            
         }  
-    }    
-    public void SetPipe(NodeManager manager, Node node){myNodeManager = manager; myNode = node;} 
-    public Transform GetLink(){return currentLink;}
-    public void CreateLink()
+    }
+	
+	public void CreateLink()
     {
         if(myNode.GetTopNode()!=null && myNode.GetIsBuilt() && myNode.GetTopNode().GetIsBuilt())
         {            
@@ -260,5 +259,20 @@ public class PipeRoom : BuildingType
             }
         }               
     }
+
+	public override void BuildBuilding()
+	{
+        if(GetCanBeBuilt() && myNodeManager.EnoughCurrency(myNode) && !myNode.GetIsBuilt())
+        {
+		    myNode.transform.position = transform.position;
+            transform.SetParent(myNode.transform);
+            myNode.SetAvailableBuilding(this.gameObject);
+            myNodeManager.visualManager.ShowBuildingsMenu(transform);
+        }
+	}
+	#region Getters and Setters
+	public void SetPipe(NodeManager manager, Node node){myNodeManager = manager; myNode = node;} 
+    public Transform GetLink(){return currentLink;}
+	#endregion
 }
     

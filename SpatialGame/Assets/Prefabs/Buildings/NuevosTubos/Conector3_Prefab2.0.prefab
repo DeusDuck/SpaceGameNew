@@ -441,6 +441,10 @@ MonoBehaviour:
   - {fileID: 9168615247324555026}
   - {fileID: 198355925016897939}
   - {fileID: 9031984826127670218}
+  checkers:
+  - {fileID: 4381085514258570191}
+  - {fileID: 5460347759956205226}
+  - {fileID: 8903294775157728678}
   oxigenCost: 0
   moneyCost: 0
   foodCost: 0

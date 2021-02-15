@@ -50,7 +50,9 @@ public class BuildingType : MonoBehaviour
     [SerializeField]
     protected Transform anchorPointBottom;
     [SerializeField]
-    List<Transform> buildingPositions;    
+    List<Transform> buildingPositions; 
+    [SerializeField]
+    List<Transform> checkers;
     [Space(5)]
     
     [Header("Building Costs")]
@@ -77,10 +79,7 @@ public class BuildingType : MonoBehaviour
         {
             Gizmos.DrawWireSphere(t.position,1.0f);
         }
-	}	
-	public List<ExitsPosition> GetExitsType(){return currentExits;}
-    public EBuildingType GetBuildingType(){return currentType;}
-    public Transform GetZoomObjective(){ return zoomObjective;}
+	}
     
     public void UpdateExits(List<ExitsPosition> updated, Transform top, Transform bottom, Transform left, Transform right)
     {
@@ -91,17 +90,7 @@ public class BuildingType : MonoBehaviour
         anchorPointRight = right;
     }
     public void RemoveBuildingPosition(Transform pos){buildingPositions.Remove(pos);}
-    public List<Transform> GetCurrentBuildingPositions(){return buildingPositions;}
-    public Transform GetLeftPos(){return anchorPointLeft;}
-    public Transform GetRightPos(){return anchorPointRight;}
-    public Transform GetTopPos(){return anchorPointTop;}
-    public Transform GetBottomPos(){return anchorPointBottom;}
-    public Transform[] GetAnchorPoints()
-    {
-        Transform[] anchors = {anchorPointBottom,anchorPointTop,anchorPointLeft,anchorPointRight};
-        return anchors;
-    }
-    public void SetManager(NodeManager manager){myNodeManager = manager;}
+    
     public void ConnectPipe()
     {        
         PipeRoom pipe = GetComponent<PipeRoom>();
@@ -146,7 +135,7 @@ public class BuildingType : MonoBehaviour
     }  
     public bool CheckIfCanBeBuild()
 	{
-        foreach(Transform t in GetAnchorPoints())
+        foreach(Transform t in checkers)
         {
             if(t==null)
                 continue;
@@ -164,19 +153,8 @@ public class BuildingType : MonoBehaviour
 			}
         }
         return true;
-	}
+	}    
     
-    public BoxCollider GetCollider(){return myCollider;}
-    public int[] MyCost()
-    {
-        int[] costs = new int[3];
-        costs[0] = oxigenCost;
-        costs[1] = moneyCost;
-        costs[2] = foodCost;
-        return costs;
-    }
-    public NavMeshSurface GetNavMeshSurface(){return myNavMesh;}
-    public void SetNavMeshSurface(NavMeshSurface nav){myNavMesh = nav;}
     public bool CheckIfPipeCollides()
     {        
         foreach(Transform t in GetAnchorPoints())
@@ -199,39 +177,18 @@ public class BuildingType : MonoBehaviour
         return true;
                
     } 
-    public void BuildBuilding()
+    public virtual void BuildBuilding()
 	{
-        Vector3 worldCenter = myCollider.transform.TransformPoint(myCollider.center);
-        Collider[] colliders = Physics.OverlapBox(worldCenter, myCollider.size * 0.5f, transform.rotation, buildingLayer);
-
-        if(colliders.Length != 0)
-        {            
-            foreach(Collider col in colliders)
-            {                
-                Node node = col.GetComponent<Node>();
-                if(canBeBuilt && myNodeManager.EnoughCurrency(node) && !node.GetIsBuilt())
-                {
-                    if(currentType != EBuildingType.PIPE)
-			        {
-                        myNodeManager.SpendResources(MyCost());
-                        myNode.transform.position = transform.position;
-                        transform.SetParent(col.transform);                            
-                        node.BuildBuilding(myNodeManager.currentMats, this);
-                        node.SetAvailableBuilding(this.gameObject);                            
-			        }
-			        else
-			        {
-                        myNode.transform.position = transform.position;
-                        transform.SetParent(col.transform);
-                        myNode.SetAvailableBuilding(this.gameObject);
-                        myNodeManager.visualManager.ShowBuildingsMenu(transform);
-                            
-			        }            
-                } 
-            } 
+        if(canBeBuilt && myNodeManager.EnoughCurrency(myNode) && !myNode.GetIsBuilt())
+        {
+            myNodeManager.SpendResources(MyCost());
+            myNode.transform.position = transform.position;
+            transform.SetParent(myNode.transform);                            
+            myNode.BuildBuilding(myNodeManager.currentMats, this);
+            myNode.SetAvailableBuilding(this.gameObject);                            
         }
 	}
-    public void SetCanBeBuild(bool can){canBeBuilt = can;}
+    
     public void AddNode()
     {
         numOfNodes++;        
@@ -241,7 +198,7 @@ public class BuildingType : MonoBehaviour
         if(numOfNodes>0)
             numOfNodes--;        
     }
-    public int GetNumOfNodes(){return numOfNodes;}
+    
     public void HasToChangeMat()
     {
         if(canBeBuilt)
@@ -271,5 +228,30 @@ public class BuildingType : MonoBehaviour
         List<int> costs = myResourceManager.GetAllResources();
         return (costs[0]>=upgrateCostFood && costs[1]>= upgrateCostMoney && costs[2]>= upgrateCostOxigen);
 	}
-    public bool GetCanBeBuilt(){return canBeBuilt;}
+	#region Getters and Setters
+    public void SetCanBeBuild(bool can){canBeBuilt = can;}
+	public bool GetCanBeBuilt(){return canBeBuilt;}
+    public int GetNumOfNodes(){return numOfNodes;}
+    public NavMeshSurface GetNavMeshSurface(){return myNavMesh;}
+    public void SetNavMeshSurface(NavMeshSurface nav){myNavMesh = nav;}
+    public List<Transform> GetCurrentBuildingPositions(){return buildingPositions;}
+    public Transform GetLeftPos(){return anchorPointLeft;}
+    public Transform GetRightPos(){return anchorPointRight;}
+    public Transform GetTopPos(){return anchorPointTop;}
+    public Transform GetBottomPos(){return anchorPointBottom;}
+    public Transform[] GetAnchorPoints()
+    {
+        Transform[] anchors = {anchorPointBottom,anchorPointTop,anchorPointLeft,anchorPointRight};
+        return anchors;
+    }
+    public void SetManager(NodeManager manager){myNodeManager = manager;}
+    public List<ExitsPosition> GetExitsType(){return currentExits;}
+    public EBuildingType GetBuildingType(){return currentType;}
+    public Transform GetZoomObjective(){ return zoomObjective;}
+    public int[] MyCost()
+    {
+        int[] costs = {oxigenCost,moneyCost,foodCost };
+        return costs;
+    }
+	#endregion
 }

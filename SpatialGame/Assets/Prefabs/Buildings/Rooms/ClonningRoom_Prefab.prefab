@@ -1497,6 +1497,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3566531534292166897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 75131840575887017}
+  m_Layer: 8
+  m_Name: ChekerTopLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &75131840575887017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566531534292166897}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.77, y: 2.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 531924677859125272}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3919758367249897644
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,6 +1770,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4311548494918844686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5198135988051540709}
+  m_Layer: 8
+  m_Name: ChekerTopRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5198135988051540709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4311548494918844686}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.85, y: 2.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 531924677859125272}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4481812025400451422
 GameObject:
   m_ObjectHideFlags: 0
@@ -3784,6 +3844,8 @@ Transform:
   - {fileID: 3857651296066522799}
   - {fileID: 395635575284193009}
   - {fileID: 4587311184713688747}
+  - {fileID: 5198135988051540709}
+  - {fileID: 75131840575887017}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -3822,6 +3884,11 @@ MonoBehaviour:
   buildingPositions:
   - {fileID: 395635575284193009}
   - {fileID: 4587311184713688747}
+  checkers:
+  - {fileID: 5198135988051540709}
+  - {fileID: 75131840575887017}
+  - {fileID: 7092464803227630757}
+  - {fileID: 5823575928809114551}
   oxigenCost: 0
   moneyCost: 0
   foodCost: 0
@@ -3930,6 +3997,7 @@ MonoBehaviour:
   buildingPositions:
   - {fileID: 5823575928809114551}
   - {fileID: 7092464803227630757}
+  checkers: []
   oxigenCost: 0
   moneyCost: 0
   foodCost: 0

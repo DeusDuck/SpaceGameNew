@@ -25,7 +25,7 @@ public class NodeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {  
-       // Debug.Log(Application.persistentDataPath);
+        //Debug.Log(Application.persistentDataPath);
         buildNodes = new List<Node>();  
         neightboors = new List<Node>();        
         
