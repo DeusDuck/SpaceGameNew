@@ -52,7 +52,7 @@ public class Node : MonoBehaviour
                     NavMeshManager.AddPipe(myBuildingType.GetComponent<PipeRoom>());
                     NavMeshManager.CalculateOffMeshLinks();
                 }
-                myNodeManager.BuildNode(this);    
+                myNodeManager.BuildNode(this);
             }
         }
 	}
@@ -64,8 +64,13 @@ public class Node : MonoBehaviour
         if(col.tag == "Building")
         {
             myBuildingType = col.GetComponent<BuildingType>();
-           if(!myBuildingType.CheckIfCanBeBuild())
-                return;
+			if(!myBuildingType.CheckIfCanBeBuild())
+			{
+                 myBuildingType.SetCanBeBuild(false);
+                 myBuildingType.HasToChangeMat();
+                 return;
+			}
+               
             if(myCreator!=myBuildingType)
             {
                 myBuildingType.AddNode();
@@ -98,6 +103,18 @@ public class Node : MonoBehaviour
             }            
         }
     }
+    void OnTriggerStay(Collider col)
+	{
+        if(isBuilt)
+            return;
+		
+           if(col.tag == "Building")
+		   {
+                BuildingType type = col.GetComponent<BuildingType>();
+                type.SetCanBeBuild(type.CheckIfCanBeBuild());
+                type.HasToChangeMat();	
+		   }
+	}
     void OnTriggerExit(Collider col)
     {
         if(isBuilt)
@@ -157,7 +174,7 @@ public class Node : MonoBehaviour
 # region Setters and Getters
 
     //Seta si el nodo está construido
-	void SetIsBuilt(bool built){ isBuilt = built;}
+	void SetIsBuilt(bool built){ isBuilt = built; }
     //Retorna si el nodo está construido
     public bool GetIsBuilt(){ return isBuilt;} 
     //Inicia las principales variables del nodo

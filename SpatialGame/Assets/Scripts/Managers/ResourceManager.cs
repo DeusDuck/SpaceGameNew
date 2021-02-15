@@ -67,10 +67,12 @@ public class ResourceManager : MonoBehaviour
         wood+=woodAmount;
         UpdateUI();
     }
+    //Comprueba si hay suficientes recursos
     public bool EnoughResources(int[] currency)
     {
         return oxigen>=currency[0] && money>=currency[1] && food>=currency[2];    
     }
+    //Gasta los recursos y refresca la UI
     public void SpendResources(int[] currency)
     {
         oxigen-=currency[0];
@@ -78,6 +80,7 @@ public class ResourceManager : MonoBehaviour
         food-=currency[2];
         UpdateUI();
     }
+    //Refresca la UI
     void UpdateUI()
     {
         visualManager.UpdateResources(ResourcesRoom.EResource.OXIGEN,oxigen);
@@ -86,6 +89,7 @@ public class ResourceManager : MonoBehaviour
         visualManager.UpdateInventory(rock,iron,wood);
         SaveSystem.SaveGame(this);
     }
+    //Devuelve todos los recursos disponibles
     public List<int> GetAllResources()
     {
         List<int> resources = new List<int>();

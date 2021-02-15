@@ -3101,7 +3101,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7380097885746006249}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.75, y: -1.3, z: 0}
+  m_LocalPosition: {x: 10.59, y: -1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 531924677859125272}
@@ -3801,7 +3801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentType: 0
   currentExits: 0000000001000000
-  meshObject: {fileID: 4481812025400451422}
+  meshObject: {fileID: 7536645003517955126}
   myCollider: {fileID: 8992772739815414673}
   myNavMesh: {fileID: 4939892970141618336}
   zoomObjective: {fileID: 8019647476758388010}
@@ -3828,7 +3828,7 @@ MonoBehaviour:
   upgrateCostOxigen: 0
   upgrateCostMoney: 0
   upgrateCostFood: 0
-  builtTime: 0
+  builtTime: 10
   timeToSpawn: 2
   spawnPos: {fileID: 9114354274491981411}
   progressBarBack: {fileID: 1409665722667367561}
@@ -4123,7 +4123,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8856753088755515723}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.75, y: -1.3, z: 0}
+  m_LocalPosition: {x: -10.3, y: -1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 531924677859125272}

@@ -81,7 +81,7 @@ public class NodeManager : MonoBehaviour
             if(type.GetCurrentBuildingPositions().Count == 0)
                 continue;
 
-            type.CheckBuildingConnected();
+            type.RemoveBuiltPositions();
             List<Transform> trans = new List<Transform>();
             foreach(Transform t in type.GetCurrentBuildingPositions())
             {             
@@ -98,8 +98,7 @@ public class NodeManager : MonoBehaviour
             }
         }
     }
-    //Crea los edificios al pulsar en la UI
-    
+    //Crea los edificios al pulsar en la UI    
     public void CreateBuilding(GameObject building)
     {
         currentBuilding = Instantiate(building,Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 10f)),building.transform.rotation,spawningPoint);
@@ -161,7 +160,7 @@ public class NodeManager : MonoBehaviour
     {        
         if(node.GetBuildingType() !=null)
         {
-            List<BuildingType.ExitsPosition> exitsPosEnum = currentBuilding.GetComponent<BuildingType>().GetExitsType();
+            List<BuildingType.ExitsPosition> exitsPosEnum = currentBuildingType.GetExitsType();
             List<BuildingType.ExitsPosition> currentExits = new List<BuildingType.ExitsPosition>();
             
             //Mira si las conexiones de los nodos encajan(Si el nodo tiene la conexion TOP y el vecino de arriba la conexion BOTTOM, devuelve true)
@@ -214,14 +213,17 @@ public class NodeManager : MonoBehaviour
         }        
         return false;
     }
+    //Gasta recursos
     public void SpendResources(int[] cost)
     {
         resourceManager.SpendResources(cost);
     }
+    //Mira si hay suficientes recursos
    public bool EnoughCurrency(Node node)
-    {
+   {
         return resourceManager.EnoughResources(node.GetBuildingType().MyCost());
-    }
+   }
+    //Construye las salas, dependiendo de el tipo de sala, setea los managers pertinentes
     public void BuildNode(Node currentNode)
     {            
         currentNode.GetBuildingType().myResourceManager = resourceManager;
@@ -249,12 +251,13 @@ public class NodeManager : MonoBehaviour
         CreateNodesNeightboors();
                
     }    
+    //Construye las tuberías, esta funcion se llama en la UI
     public void BuildPipe(Transform building)
     {
         if(building!=null)
         {
             Node node = building.transform.GetComponent<BuildingType>().myNode;
-     
+            //Comprueba si se puede construir en ese nodo
             if(node.CanBeBuild())
             {
                 resourceManager.SpendResources(node.GetBuildingType().MyCost());

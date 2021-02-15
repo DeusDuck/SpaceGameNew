@@ -7121,7 +7121,7 @@ MonoBehaviour:
   nodeManager: {fileID: 524831580}
   hitableLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
   visualManager: {fileID: 1558518508}
 --- !u!114 &1558518510
 MonoBehaviour:

@@ -96,6 +96,11 @@ public class BuildingType : MonoBehaviour
     public Transform GetRightPos(){return anchorPointRight;}
     public Transform GetTopPos(){return anchorPointTop;}
     public Transform GetBottomPos(){return anchorPointBottom;}
+    public Transform[] GetAnchorPoints()
+    {
+        Transform[] anchors = {anchorPointBottom,anchorPointTop,anchorPointLeft,anchorPointRight};
+        return anchors;
+    }
     public void SetManager(NodeManager manager){myNodeManager = manager;}
     public void ConnectPipe()
     {        
@@ -108,13 +113,13 @@ public class BuildingType : MonoBehaviour
     }
     public void ChangeMaterial(Material currentMaterial)
     { 
-        MeshRenderer[] childRenderer = meshObject.GetComponentsInChildren<MeshRenderer>(); 
+        MeshRenderer[] childRenderer = meshObject.GetComponentsInChildren<MeshRenderer>();
         foreach(MeshRenderer rnd in childRenderer)
         {
             rnd.material = currentMaterial;                
         }
     }
-    public void CheckBuildingConnected()
+    public void RemoveBuiltPositions()
     {
         List<Transform> trans = new List<Transform>();
         foreach(Transform t in buildingPositions)
@@ -141,18 +146,19 @@ public class BuildingType : MonoBehaviour
     }  
     public bool CheckIfCanBeBuild()
 	{
-        foreach(Transform t in buildingPositions)
+        foreach(Transform t in GetAnchorPoints())
         {
-            Collider[] colliders = Physics.OverlapSphere(t.position, 1.0f,collisionLayer);
-			if(colliders.Length>1)
-			{
+            if(t==null)
+                continue;
+
+            Collider[] colliders = Physics.OverlapSphere(t.position, 0.3f,collisionLayer);
+			if(colliders.Length>=1)
+			{               
                 foreach(Collider col in colliders)
                 {
                     if(col.transform == transform)
-                        continue;
-
-                    SetCanBeBuild(false);
-                    HasToChangeMat();
+                        continue;  
+                    
                     return false;
                 }
 			}
@@ -171,25 +177,26 @@ public class BuildingType : MonoBehaviour
     }
     public NavMeshSurface GetNavMeshSurface(){return myNavMesh;}
     public void SetNavMeshSurface(NavMeshSurface nav){myNavMesh = nav;}
-    public bool CheckIfBuildingColliding()
+    public bool CheckIfPipeCollides()
     {        
-        Vector3 worldCenter = myCollider.transform.TransformPoint(myCollider.center);
-        Collider[] colliders = Physics.OverlapBox(worldCenter, myCollider.size * 0.5f, transform.rotation, collisionLayer);
+        foreach(Transform t in GetAnchorPoints())
+        {
+            if(t==null)
+                continue;
 
-        if(colliders.Length != 0)
-        {            
-            foreach(Collider col in colliders)
-            {                
-                if(myNode.IsNeightboor(col.GetComponentInParent<Node>()) || col.transform == transform)
-                    continue;
-
-                if(col.tag == "Building")
+            Collider[] colliders = Physics.OverlapSphere(t.position, 0.3f,collisionLayer);
+			if(colliders.Length>=1)
+			{               
+                foreach(Collider col in colliders)
                 {
-                    return true;                
+                    if(col.transform == transform || myNode.IsNeightboor(col.GetComponentInParent<Node>()))
+                        continue;  
+                    
+                    return false;
                 }
-            }
+			}
         }
-        return false;
+        return true;
                
     } 
     public void BuildBuilding()
@@ -207,16 +214,16 @@ public class BuildingType : MonoBehaviour
                     if(currentType != EBuildingType.PIPE)
 			        {
                         myNodeManager.SpendResources(MyCost());
-                        col.transform.position = transform.position;
+                        myNode.transform.position = transform.position;
                         transform.SetParent(col.transform);                            
                         node.BuildBuilding(myNodeManager.currentMats, this);
                         node.SetAvailableBuilding(this.gameObject);                            
 			        }
 			        else
 			        {
-                        col.transform.position = transform.position;
+                        myNode.transform.position = transform.position;
                         transform.SetParent(col.transform);
-                        node.SetAvailableBuilding(this.gameObject);
+                        myNode.SetAvailableBuilding(this.gameObject);
                         myNodeManager.visualManager.ShowBuildingsMenu(transform);
                             
 			        }            

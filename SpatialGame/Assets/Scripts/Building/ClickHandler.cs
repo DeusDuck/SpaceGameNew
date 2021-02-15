@@ -21,11 +21,11 @@ public class ClickHandler : MonoBehaviour
                 Ray rayo = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
                 if(Physics.Raycast(rayo, out RaycastHit hitInfo,hitableLayer))
                 {                 
-                    if(hitInfo.collider.transform.tag == "Node")
+                   /* if(hitInfo.collider.transform.tag == "Node")
                     {                 
                         Node node = hitInfo.collider.transform.GetComponentInParent<Node>();                     
                         visualManager.ShowBuildingsMenu(node.GetAvailableBuildingTransform());
-                    }
+                    }*/
                     if(hitInfo.collider.transform.tag == "Building")
                     {                
                         visualManager.ShowBuildingsMenu(hitInfo.collider.transform);

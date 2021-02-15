@@ -197,7 +197,7 @@ public class PipeRoom : BuildingType
                 currentExits = updatedPos;
                 SetActiveNavMesh();
                 myNodeManager.UpdateNodeDistance(myNode);
-				if(CheckIfBuildingColliding())
+				if(!CheckIfPipeCollides())
 				{
                     SetCanBeBuild(false);
                     HasToChangeMat();
