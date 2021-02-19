@@ -110,9 +110,30 @@ public class Node : MonoBehaviour
 		
            if(col.tag == "Building")
 		   {
-                BuildingType type = col.GetComponent<BuildingType>();
-                type.SetCanBeBuild(type.CheckIfCanBeBuild());
-                type.HasToChangeMat();	
+                myBuildingType = col.GetComponent<BuildingType>();
+			    if(myNodeManager.CanBeConnected(this))
+			    {
+                    if(myBuildingType.GetBuildingType() == BuildingType.EBuildingType.PIPE)
+			        {
+                        myBuildingType.SetCanBeBuild(myBuildingType.CheckIfCanBeBuild());
+			        }
+			        else
+			        {
+				        if(myNodeManager.HasNeightboorsWithPipes(this))
+				        {
+                            myBuildingType.SetCanBeBuild(myBuildingType.CheckIfCanBeBuild());
+				    }
+				        else
+				        {
+                            myBuildingType.SetCanBeBuild(false);
+				        }
+			        }
+			    }
+			    else
+			    {
+                    myBuildingType.SetCanBeBuild(false);
+			    } 
+                myBuildingType.HasToChangeMat();
 		   }
 	}
     void OnTriggerExit(Collider col)

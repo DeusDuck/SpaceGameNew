@@ -213,6 +213,33 @@ public class NodeManager : MonoBehaviour
         }        
         return false;
     }
+    public bool CanBeConnected(Node node)
+    {
+        var nodeType = node.GetBuildingType();
+        Node up = node.GetTopNode();
+        Node down = node.GetBottomNode();
+        Node left = node.GetLeftNode();
+        Node right = node.GetRightNode();
+        
+
+        if(up != null && up.GetIsBuilt())
+        {                  
+            return (up.GetBuildingType().GetExitsType().Contains(BuildingType.ExitsPosition.BOTTOM) && nodeType.GetExitsType().Contains(BuildingType.ExitsPosition.TOP));
+        }
+        if(down != null && down.GetIsBuilt())
+        {                         
+            return (down.GetBuildingType().GetExitsType().Contains(BuildingType.ExitsPosition.TOP) && nodeType.GetExitsType().Contains(BuildingType.ExitsPosition.BOTTOM));        
+        }
+        if(left != null && left.GetIsBuilt())
+        {   
+            return (left.GetBuildingType().GetExitsType().Contains(BuildingType.ExitsPosition.RIGHT) && nodeType.GetExitsType().Contains(BuildingType.ExitsPosition.LEFT));
+        }
+        if(right != null && right.GetIsBuilt())
+        {               
+            return (right.GetBuildingType().GetExitsType().Contains(BuildingType.ExitsPosition.LEFT) && nodeType.GetExitsType().Contains(BuildingType.ExitsPosition.RIGHT));
+        }
+        return false;
+    }
     //Gasta recursos
     public void SpendResources(int[] cost)
     {
