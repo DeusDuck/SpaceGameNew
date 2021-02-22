@@ -22,6 +22,8 @@ public class BigDrone : MonoBehaviour,IControlable
     public float resistance;
     public float movingSpeed;
     public float distanceToStop;
+    int attack;
+    int defense;
     [Space(5)]
 
     [Header ("Weapons")]
@@ -97,8 +99,7 @@ public class BigDrone : MonoBehaviour,IControlable
     }
     public void Attack()
 	{
-        if(target!=null)
-            target.TakeDamage(damage);
+        target.TakeDamage(damage * attack);
 	}
     public void ShowArrow(bool must)
 	{
@@ -108,14 +109,12 @@ public class BigDrone : MonoBehaviour,IControlable
 	{
         damage = newDamage;
 	}
-    public void SetEnergyCost(int _energyCost)
+    public void SpendEnergy()
 	{
-		if(_energyCost<=myPlayerController.GetCurrentEnergy())
+		if(myPlayerController.GetCurrentEnergy()>0)
 		{
-            myPlayerController.SpendEnergy(_energyCost);
-            gamePlayManager.GetUIManager().HidePanel();
+            myPlayerController.SpendEnergy();
             gamePlayManager.SetAttack(true);
-            gamePlayManager.ActivateEnemyArrows(true);
 		}            
 	}
     public void SetPlayerController(PlayerOnlineController player){myPlayerController = player;}
@@ -150,4 +149,30 @@ public class BigDrone : MonoBehaviour,IControlable
 	{
         return mySprite;
 	}
+    public void AddAttack()
+	{
+		if(myPlayerController.GetCurrentEnergy()>0)
+		{
+            myPlayerController.SpendEnergy();
+            attack++;
+            GamePlayManager.instance.GetUIManager().UpdateAmounts();
+		}        
+	}
+    public void AddDefense()
+	{
+        if(myPlayerController.GetCurrentEnergy()>0)
+		{
+            myPlayerController.SpendEnergy();
+            defense++;
+            GamePlayManager.instance.GetUIManager().UpdateAmounts();
+        }
+	}
+    public void ResetParameters()
+	{
+        attack = 0;
+        defense = 0;
+        GamePlayManager.instance.GetUIManager().UpdateAmounts();
+	}
+    public int GetAttack(){return attack;}
+    public int GetDefense(){return defense;}
 }

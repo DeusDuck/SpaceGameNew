@@ -21,35 +21,39 @@ public class PlayerOnlineController : MonoBehaviour
     [SerializeField]
     int maxEnergy;
     List<Image> energyImages = new List<Image>();
+    PlayerOnlineController enemy;
+    
 
     // Start is called before the first frame update
     void Awake()
     {
         gamePlayManager = FindObjectOfType<GamePlayManager>();
         gamePlayManager.AddPlayer(this);
+        currentEnergy = maxEnergy;
     }
 	private void Start()
 	{
         Recharge();
 		if(PV.IsMine)
 		{
+            gamePlayManager.localPlayer = this;
             PV.RPC("RPC_GetTeam",RpcTarget.MasterClient);
             if(myTeam == 1)
 			{
                 for(int i = 0; i<GamePlayManager.instance.spawningPointsLocal.Length; i++)
 			    {
-                    BigDrone current = PhotonNetwork.Instantiate(path, GamePlayManager.instance.spawningPointsLocal[i].position,GamePlayManager.instance.spawningPointsLocal[i].rotation,0).GetComponent<BigDrone>();
+                    BigDrone current = PhotonNetwork.Instantiate(path, gamePlayManager.spawningPointsLocal[i].position,gamePlayManager.spawningPointsLocal[i].rotation,0).GetComponent<BigDrone>();
 				    mySoldiers.Add(current);
-                    current.SetPosition(GamePlayManager.instance.spawningPointsLocal[i]);
+                    current.SetPosition(gamePlayManager.spawningPointsLocal[i]);
 			    }
 			}
 			else
 			{
                 for(int i = 0; i<GamePlayManager.instance.spawningPointsOther.Length; i++)
 			    {
-                    BigDrone current = PhotonNetwork.Instantiate(path, GamePlayManager.instance.spawningPointsOther[i].position,GamePlayManager.instance.spawningPointsOther[i].rotation,0).GetComponent<BigDrone>();
+                    BigDrone current = PhotonNetwork.Instantiate(path, gamePlayManager.spawningPointsOther[i].position,gamePlayManager.spawningPointsOther[i].rotation,0).GetComponent<BigDrone>();
 				    mySoldiers.Add(current);
-                    current.SetPosition(GamePlayManager.instance.spawningPointsOther[i]);
+                    current.SetPosition(gamePlayManager.spawningPointsOther[i]);
 			    }	
 			}
 		}
@@ -62,8 +66,8 @@ public class PlayerOnlineController : MonoBehaviour
     [PunRPC]
     void RPC_GetTeam()
 	{
-        myTeam = GamePlayManager.instance.nextTeam;
-        GamePlayManager.instance.UpdateTeam();
+        myTeam = gamePlayManager.nextTeam;
+       gamePlayManager.UpdateTeam();
         PV.RPC("RPC_SetPlayerTeam",RpcTarget.OthersBuffered,myTeam);
 	}
     [PunRPC]
@@ -85,18 +89,12 @@ public class PlayerOnlineController : MonoBehaviour
 			}
 		}
 	}
-    public void SpendEnergy(int energy)
+    public void SpendEnergy()
 	{
-		if(energy!=0 && currentEnergy-energy>=0)
+		if(currentEnergy>=0)
 		{
-            currentEnergy-=energy;
-
-            int diference = maxEnergy-currentEnergy;
-
-            for(int i = diference - 1; i>=0; i--)
-		    {
-                energyImages[i].color = Color.white;
-		    }
+            energyImages[currentEnergy - 1].color = Color.white;
+            currentEnergy--;
 		}            
 	}
     public void Recharge()
@@ -138,5 +136,6 @@ public class PlayerOnlineController : MonoBehaviour
 		{
             energyImages[i].gameObject.SetActive(true);           
 		}
-	}    
+	}
+    public PlayerOnlineController Enemy{get{return Enemy; } set {enemy = value; mySoldiers[0].target = enemy.GetMySoldiers()[0];} }
 }

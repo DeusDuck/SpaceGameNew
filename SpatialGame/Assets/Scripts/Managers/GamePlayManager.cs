@@ -26,6 +26,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
     [SerializeField]
     List<PlayerOnlineController> players = new List<PlayerOnlineController>();
     public PlayerOnlineController currentPlayer;
+    public PlayerOnlineController localPlayer;
     [SerializeField]
     LayerMask layerToCollide;
     [SerializeField]
@@ -85,7 +86,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
                 time.text = currentTime.ToString("F0");
                 //Mira que no estes tocando un elemento de la UI
                 //if(!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                if(!EventSystem.current.IsPointerOverGameObject())
+                /*if(!EventSystem.current.IsPointerOverGameObject())
                 {
 				    if(Input.GetMouseButtonDown(0) && currentPlayer.GetPV().IsMine && !attacking && !moving)
 				    {                    
@@ -101,45 +102,15 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 						    {
                                 if(currentPlayer.GetMySoldiers().Contains(currentAttackingDrone) && !attackingDrones.Contains(currentAttackingDrone))
 							    {
-                                    panel.gameObject.SetActive(true);
-                                    ActivateAlliesArrows(false);
+                                    
                                     UIManager.SetCurrentDrone(currentAttackingDrone);
 							    }                           
 						    }
 
 
 					    }   
-				    }
-                    //Si ya has seleccionado tu movimiento
-				    if((moving || attacking) && Input.GetMouseButtonDown(0))
-				    {                    
-                        Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);  
-                    
-                        if(Physics.Raycast(rayo,out RaycastHit hit, 1000, layerToCollide))
-					    {
-                            BigDrone drone = hit.transform.GetComponent<BigDrone>();
-                            if(drone!=null) 
-						    {
-                                //Si el dron que has seleccionado esta entre tus soldados los mueve, sino lo añade a los drones que debe dañar
-                                currentAttackingDrone.target = drone;
-							    if(!currentPlayer.GetMySoldiers().Contains(drone))
-							    {
-                                    attacking = false;
-                                    ActivateEnemyArrows(attacking);
-                                    ActivateAlliesArrows(!attacking);
-							    }
-							    else
-							    {                 
-                                    currentAttackingDrone.MoveToTargetPosition();
-                                    moving = false;
-                                    ActivateEnemyArrows(false);
-                                    ActivateAlliesArrows(true);
-							    }
-						    }
-					    }
-					
-				    }
-                }
+				    }                    
+                }*/
                 //Si el tiempo llega a 0 se canvia el estado a attacking
 		        if(currentTime<0 && PhotonNetwork.IsMasterClient)
 		        {
@@ -152,7 +123,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
                 currentTime-=Time.deltaTime;
 				if(firstTime)
 				{
-                    foreach(BigDrone drone in attackingDrones)
+                    foreach(BigDrone drone in currentPlayer.GetMySoldiers())
                     {
                        if(drone.target == null)
                             continue;
@@ -162,7 +133,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 				    }
                     firstTime = false;
 				}
-                
+                currentPlayer.GetMySoldiers()[0].ResetParameters();
 				if(currentTime<=0 && PhotonNetwork.IsMasterClient)
 				{
                     ChangeTurn();                                   
@@ -189,6 +160,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
                     AddEnergy();
                     PV.RPC("RPC_AddMoreEnergy",RpcTarget.Others);
 				}
+                UIManager.SetInteractable(currentPlayer.GetPV().IsMine);
                 break;
             case EGameState.ATTACKING:
                 currentTime = timeAttacking;
@@ -217,14 +189,15 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
                     player.SetEnergyImages();
                     player.AddMoreEnergy();
 				}
-                ActivateAlliesArrows(true);
-                
+                UIManager.SetButtons();
+                SetEnemy();
                 break;
                 //Desactiva el modo ataque y las flechas de los aliados del currentPlayer
             case EGameState.SELECTING:
                 attacking = false;
                 foreach(BigDrone drone in currentPlayer.GetMySoldiers())
                     drone.ShowArrow(false);
+                UIManager.SetInteractable(false);
                 break;  
                 //Borra toda la lista de atacantes y moving
             case EGameState.ATTACKING:
@@ -379,6 +352,36 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 		else
 		{
 			nextTeam = 1;
+		}
+	}
+    public PlayerOnlineController GetLocalPlayer()
+	{
+        foreach(PlayerOnlineController player in players)
+		{
+            if(player.GetPV().IsMine)
+                return player;
+		}
+        return null;
+	}
+    public BigDrone SetEnemy(BigDrone drone)
+	{
+        foreach(BigDrone current in avatars)
+		{
+            if(drone == current)
+                continue;
+
+            return current;
+		}
+        return null;
+	}
+    void SetEnemy()
+	{
+        foreach(PlayerOnlineController player in players)
+		{
+            if(player == localPlayer)
+                continue;
+
+            localPlayer.Enemy = player;
 		}
 	}
 }

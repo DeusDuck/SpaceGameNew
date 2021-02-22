@@ -13,7 +13,15 @@ public class UIOnlineManager : MonoBehaviour
     public List<Image> energyPlayer1;
     public List<Image> energyPlayer2;
     [SerializeField]
-    GameObject panel;
+    Button attackButton;
+    [SerializeField]
+    Button defenseButton;
+    [SerializeField]
+    Button specialButton;
+    [SerializeField]
+    Text attackText;
+    [SerializeField]
+    Text defenseText;
 
     //Cambia el daño del dron sobre el que has  pulsado
     public void ChangeAttackDamage(float newDamage)
@@ -26,31 +34,32 @@ public class UIOnlineManager : MonoBehaviour
         currentDrone.SetBullet(currentBullet);
 	}
     //Cambia el coste de energia del dron seleccionado
-    public void SetEnergyCost(int energy)
+    public void SetEnergyCost()
 	{
-		if(energy<=currentDrone.Getplayer().GetCurrentEnergy())
-            currentDrone.SetEnergyCost(energy);            
+        currentDrone.SpendEnergy();            
 	}
     //Cambia el dron seleccionado
     public void SetCurrentDrone(BigDrone drone)
 	{
         currentDrone = drone;
 	}
-    //Esconde el panel de ataque
-    public void HidePanel()
+    public void SetButtons()
 	{
-        panel.SetActive(false);
-	}
-    //Enseña las flechas sobre los drones
-    public void ShowAvailableDrones()
-	{
-        foreach(BigDrone drone in gamePlayManager.avatars)
-		{
-            if(gamePlayManager.attackingDrones.Contains(drone) || gamePlayManager.movingDrones.Contains(drone)
-                || !gamePlayManager.currentPlayer.GetMySoldiers().Contains(drone))
-                continue;
+        BigDrone drone = GamePlayManager.instance.GetLocalPlayer().GetMySoldiers()[0];
 
-            drone.ShowArrow(true);
-		}
+        attackButton.onClick.AddListener(delegate{drone.AddAttack();});
+        defenseButton.onClick.AddListener(delegate{drone.AddDefense();});
+	}
+    public void UpdateAmounts()
+	{
+        BigDrone drone = GamePlayManager.instance.GetLocalPlayer().GetMySoldiers()[0];
+        attackText.text = drone.GetAttack().ToString();
+        defenseText.text = drone.GetDefense().ToString();
+	}
+    public void SetInteractable(bool must)
+	{
+        attackButton.interactable = must;
+        defenseButton.interactable = must;
+        specialButton.interactable = must;
 	}
 }
