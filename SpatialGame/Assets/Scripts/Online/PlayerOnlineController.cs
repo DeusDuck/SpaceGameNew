@@ -19,8 +19,7 @@ public class PlayerOnlineController : MonoBehaviour
     [SerializeField]
     int currentEnergy;
     [SerializeField]
-    int maxEnergy;
-    List<Image> energyImages = new List<Image>();
+    int maxEnergy;    
     PlayerOnlineController enemy;
     
 
@@ -32,8 +31,7 @@ public class PlayerOnlineController : MonoBehaviour
         currentEnergy = maxEnergy;
     }
 	private void Start()
-	{
-        Recharge();
+	{        
 		if(PV.IsMine)
 		{
             gamePlayManager.localPlayer = this;
@@ -44,7 +42,8 @@ public class PlayerOnlineController : MonoBehaviour
 			    {
                     BigDrone current = PhotonNetwork.Instantiate(path, gamePlayManager.spawningPointsLocal[i].position,gamePlayManager.spawningPointsLocal[i].rotation,0).GetComponent<BigDrone>();
 				    mySoldiers.Add(current);
-                    current.SetPosition(gamePlayManager.spawningPointsLocal[i]);
+                    gamePlayManager.GetCameraManager().EnableLocalCamera(true);
+                    gamePlayManager.GetCameraManager().EnableOtherCamera(false);                    
 			    }
 			}
 			else
@@ -53,8 +52,9 @@ public class PlayerOnlineController : MonoBehaviour
 			    {
                     BigDrone current = PhotonNetwork.Instantiate(path, gamePlayManager.spawningPointsOther[i].position,gamePlayManager.spawningPointsOther[i].rotation,0).GetComponent<BigDrone>();
 				    mySoldiers.Add(current);
-                    current.SetPosition(gamePlayManager.spawningPointsOther[i]);
-			    }	
+                    gamePlayManager.GetCameraManager().EnableLocalCamera(false);
+                    gamePlayManager.GetCameraManager().EnableOtherCamera(true);
+   			    }	
 			}
 		}
 
@@ -62,12 +62,13 @@ public class PlayerOnlineController : MonoBehaviour
 		{
             drone.SetPlayerController(this);
 		}
+        Recharge();
 	}
     [PunRPC]
     void RPC_GetTeam()
 	{
         myTeam = gamePlayManager.nextTeam;
-       gamePlayManager.UpdateTeam();
+        gamePlayManager.UpdateTeam();
         PV.RPC("RPC_SetPlayerTeam",RpcTarget.OthersBuffered,myTeam);
 	}
     [PunRPC]
@@ -85,57 +86,40 @@ public class PlayerOnlineController : MonoBehaviour
             if(current.PV.ViewID == id)
 			{
                 current.TakeDamage(damage);
+                GamePlayManager.instance.GetUIManager().UpdateMyHealthBar(current.GetCurrentHealth(),current.GetMaxHealth());
                 break;
 			}
 		}
 	}
-    public void SpendEnergy()
+    public void SpendEnergy(int energy = 1)
 	{
-		if(currentEnergy>=0)
+		if(currentEnergy - energy>=0)
 		{
-            energyImages[currentEnergy - 1].color = Color.white;
-            currentEnergy--;
+            currentEnergy-= energy;
 		}            
 	}
     public void Recharge()
 	{
-        currentEnergy = maxEnergy;
-
-        for(int i = 0; i<energyImages.Count; i++)
-		{
-            energyImages[i].color = Color.red;
-		}
+        currentEnergy = maxEnergy;        
+        GamePlayManager.instance.GetUIManager().UpdateAmounts();
 	}
     public void AddMoreEnergy()
-	{
-        if(maxEnergy<energyImages.Count)
+	{        
+        if(maxEnergy<=6)
             maxEnergy++;
 
-        UpdateMaxEnergyImage();
         Recharge();
 	}
-    public void SetEnergyImages()
-	{
-        if(myTeam == 1)
-		{
-            foreach(Image image in gamePlayManager.GetUIManager().energyPlayer2)
-                energyImages.Add(image);
-		}
-        else
-           foreach(Image image in gamePlayManager.GetUIManager().energyPlayer1)
-                energyImages.Add(image);
-	}
+    
     //Retorna una lista de int, el primero siempre sera la energia que tiene y el segundo la energia maxima
     public int GetCurrentEnergy()
 	{        
         return currentEnergy;
 	}
-    void UpdateMaxEnergyImage()
+    public int GetMaxEnergy()
 	{
-        for(int i = 0; i<maxEnergy; i++)
-		{
-            energyImages[i].gameObject.SetActive(true);           
-		}
+        return maxEnergy;
 	}
+    
     public PlayerOnlineController Enemy{get{return Enemy; } set {enemy = value; mySoldiers[0].target = enemy.GetMySoldiers()[0];} }
 }

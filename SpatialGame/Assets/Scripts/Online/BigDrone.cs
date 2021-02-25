@@ -6,11 +6,8 @@ using UnityEngine.UI;
 
 public class BigDrone : MonoBehaviour,IControlable
 {
+    [SerializeField]
     float currentHealth;    
-    [SerializeField]
-    Image healthBar;
-    [SerializeField]
-    Image arrowImage;
     [Header("Drone Stats")]
     [Space(5)]
     public float maxHealth;
@@ -22,8 +19,15 @@ public class BigDrone : MonoBehaviour,IControlable
     public float resistance;
     public float movingSpeed;
     public float distanceToStop;
+    public int energyDefense;
+    public int energySpecialAttack;
+    public int energySpecialHability;
     int attack;
+    int specialHability;
     int defense;
+    int special;
+    [SerializeField]
+    float currentDamage;
     [Space(5)]
 
     [Header ("Weapons")]
@@ -39,39 +43,18 @@ public class BigDrone : MonoBehaviour,IControlable
     public BigDrone target;
     public PhotonView PV;
     PlayerOnlineController myPlayerController;
-    GamePlayManager gamePlayManager;
     [SerializeField]
-    Transform currentPosition;
+    GameObject particle;
     [SerializeField]
-    SpriteRenderer mySprite;
-    bool move;
-	public void TakeDamage(float _damage)
-	{
-		currentHealth-=_damage;
-        healthBar.fillAmount = currentHealth/maxHealth;
-	}
+    Animator animatorController;
+
+	
 
 	// Start is called before the first frame update
 	void Start()
     {
         SetUpStats();        
-    }
-	private void Update()
-	{
-		if(move)
-		{
-            if(Vector3.Distance(transform.position,target.GetPosition().position)>distanceToStop && Vector3.Distance(target.GetPosition().position,transform.position)>distanceToStop)
-                MoveToTargetPosition();
-			else
-			{
-                Transform targetPos = target.GetPosition();
-                target.SetPosition(currentPosition);
-                currentPosition = targetPos;
-                move = false;
-			}
-                
-		}
-	}
+    }	
 	void SetUpStats()
 	{
         foreach(Weapon weapon in myWeapons)
@@ -87,6 +70,18 @@ public class BigDrone : MonoBehaviour,IControlable
 		}
         
         currentHealth = maxHealth;
+        currentDamage = damage;
+	}
+    public void TakeDamage(float _damage)
+	{
+		currentHealth-=_damage;
+        if(currentHealth<=0)
+            Die();
+    }
+    void Die()
+	{
+        GamePlayManager.instance.IDied(myPlayerController);
+        Destroy(this.gameObject);
 	}
     public void AddWeapon(Weapon weapon)
 	{
@@ -94,61 +89,23 @@ public class BigDrone : MonoBehaviour,IControlable
 	}
     public void SetChasis(Chasis nextChasis)
     {
-        myChasis = nextChasis;
-    
+        myChasis = nextChasis;    
     }
     public void Attack()
 	{
-        target.TakeDamage(damage * attack);
-	}
-    public void ShowArrow(bool must)
+        SetDamage();
+        target.TakeDamage(currentDamage);
+	}    
+    public void SetDamage()
 	{
-        arrowImage.gameObject.SetActive(must);
+        currentDamage = damage * attack;
 	}
-    public void SetDamage(float newDamage)
+    public void ResetDamage()
 	{
-        damage = newDamage;
-	}
-    public void SpendEnergy()
-	{
-		if(myPlayerController.GetCurrentEnergy()>0)
-		{
-            myPlayerController.SpendEnergy();
-            gamePlayManager.SetAttack(true);
-		}            
+        currentDamage = damage;
 	}
     public void SetPlayerController(PlayerOnlineController player){myPlayerController = player;}
-    public void SetGamePlayManager(GamePlayManager manager){ gamePlayManager = manager;}
-    public PlayerOnlineController Getplayer(){return myPlayerController;}
-    public void SetBullet(Bullets currentBullet)
-    {
-        myBullet = currentBullet;
-        damage = myBullet.GetDamage();
-    }
-    public void SetPosition(Transform next){currentPosition = next;}
-    public Transform GetPosition(){return currentPosition;}
-    public void MoveToTargetPosition()
-	{
-        move = true;
-        Transform nextPos = target.GetPosition();		            
-        target.MoveToPosition(currentPosition);
-        transform.position = Vector3.Lerp(transform.position, nextPos.position, movingSpeed*Time.deltaTime);		        
-	}
-    public void MoveToPosition(Transform next)
-	{
-        transform.position = Vector3.Lerp(transform.position, next.position, movingSpeed*Time.deltaTime);
-	}
-    public void FaceEnemies()
-	{
-        if(gamePlayManager.transform.position.x>transform.position.x)
-            transform.localScale = new Vector3(-1,1,1);
-        else
-            transform.localScale = new Vector3(1,1,1);
-	}
-    public SpriteRenderer GetMySprite()
-	{
-        return mySprite;
-	}
+    public PlayerOnlineController GetPlayerController(){return myPlayerController;} 
     public void AddAttack()
 	{
 		if(myPlayerController.GetCurrentEnergy()>0)
@@ -160,10 +117,28 @@ public class BigDrone : MonoBehaviour,IControlable
 	}
     public void AddDefense()
 	{
-        if(myPlayerController.GetCurrentEnergy()>0)
+        if(myPlayerController.GetCurrentEnergy()-energyDefense>=0)
 		{
-            myPlayerController.SpendEnergy();
+            myPlayerController.SpendEnergy(energyDefense);
             defense++;
+            GamePlayManager.instance.GetUIManager().UpdateAmounts();
+        }
+	}
+    public void AddSpecial()
+	{
+        if(myPlayerController.GetCurrentEnergy()-energySpecialAttack>=0)
+		{
+            myPlayerController.SpendEnergy(energySpecialAttack);
+            special++;
+            GamePlayManager.instance.GetUIManager().UpdateAmounts();
+        }
+	}
+    public void AddSpecialHability()
+	{
+        if(myPlayerController.GetCurrentEnergy()-energySpecialHability>=0)
+		{
+            myPlayerController.SpendEnergy(energySpecialHability);
+            specialHability++;
             GamePlayManager.instance.GetUIManager().UpdateAmounts();
         }
 	}
@@ -171,8 +146,15 @@ public class BigDrone : MonoBehaviour,IControlable
 	{
         attack = 0;
         defense = 0;
+        special = 0;
+        specialHability = 0;
         GamePlayManager.instance.GetUIManager().UpdateAmounts();
 	}
     public int GetAttack(){return attack;}
     public int GetDefense(){return defense;}
+    public int GetSpecial(){return special;}
+    public int GetSpecialAttack(){return specialHability;}
+    public float GetCurrentHealth(){return currentHealth;}
+    public float GetMaxHealth(){return maxHealth;}
+    public float GetCurrentDamage(){return currentDamage;}
 }

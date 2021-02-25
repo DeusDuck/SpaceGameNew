@@ -146,7 +146,7 @@ MonoBehaviour:
   notMyTurn: {r: 0.6039216, g: 0.6039216, b: 0.6039216, a: 1}
   mySoldiers: []
   facingPoint: {fileID: 0}
-  path: MultiplayerPrefabs/RedCombatDrone
+  path: MultiplayerPrefabs/Legs_Spider_Med
   myTeam: 0
   currentEnergy: 0
   maxEnergy: 0

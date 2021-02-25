@@ -107,8 +107,12 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		PhotonNetwork.CurrentRoom.IsVisible = false;
 		PhotonNetwork.LoadLevel(1);
 	}
-	#region Getters
-	public GameSettings GameSettings{get{return gameSettings;}}
-	public int GetCurrentNumberOfPlayers{get{return PhotonNetwork.PlayerList.Length;}}
-	#endregion
+	public override void OnLeftRoom()
+	{
+		PhotonNetwork.LoadLevel(0);
+	}
+	public void ReturnToMainScene()
+	{
+		PhotonNetwork.Disconnect();
+	}
 }
