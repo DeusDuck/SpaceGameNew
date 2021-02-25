@@ -12,6 +12,9 @@ public class BigDrone : MonoBehaviour,IControlable
     [Space(5)]
     public float maxHealth;
     public float damage;
+    public float specialHabilityDamage1;
+    public float specialHabilityDamage2;
+    public float specialHabilityDamage3;
     public float armor;
     public float velocity;
     public float criticalProb;
@@ -98,7 +101,7 @@ public class BigDrone : MonoBehaviour,IControlable
 	}    
     public void SetDamage()
 	{
-        currentDamage = damage * attack;
+        currentDamage = damage * attack + specialHabilityDamage1 * special + specialHabilityDamage2 * defense + specialHabilityDamage3 * specialHability;
 	}
     public void ResetDamage()
 	{

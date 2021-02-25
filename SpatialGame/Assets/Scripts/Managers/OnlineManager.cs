@@ -44,7 +44,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	}
 	void CreatePlayer()
 	{
-		PhotonNetwork.Instantiate("MultiplayerPrefabs/Player",transform.position,Quaternion.identity,0);
+		PhotonNetwork.Instantiate("MultiplayerPrefabs/Player 1",transform.position,Quaternion.identity,0);
 			
 	}
 	// Start is called before the first frame update

@@ -2706,6 +2706,9 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 1000
   damage: 200
+  specialHabilityDamage1: 150
+  specialHabilityDamage2: 300
+  specialHabilityDamage3: 250
   armor: 0
   velocity: 0
   criticalProb: 0
@@ -2722,6 +2725,7 @@ MonoBehaviour:
   myBullet: {fileID: 0}
   target: {fileID: 0}
   PV: {fileID: 1227695771875708580}
+  particle: {fileID: 0}
   animatorController: {fileID: 6268939155553028128}
 --- !u!1 &6268939155562560482
 GameObject:
